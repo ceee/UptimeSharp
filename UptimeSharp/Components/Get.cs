@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using RestSharp;
+using System.Collections.Generic;
 using UptimeSharp.Models;
 
 namespace UptimeSharp

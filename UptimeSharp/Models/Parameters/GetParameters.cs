@@ -64,15 +64,34 @@ namespace UptimeSharp.Models
     /// <returns>Parameter list</returns>
     public List<Parameter> Convert()
     {
-      return new List<Parameter>()
+      List<Parameter> parameters = new List<Parameter>();
+
+      if (Monitors != null)
       {
-        Utilities.CreateParam("monitors", String.Join("-", Monitors)),
-        Utilities.CreateParam("customUptimeRatio", String.Join("-", CustomUptimeRatio)),
-        Utilities.CreateParam("logs", Utilities.Bool(ShowLogs)),
-        Utilities.CreateParam("alertContacts", Utilities.Bool(ShowAlertContacts)),
-        Utilities.CreateParam("showMonitorAlertContacts", Utilities.Bool(ShowMonitorAlertContacts)),
-        Utilities.CreateParam("showTimezone", Utilities.Bool(ShowTimezone))
-      };
+        parameters.Add(Utilities.CreateParam("monitors", String.Join("-", Monitors)));
+      }
+      if (CustomUptimeRatio != null)
+      {
+        parameters.Add(Utilities.CreateParam("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
+      }
+      if (ShowLogs.HasValue)
+      {
+        parameters.Add(Utilities.CreateParam("logs", ShowLogs));
+      }
+      if (ShowAlertContacts.HasValue)
+      {
+        parameters.Add(Utilities.CreateParam("alertContacts", ShowAlertContacts));
+      }
+      if (ShowMonitorAlertContacts.HasValue)
+      {
+        parameters.Add(Utilities.CreateParam("showMonitorAlertContacts", ShowMonitorAlertContacts));
+      }
+      if (ShowTimezone.HasValue)
+      {
+        parameters.Add(Utilities.CreateParam("showTimezone", ShowTimezone));
+      }
+
+      return parameters;
     }
   }
 }
