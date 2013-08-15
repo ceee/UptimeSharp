@@ -9,6 +9,18 @@ namespace UptimeSharp
   /// </summary>
   internal class Utilities
   {
+
+    /// <summary>
+    /// converts a bool to a string for GET param
+    /// </summary>
+    /// <param name="value">The value.</param>
+    /// <returns>A string representation of the boolean</returns>
+    public static string? Bool(bool? value)
+    {
+      return value != null ? ((bool)value ? "1" : "0") : null;
+    }
+
+
     /// <summary>
     /// converts DateTime to an UNIX timestamp
     /// </summary>
