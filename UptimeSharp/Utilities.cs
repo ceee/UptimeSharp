@@ -15,7 +15,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="value">The value.</param>
     /// <returns>A string representation of the boolean</returns>
-    public static string? Bool(bool? value)
+    public static string Bool(bool? value)
     {
       return value != null ? ((bool)value ? "1" : "0") : null;
     }

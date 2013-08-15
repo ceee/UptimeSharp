@@ -1,8 +1,6 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace UptimeSharp
 {
@@ -73,7 +71,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="request">The request.</param>
     /// <returns></returns>
-    public string Request(RestRequest request)
+    protected string Request(RestRequest request)
     {
       IRestResponse response = _restClient.Execute(request);
 
@@ -98,5 +96,95 @@ namespace UptimeSharp
 
       return response.Data;
     }
+
+
+    /// <summary>
+    /// Fetches a typed resource
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="resource">Requested resource</param>
+    /// <param name="parameters">Additional GET parameters</param>
+    /// <returns></returns>
+    protected T Get<T>(string resource, List<Parameter> parameters = null) where T : class, new()
+    {
+      // UptimeRobot uses GET for all of its endpoints
+      var request = new RestRequest(resource, Method.GET);
+
+      // enumeration for params
+      if (parameters != null)
+      {
+        parameters.ForEach(
+          param => request.AddParameter(param)
+        );
+      }
+
+      // do the request
+      return Request<T>(request);
+    }
+
+
+    ///// <summary>
+    ///// Puts an action
+    ///// </summary>
+    ///// <param name="actionParameter">The action parameter.</param>
+    ///// <returns></returns>
+    //protected bool PutSendAction(ActionParameter actionParameter)
+    //{
+    //  ModifyParameters parameters = new ModifyParameters()
+    //  {
+    //    Actions = new List<ActionParameter>() { actionParameter }
+    //  };
+
+    //  return Get<Modify>("send", parameters.Convert(), true).Status;
+    //}
+
+
+    ///// <summary>
+    ///// Validates the response.
+    ///// </summary>
+    ///// <param name="response">The response.</param>
+    ///// <returns></returns>
+    ///// <exception cref="APIException">
+    ///// Error retrieving response
+    ///// </exception>
+    //protected void ValidateResponse(IRestResponse response)
+    //{
+    //  if (response.StatusCode != HttpStatusCode.OK)
+    //  {
+    //    // get pocket error headers
+    //    Parameter error = response.Headers[1];
+    //    Parameter errorCode = response.Headers[2];
+
+    //    string exceptionString = response.Content;
+
+    //    bool isPocketError = error.Name == "X-Error";
+
+    //    // update message to include pocket response data
+    //    if (isPocketError)
+    //    {
+    //      exceptionString = exceptionString + "\nPocketResponse: (" + errorCode.Value + ") " + error.Value;
+    //    }
+
+    //    // create exception
+    //    APIException exception = new APIException(exceptionString, response.ErrorException);
+
+    //    if (isPocketError)
+    //    {
+    //      // add custom pocket fields
+    //      exception.PocketError = error.Value.ToString();
+    //      exception.PocketErrorCode = Convert.ToInt32(errorCode.Value);
+
+    //      // add to generic exception data
+    //      exception.Data.Add(error.Name, error.Value);
+    //      exception.Data.Add(errorCode.Name, errorCode.Value);
+    //    }
+
+    //    throw exception;
+    //  }
+    //  else if (response.ErrorException != null)
+    //  {
+    //    throw new APIException("Error retrieving response", response.ErrorException);
+    //  }
+    //}
   }
 }

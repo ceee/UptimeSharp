@@ -43,6 +43,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -51,7 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIException.cs" />
+    <Compile Include="Components\Get.cs" />
     <Compile Include="JsonDeserializer.cs" />
+    <Compile Include="Models\Monitor.cs" />
+    <Compile Include="Models\Parameters\GetParameters.cs" />
+    <Compile Include="Models\Response\Get.cs" />
+    <Compile Include="Models\Response\ResponseBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UptimeClient.cs" />
     <Compile Include="Utilities.cs" />
@@ -59,6 +65,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
