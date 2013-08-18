@@ -69,6 +69,7 @@ namespace UptimeSharp
     }
 
 
+
     /// <summary>
     /// Deletes a monitor
     /// </summary>
@@ -93,6 +94,97 @@ namespace UptimeSharp
     public bool Delete(Monitor monitor)
     {
       return Delete(monitor.ID);
+    }
+
+
+
+    /// <summary>
+    /// Creates a HTTP/IP monitor.
+    /// </summary>
+    /// <param name="name">The name of the new monitor.</param>
+    /// <param name="uri">The URI or IP to watch.</param>
+    /// <param name="alerts">A ID list of existing alerts to notify.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Add(string name, string uri, int[] alerts = null)
+    {
+      MonitorParameters parameters = new MonitorParameters()
+      {
+        Name = name,
+        Uri = uri,
+        Type = Type.HTTP,
+        Alerts = alerts
+      };
+
+      return Get<Default>("newMonitor", parameters.Convert()).Status;
+    }
+
+
+    /// <summary>
+    /// Creates a Port monitor.
+    /// </summary>
+    /// <param name="name">The name of the new monitor.</param>
+    /// <param name="uri">The URI or IP to watch.</param>
+    /// <param name="subtype">The subtype of the port.</param>
+    /// <param name="port">The port (only for Subtype.Custom).</param>
+    /// <param name="alerts">A ID list of existing alerts to notify.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Add(string name, string uri, Subtype subtype, int? port = null, int[] alerts = null)
+    {
+      MonitorParameters parameters = new MonitorParameters()
+      {
+        Name = name,
+        Uri = uri,
+        Type = Type.Port,
+        Subtype = subtype,
+        Port = port,
+        Alerts = alerts
+      };
+
+      return Get<Default>("newMonitor", parameters.Convert()).Status;
+    }
+
+
+    /// <summary>
+    /// Creates a Keyword monitor.
+    /// </summary>
+    /// <param name="name">The name of the new monitor.</param>
+    /// <param name="uri">The URI or IP to watch.</param>
+    /// <param name="keywordType">Type of the keyword.</param>
+    /// <param name="keywordValue">The keyword value.</param>
+    /// <param name="alerts">A ID list of existing alerts to notify.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Add(string name, string uri, string keyword, KeywordType keywordType = KeywordType.Exists, int[] alerts = null)
+    {
+      MonitorParameters parameters = new MonitorParameters()
+      {
+        Name = name,
+        Uri = uri,
+        Type = Type.Keyword,
+        KeywordValue = keyword,
+        KeywordType = keywordType,
+        Alerts = alerts
+      };
+
+      return Get<Default>("newMonitor", parameters.Convert()).Status;
+    }
+
+
+    /// <summary>
+    /// Creates a monitor.
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Add(MonitorParameters parameters)
+    {
+      return Get<Default>("newMonitor", parameters.Convert()).Status;
     }
   }
 }

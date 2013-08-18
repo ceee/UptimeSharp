@@ -58,6 +58,7 @@
     <Compile Include="Models\Log.cs" />
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Parameters\GetParameters.cs" />
+    <Compile Include="Models\Parameters\MonitorParameters.cs" />
     <Compile Include="Models\Response\Default.cs" />
     <Compile Include="Models\Response\Get.cs" />
     <Compile Include="Models\Response\ResponseBase.cs" />

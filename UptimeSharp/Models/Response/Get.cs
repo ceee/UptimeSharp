@@ -28,7 +28,8 @@ namespace UptimeSharp.Models
     [IgnoreDataMember]
     public List<Monitor> Items
     {
-      get {
+      get
+      {
         return ItemDictionary["monitor"]; 
       }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Net;
 using ServiceStack.Text;
+using RestSharp;
 
 namespace UptimeSharp.Models
 {
