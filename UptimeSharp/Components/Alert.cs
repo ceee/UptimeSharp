@@ -54,5 +54,16 @@ namespace UptimeSharp
 
       return Get<DefaultResponse>("deleteAlertContact", parameters).Status;
     }
+
+
+    /// <summary>
+    /// Removes an alert.
+    /// </summary>
+    /// <param name="alert">The alert.</param>
+    /// <returns></returns>
+    public bool DeleteAlert(Alert alert)
+    {
+      return DeleteAlert((int)alert.ID);
+    }
   }
 }
