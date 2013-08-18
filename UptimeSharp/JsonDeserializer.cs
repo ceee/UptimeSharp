@@ -2,6 +2,7 @@
 using RestSharp.Deserializers;
 using ServiceStack.Text;
 using System;
+using System.Net;
 
 namespace UptimeSharp
 {
@@ -30,12 +31,27 @@ namespace UptimeSharp
     public static void AddCustomDeserialization()
     {
       // generate correct Uri format
-      JsConfig<Uri>.DeSerializeFn = value => new Uri(value);
+      JsConfig<Uri>.DeSerializeFn = value => 
+      {
+        Uri uri;
+        try
+        {
+          uri = new Uri(value);
+        }
+        catch
+        {
+          uri = null;
+        }
+        return uri;
+      };
 
       // create DateTime from UNIX timestamp input
       JsConfig<DateTime?>.DeSerializeFn = value =>
       {
-        if (value == "0") return null;
+        if (value == "0")
+        {
+          return null;
+        }
         return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToDouble(value)).ToLocalTime();
       };
     }
