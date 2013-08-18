@@ -89,6 +89,9 @@ namespace UptimeSharp
     /// <returns></returns>
     protected T Request<T>(RestRequest request) where T : new()
     {
+      // fix content type if wrong determined by RestSharp
+      request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+
       IRestResponse<T> response = _restClient.Execute<T>(request);
 
       LastRequestData = response;

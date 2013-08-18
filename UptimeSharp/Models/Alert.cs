@@ -27,6 +27,15 @@ namespace UptimeSharp.Models
     public AlertType Type { get; set; }
 
     /// <summary>
+    /// Gets or sets the alert status.
+    /// </summary>
+    /// <value>
+    /// The status.
+    /// </value>
+    [DataMember(Name = "status")]
+    public AlertStatus Status { get; set; }
+
+    /// <summary>
     /// Gets or sets the alert value.
     /// </summary>
     /// <value>
@@ -59,5 +68,29 @@ namespace UptimeSharp.Models
     /// Boxcar
     /// </summary>
     Boxcar = 4
+  }
+
+
+  /// <summary>
+  /// The status of the alert contact.
+  /// </summary>
+  public enum AlertStatus
+  {
+    /// <summary>
+    /// Unknown
+    /// </summary>
+    Unknown,
+    /// <summary>
+    /// Not activated
+    /// </summary>
+    NotActicated = 0,
+    /// <summary>
+    /// Paused
+    /// </summary>
+    Paused = 1,
+    /// <summary>
+    /// Active
+    /// </summary>
+    Active = 2
   }
 }

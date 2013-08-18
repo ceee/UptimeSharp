@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIException.cs" />
+    <Compile Include="Components\Alert.cs" />
     <Compile Include="Components\Monitor.cs" />
     <Compile Include="JsonDeserializer.cs" />
     <Compile Include="Models\Alert.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Parameters\MonitorParameters.cs" />
     <Compile Include="Models\Parameters\RetrieveParameters.cs" />
+    <Compile Include="Models\Response\AlertResponse.cs" />
     <Compile Include="Models\Response\DefaultResponse.cs" />
     <Compile Include="Models\Response\ResponseBase.cs" />
     <Compile Include="Models\Response\RetrieveResponse.cs" />
