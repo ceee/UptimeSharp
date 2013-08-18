@@ -12,9 +12,24 @@ namespace UptimeSharp.Models
     /// Gets or sets a value indicating whether this <see cref="ResponseBase"/> is status.
     /// </summary>
     /// <value>
-    ///   <c>true</c> if status is OK; otherwise, <c>false</c>.
+    ///   "ok" or "fail"
     /// </value>
     [DataMember(Name = "stat")]
-    public bool Status { get; set; }
+    public string RawStatus { get; set; }
+
+    /// <summary>
+    /// Gets or sets a value indicating whether this <see cref="ResponseBase"/> is status.
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if status is OK; otherwise, <c>false</c>.
+    /// </value>
+    [IgnoreDataMember]
+    public bool Status
+    {
+      get
+      {
+        return RawStatus == "ok";
+      }
+    }
   }
 }

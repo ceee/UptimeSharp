@@ -123,6 +123,23 @@ namespace UptimeSharp
     }
 
 
+    protected string Get(string resource, List<Parameter> parameters = null)
+    {
+      var request = new RestRequest(resource, Method.GET);
+
+      // enumeration for params
+      if (parameters != null)
+      {
+        parameters.ForEach(
+          param => request.AddParameter(param)
+        );
+      }
+
+      // do the request
+      return Request(request);
+    }
+
+
     ///// <summary>
     ///// Puts an action
     ///// </summary>

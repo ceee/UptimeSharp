@@ -67,5 +67,32 @@ namespace UptimeSharp
     {
       return Get<Get>("getMonitors", parameters.Convert()).Items;
     }
+
+
+    /// <summary>
+    /// Deletes a monitor
+    /// </summary>
+    /// <param name="ID">The unique identifier for the monitor.</param>
+    /// <returns>success state</returns>
+    public bool Delete(int ID)
+    {
+      List<Parameter> parameters = new List<Parameter>()
+      {
+        new Parameter() { Name = "monitorID", Value = ID, Type = ParameterType.GetOrPost }
+      };
+
+      return Get<Default>("deleteMonitor", parameters).Status;
+    }
+
+
+    /// <summary>
+    /// Deletes a monitor
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <returns>success state</returns>
+    public bool Delete(Monitor monitor)
+    {
+      return Delete(monitor.ID);
+    }
   }
 }
