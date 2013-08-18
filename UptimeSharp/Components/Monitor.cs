@@ -12,15 +12,24 @@ namespace UptimeSharp
     /// <summary>
     /// Retrieves all monitors from UptimeRobot
     /// </summary>
+    /// <param name="parameters">parameters, which are mapped to the officials from http://www.uptimerobot.com/api.asp#methods </param>
+    /// <returns></returns>
+    public List<Monitor> Get(GetParameters parameters)
+    {
+      return Get<Get>("getMonitors", parameters.Convert()).Items;
+    }
+
+
+    /// <summary>
+    /// Retrieves all monitors from UptimeRobot
+    /// </summary>
     /// <returns></returns>
     public List<Monitor> Get()
     {
-      GetParameters parameters = new GetParameters()
+      return Get(new GetParameters()
       {
         ShowAlerts = true
-      };
-
-      return Get<Get>("getMonitors", parameters.Convert()).Items;
+      });
     }
 
 
@@ -31,13 +40,11 @@ namespace UptimeSharp
     /// <returns></returns>
     public Monitor Get(int monitorId)
     {
-      GetParameters parameters = new GetParameters()
+      return Get(new GetParameters()
       {
         Monitors = new int[] { monitorId },
         ShowAlerts = true
-      };
-
-      return Get<Get>("getMonitors", parameters.Convert()).Items[0];
+      });
     }
 
 
@@ -48,24 +55,11 @@ namespace UptimeSharp
     /// <returns></returns>
     public List<Monitor> Get(int[] monitors)
     {
-      GetParameters parameters = new GetParameters()
+      return Get(new GetParameters()
       {
         Monitors = monitors,
         ShowAlerts = true
-      };
-
-      return Get<Get>("getMonitors", parameters.Convert()).Items;
-    }
-
-
-    /// <summary>
-    /// Retrieves all monitors from UptimeRobot
-    /// </summary>
-    /// <param name="parameters">parameters, which are mapped to the officials from http://www.uptimerobot.com/api.asp#methods </param>
-    /// <returns></returns>
-    public List<Monitor> Get(GetParameters parameters)
-    {
-      return Get<Get>("getMonitors", parameters.Convert()).Items;
+      });
     }
 
 
@@ -99,6 +93,19 @@ namespace UptimeSharp
 
 
     /// <summary>
+    /// Creates a monitor.
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Add(MonitorParameters parameters)
+    {
+      return Get<Default>("newMonitor", parameters.Convert()).Status;
+    }
+
+
+    /// <summary>
     /// Creates a HTTP/IP monitor.
     /// </summary>
     /// <param name="name">The name of the new monitor.</param>
@@ -109,15 +116,13 @@ namespace UptimeSharp
     /// </returns>
     public bool Add(string name, string uri, int[] alerts = null)
     {
-      MonitorParameters parameters = new MonitorParameters()
+      return Add(new MonitorParameters()
       {
         Name = name,
         Uri = uri,
         Type = Type.HTTP,
         Alerts = alerts
-      };
-
-      return Get<Default>("newMonitor", parameters.Convert()).Status;
+      }));
     }
 
 
@@ -134,7 +139,7 @@ namespace UptimeSharp
     /// </returns>
     public bool Add(string name, string uri, Subtype subtype, int? port = null, int[] alerts = null)
     {
-      MonitorParameters parameters = new MonitorParameters()
+      return Add(new MonitorParameters()
       {
         Name = name,
         Uri = uri,
@@ -142,9 +147,7 @@ namespace UptimeSharp
         Subtype = subtype,
         Port = port,
         Alerts = alerts
-      };
-
-      return Get<Default>("newMonitor", parameters.Convert()).Status;
+      });
     }
 
 
@@ -161,7 +164,7 @@ namespace UptimeSharp
     /// </returns>
     public bool Add(string name, string uri, string keyword, KeywordType keywordType = KeywordType.Exists, int[] alerts = null)
     {
-      MonitorParameters parameters = new MonitorParameters()
+      return Add(new MonitorParameters()
       {
         Name = name,
         Uri = uri,
@@ -169,22 +172,7 @@ namespace UptimeSharp
         KeywordValue = keyword,
         KeywordType = keywordType,
         Alerts = alerts
-      };
-
-      return Get<Default>("newMonitor", parameters.Convert()).Status;
-    }
-
-
-    /// <summary>
-    /// Creates a monitor.
-    /// </summary>
-    /// <param name="monitor">The monitor.</param>
-    /// <returns>
-    /// success state
-    /// </returns>
-    public bool Add(MonitorParameters parameters)
-    {
-      return Get<Default>("newMonitor", parameters.Convert()).Status;
+      });
     }
   }
 }
