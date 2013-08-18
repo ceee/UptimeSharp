@@ -59,9 +59,9 @@
     <Compile Include="Models\Monitor.cs" />
     <Compile Include="Models\Parameters\MonitorParameters.cs" />
     <Compile Include="Models\Parameters\RetrieveParameters.cs" />
-    <Compile Include="Models\Response\Default.cs" />
-    <Compile Include="Models\Response\Get.cs" />
+    <Compile Include="Models\Response\DefaultResponse.cs" />
     <Compile Include="Models\Response\ResponseBase.cs" />
+    <Compile Include="Models\Response\RetrieveResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UptimeClient.cs" />
     <Compile Include="Utilities.cs" />

@@ -16,7 +16,7 @@ namespace UptimeSharp
     /// <returns></returns>
     public List<Monitor> Retrieve(RetrieveParameters parameters)
     {
-      return Get<Get>("getMonitors", parameters.Convert()).Items;
+      return Get<RetrieveResponse>("getMonitors", parameters.Convert()).Items;
     }
 
 
@@ -76,7 +76,7 @@ namespace UptimeSharp
         new Parameter() { Name = "monitorID", Value = ID, Type = ParameterType.GetOrPost }
       };
 
-      return Get<Default>("deleteMonitor", parameters).Status;
+      return Get<DefaultResponse>("deleteMonitor", parameters).Status;
     }
 
 
@@ -101,7 +101,7 @@ namespace UptimeSharp
     /// </returns>
     public bool Add(MonitorParameters parameters)
     {
-      return Get<Default>("newMonitor", parameters.Convert()).Status;
+      return Get<DefaultResponse>("newMonitor", parameters.Convert()).Status;
     }
 
 

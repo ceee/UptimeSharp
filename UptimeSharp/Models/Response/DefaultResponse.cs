@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// Default Response
   /// </summary>
   [DataContract]
-  internal class Default : ResponseBase
+  internal class DefaultResponse : ResponseBase
   {
 
   }

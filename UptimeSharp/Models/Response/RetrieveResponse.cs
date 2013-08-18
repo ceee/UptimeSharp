@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// Monitor Response
   /// </summary>
   [DataContract]
-  internal class Get : ResponseBase
+  internal class RetrieveResponse : ResponseBase
   {
     /// <summary>
     /// Gets or sets the item dictionary.
