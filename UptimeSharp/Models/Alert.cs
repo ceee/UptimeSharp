@@ -24,7 +24,7 @@ namespace UptimeSharp.Models
     /// The name.
     /// </value>
     [DataMember(Name = "type")]
-    public Type Type { get; set; }
+    public AlertType Type { get; set; }
 
     /// <summary>
     /// Gets or sets the alert value.
@@ -41,7 +41,7 @@ namespace UptimeSharp.Models
   /// <summary>
   /// The type of the alert contact notified.
   /// </summary>
-  public enum Type
+  public enum AlertType
   {
     /// <summary>
     /// SMS
@@ -50,7 +50,7 @@ namespace UptimeSharp.Models
     /// <summary>
     /// E-Mail
     /// </summary>
-    EMail = 2,
+    Email = 2,
     /// <summary>
     /// Twitter DM
     /// </summary>

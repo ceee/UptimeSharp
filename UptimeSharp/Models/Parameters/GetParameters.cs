@@ -31,15 +31,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The log bool.
     /// </value>
-    public bool? ShowLogs { get; set; }
-
-    /// <summary>
-    /// Defines if the notified alert contacts of each notification will be returned
-    /// </summary>
-    /// <value>
-    /// The alert contacts bool.
-    /// </value>
-    public bool? ShowAlertContacts { get; set; }
+    public bool? ShowLog { get; set; }
 
     /// <summary>
     /// Defines if the alert contacts set for the monitor to be returned
@@ -47,15 +39,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts bool.
     /// </value>
-    public bool? ShowMonitorAlertContacts { get; set; }
-
-    /// <summary>
-    /// Defines if the user's timezone should be returned
-    /// </summary>
-    /// <value>
-    /// The alert contacts bool.
-    /// </value>
-    public bool? ShowTimezone { get; set; }
+    public bool? ShowAlerts { get; set; }
 
 
     /// <summary>
@@ -74,21 +58,16 @@ namespace UptimeSharp.Models
       {
         parameters.Add(Utilities.CreateParam("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
       }
-      if (ShowLogs.HasValue)
+      if (ShowLog.HasValue)
       {
-        parameters.Add(Utilities.CreateParam("logs", ShowLogs));
+        string showLog = (bool)ShowLog ? "1" : "0";
+        parameters.Add(Utilities.CreateParam("logs", showLog));
+        parameters.Add(Utilities.CreateParam("alertContacts", showLog));
+        parameters.Add(Utilities.CreateParam("showTimezone", showLog));
       }
-      if (ShowAlertContacts.HasValue)
+      if (ShowAlerts.HasValue)
       {
-        parameters.Add(Utilities.CreateParam("alertContacts", ShowAlertContacts));
-      }
-      if (ShowMonitorAlertContacts.HasValue)
-      {
-        parameters.Add(Utilities.CreateParam("showMonitorAlertContacts", ShowMonitorAlertContacts));
-      }
-      if (ShowTimezone.HasValue)
-      {
-        parameters.Add(Utilities.CreateParam("showTimezone", ShowTimezone));
+        parameters.Add(Utilities.CreateParam("showMonitorAlertContacts", (bool)ShowAlerts ? "1" : "0"));
       }
 
       return parameters;

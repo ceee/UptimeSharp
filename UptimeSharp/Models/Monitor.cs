@@ -155,6 +155,24 @@ namespace UptimeSharp.Models
     /// </value>
     [DataMember(Name = "subtype")]
     public Subtype Subtype { get; set; }
+
+    /// <summary>
+    /// Gets or sets the alerts.
+    /// </summary>
+    /// <value>
+    /// The alert contacts.
+    /// </value>
+    [DataMember(Name = "alertcontact")]
+    public List<Alert> Alerts { get; set; }
+
+    /// <summary>
+    /// Gets or sets the log.
+    /// </summary>
+    /// <value>
+    /// The log with dates and associated alert contacts.
+    /// </value>
+    [DataMember(Name = "log")]
+    public List<Log> Log { get; set; }
   }
 
 

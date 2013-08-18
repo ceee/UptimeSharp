@@ -15,7 +15,12 @@ namespace UptimeSharp
     /// <returns></returns>
     public List<Monitor> Get()
     {
-      return Get<Get>("getMonitors").Items;
+      GetParameters parameters = new GetParameters()
+      {
+        ShowAlerts = true
+      };
+
+      return Get<Get>("getMonitors", parameters.Convert()).Items;
     }
 
 
@@ -28,7 +33,8 @@ namespace UptimeSharp
     {
       GetParameters parameters = new GetParameters()
       {
-        Monitors = new int[] { monitorId }
+        Monitors = new int[] { monitorId },
+        ShowAlerts = true
       };
 
       return Get<Get>("getMonitors", parameters.Convert()).Items[0];
@@ -44,7 +50,8 @@ namespace UptimeSharp
     {
       GetParameters parameters = new GetParameters()
       {
-        Monitors = monitors
+        Monitors = monitors,
+        ShowAlerts = true
       };
 
       return Get<Get>("getMonitors", parameters.Convert()).Items;
