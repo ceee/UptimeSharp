@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// <summary>
   /// All parameters which can be passed for monitor retrieval
   /// </summary>
-  public class GetParameters
+  public class RetrieveParameters
   {
     /// <summary>
     /// List of monitor ids

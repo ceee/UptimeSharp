@@ -14,7 +14,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="parameters">parameters, which are mapped to the officials from http://www.uptimerobot.com/api.asp#methods </param>
     /// <returns></returns>
-    public List<Monitor> Get(GetParameters parameters)
+    public List<Monitor> Retrieve(GetParameters parameters)
     {
       return Get<Get>("getMonitors", parameters.Convert()).Items;
     }
@@ -24,9 +24,9 @@ namespace UptimeSharp
     /// Retrieves all monitors from UptimeRobot
     /// </summary>
     /// <returns></returns>
-    public List<Monitor> Get()
+    public List<Monitor> Retrieve()
     {
-      return Get(new GetParameters()
+      return Retrieve(new GetParameters()
       {
         ShowAlerts = true
       });
@@ -38,13 +38,13 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
     /// <returns></returns>
-    public Monitor Get(int monitorId)
+    public Monitor Retrieve(int monitorId)
     {
-      return Get(new GetParameters()
+      return Retrieve(new GetParameters()
       {
         Monitors = new int[] { monitorId },
         ShowAlerts = true
-      });
+      })[0];
     }
 
 
@@ -53,9 +53,9 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitors">monitor list</param>
     /// <returns></returns>
-    public List<Monitor> Get(int[] monitors)
+    public List<Monitor> Retrieve(int[] monitors)
     {
-      return Get(new GetParameters()
+      return Retrieve(new GetParameters()
       {
         Monitors = monitors,
         ShowAlerts = true
@@ -122,7 +122,7 @@ namespace UptimeSharp
         Uri = uri,
         Type = Type.HTTP,
         Alerts = alerts
-      }));
+      });
     }
 
 
