@@ -97,12 +97,22 @@ namespace UptimeSharp.Models
     /// <returns>Parameter list</returns>
     public List<Parameter> Convert()
     {
-      List<Parameter> parameters = new List<Parameter>()
+      List<Parameter> parameters = new List<Parameter>();
+
+      if(!string.IsNullOrEmpty(Name))
       {
-        Utilities.CreateParam("monitorFriendlyName", Name),
-        Utilities.CreateParam("monitorURL", Uri),
-        Utilities.CreateParam("monitorType", (int)Type)
-      };
+        parameters.Add(Utilities.CreateParam("monitorFriendlyName", Name)); 
+      }
+
+      if(!string.IsNullOrEmpty(Uri))
+      {
+        parameters.Add(Utilities.CreateParam("monitorURL", Uri)); 
+      }
+
+      if(Type != null && (int)Type != 0)
+      {
+        parameters.Add(Utilities.CreateParam("monitorType", (int)Type)); 
+      }
 
       // special params for port listener
       if (Type == Type.Port && Subtype != Subtype.Unknown && Port.HasValue)

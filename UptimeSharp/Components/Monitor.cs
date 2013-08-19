@@ -95,7 +95,7 @@ namespace UptimeSharp
     /// <summary>
     /// Creates a monitor.
     /// </summary>
-    /// <param name="monitor">The monitor.</param>
+    /// <param name="parameters">The monitor parameters.</param>
     /// <returns>
     /// success state
     /// </returns>
@@ -173,6 +173,66 @@ namespace UptimeSharp
         KeywordType = keywordType,
         Alerts = alerts
       });
+    }
+
+
+    /// <summary>
+    /// Edits a monitor.
+    /// </summary>
+    /// <param name="monitorID">The monitor unique identifier.</param>
+    /// <param name="parameters">The monitor parameters.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Modify(int monitorID, MonitorParameters parameters)
+    {
+      List<Parameter> paramList = parameters.Convert();
+      paramList.Add(Utilities.CreateParam("monitorID", monitorID));
+
+      return Get<DefaultResponse>("editorMonitor", paramList).Status;
+    }
+
+
+    /// <summary>
+    /// Edits a monitor.
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <returns>
+    /// success state
+    /// </returns>
+    public bool Modify(Monitor monitor)
+    {
+      List<int> alerts = null;
+
+      if (monitor.Alerts != null)
+      {
+        monitor.Alerts.ForEach(item => alerts.Add((int)item.ID));
+      }
+
+      MonitorParameters parameters = new MonitorParameters()
+      {
+        Name = monitor.Name,
+        Uri = monitor.UriString != null ? monitor.UriString : null,
+        Port = monitor.Port,
+        HTTPPassword = monitor.HTTPPassword,
+        HTTPUsername = monitor.HTTPUsername,
+        KeywordType = monitor.KeywordType,
+        KeywordValue = monitor.KeywordValue,
+        Subtype = monitor.Subtype,
+        Alerts = alerts != null ? alerts.ToArray() : null
+      };
+
+      List<Parameter> paramList = parameters.Convert();
+
+      // fix bad behaviour in API if no subtype is submitted
+      if(parameters.Subtype == Subtype.Unknown)
+      {
+        paramList.Add(Utilities.CreateParam("monitorSubType", 0));
+      }
+
+      paramList.Add(Utilities.CreateParam("monitorID", monitor.ID));
+
+      return Get<DefaultResponse>("editMonitor", paramList).Status;
     }
   }
 }
