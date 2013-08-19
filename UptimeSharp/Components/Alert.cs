@@ -40,6 +40,24 @@ namespace UptimeSharp
 
 
     /// <summary>
+    /// Adds an alert.
+    /// mobile/SMS alert contacts are not supported yet, see: http://www.uptimerobot.com/api.asp#methods
+    /// </summary>
+    /// <param name="alert">The alert.</param>
+    /// <returns></returns>
+    public bool AddAlert(Alert alert)
+    {
+      List<Parameter> parameters = new List<Parameter>()
+      {
+        Utilities.CreateParam("alertContactType", (int)alert.Type),
+        Utilities.CreateParam("alertContactValue", alert.Value)
+      };
+
+      return Get<DefaultResponse>("newAlertContact", parameters).Status;
+    }
+
+
+    /// <summary>
     /// Removes an alert.
     /// </summary>
     /// <param name="type">The type.</param>
