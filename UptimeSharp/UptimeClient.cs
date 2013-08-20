@@ -117,7 +117,12 @@ namespace UptimeSharp
       if (parameters != null)
       {
         parameters.ForEach(
-          param => request.AddParameter(param)
+          param => {
+            if(param.Value != null)
+            {
+              request.AddParameter(param);
+            }
+          }
         );
       }
 
@@ -126,37 +131,31 @@ namespace UptimeSharp
     }
 
 
-    protected string Get(string resource, List<Parameter> parameters = null)
+    /// <summary>
+    /// Fetches a typed resource
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="resource">Requested resource</param>
+    /// <param name="parameter">The parameters.</param>
+    /// <returns></returns>
+    protected T Get<T>(string resource, params Parameter[] parameters) where T : class, new()
     {
-      var request = new RestRequest(resource, Method.GET);
+      List<Parameter> parameterList = new List<Parameter>();
+      parameterList.AddRange(parameters);
 
-      // enumeration for params
-      if (parameters != null)
-      {
-        parameters.ForEach(
-          param => request.AddParameter(param)
-        );
-      }
-
-      // do the request
-      return Request(request);
+      return Get<T>(resource, parameterList);
     }
 
 
-    ///// <summary>
-    ///// Puts an action
-    ///// </summary>
-    ///// <param name="actionParameter">The action parameter.</param>
-    ///// <returns></returns>
-    //protected bool PutSendAction(ActionParameter actionParameter)
-    //{
-    //  ModifyParameters parameters = new ModifyParameters()
-    //  {
-    //    Actions = new List<ActionParameter>() { actionParameter }
-    //  };
-
-    //  return Get<Modify>("send", parameters.Convert(), true).Status;
-    //}
+    public static Parameter Parameter(string name, object value)
+    {
+      return new Parameter()
+      {
+        Name = name,
+        Value = value,
+        Type = ParameterType.GetOrPost
+      };
+    }
 
 
     ///// <summary>

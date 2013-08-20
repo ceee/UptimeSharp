@@ -14,9 +14,11 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="IDs">Retrieve specified alert contacts by supplying IDs for them.</param>
     /// <returns></returns>
-    public List<Alert> RetrieveAlerts(int[] alertIDs = null)
+    public List<Alert> RetrieveAlerts(params int[] alertIDs)
     {
-      return Get<AlertResponse>("getAlertContacts").Items;
+      Parameter alerts = Parameter("alertcontacts", alertIDs.Length > 0 ? string.Join("-", alertIDs) : null);
+
+      return Get<AlertResponse>("getAlertContacts", alerts).Items;
     }
 
 
@@ -29,13 +31,15 @@ namespace UptimeSharp
     /// <returns></returns>
     public bool AddAlert(AlertType type, string value)
     {
-      List<Parameter> parameters = new List<Parameter>()
+      if (type == AlertType.SMS)
       {
-        Utilities.CreateParam("alertContactType", (int)type),
-        Utilities.CreateParam("alertContactValue", value)
-      };
+        throw new APIException("AlertType.SMS is not supported by the UptimeRobot API");
+      }
 
-      return Get<DefaultResponse>("newAlertContact", parameters).Status;
+      return Get<DefaultResponse>("newAlertContact", 
+        Parameter("alertContactType", (int)type), 
+        Parameter("alertContactValue", value)
+      ).Status;
     }
 
 
@@ -47,13 +51,7 @@ namespace UptimeSharp
     /// <returns></returns>
     public bool AddAlert(Alert alert)
     {
-      List<Parameter> parameters = new List<Parameter>()
-      {
-        Utilities.CreateParam("alertContactType", (int)alert.Type),
-        Utilities.CreateParam("alertContactValue", alert.Value)
-      };
-
-      return Get<DefaultResponse>("newAlertContact", parameters).Status;
+      return AddAlert(alert.Type, alert.Value);
     }
 
 
@@ -65,12 +63,7 @@ namespace UptimeSharp
     /// <returns></returns>
     public bool DeleteAlert(int alertID)
     {
-      List<Parameter> parameters = new List<Parameter>()
-      {
-        Utilities.CreateParam("alertContactID", alertID)
-      };
-
-      return Get<DefaultResponse>("deleteAlertContact", parameters).Status;
+      return Get<DefaultResponse>("deleteAlertContact", Parameter("alertContactID", alertID)).Status;
     }
 
 

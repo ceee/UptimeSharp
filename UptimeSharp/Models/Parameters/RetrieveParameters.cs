@@ -50,24 +50,16 @@ namespace UptimeSharp.Models
     {
       List<Parameter> parameters = new List<Parameter>();
 
-      if (Monitors != null)
-      {
-        parameters.Add(Utilities.CreateParam("monitors", String.Join("-", Monitors)));
-      }
-      if (CustomUptimeRatio != null)
-      {
-        parameters.Add(Utilities.CreateParam("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
-      }
+      parameters.Add(UptimeClient.Parameter("monitors", String.Join("-", Monitors)));
+      parameters.Add(UptimeClient.Parameter("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
+      parameters.Add(UptimeClient.Parameter("showMonitorAlertContacts", (bool)ShowAlerts ? "1" : "0"));
+
       if (ShowLog.HasValue)
       {
         string showLog = (bool)ShowLog ? "1" : "0";
-        parameters.Add(Utilities.CreateParam("logs", showLog));
-        parameters.Add(Utilities.CreateParam("alertContacts", showLog));
-        parameters.Add(Utilities.CreateParam("showTimezone", showLog));
-      }
-      if (ShowAlerts.HasValue)
-      {
-        parameters.Add(Utilities.CreateParam("showMonitorAlertContacts", (bool)ShowAlerts ? "1" : "0"));
+        parameters.Add(UptimeClient.Parameter("logs", showLog));
+        parameters.Add(UptimeClient.Parameter("alertContacts", showLog));
+        parameters.Add(UptimeClient.Parameter("showTimezone", showLog));
       }
 
       return parameters;

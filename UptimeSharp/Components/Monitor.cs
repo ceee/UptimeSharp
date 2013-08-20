@@ -187,7 +187,7 @@ namespace UptimeSharp
     public bool Modify(int monitorID, MonitorParameters parameters)
     {
       List<Parameter> paramList = parameters.Convert();
-      paramList.Add(Utilities.CreateParam("monitorID", monitorID));
+      paramList.Add(Parameter("monitorID", monitorID));
 
       return Get<DefaultResponse>("editorMonitor", paramList).Status;
     }
@@ -227,10 +227,10 @@ namespace UptimeSharp
       // fix bad behaviour in API if no subtype is submitted
       if(parameters.Subtype == Subtype.Unknown)
       {
-        paramList.Add(Utilities.CreateParam("monitorSubType", 0));
+        paramList.Add(Parameter("monitorSubType", 0));
       }
 
-      paramList.Add(Utilities.CreateParam("monitorID", monitor.ID));
+      paramList.Add(Parameter("monitorID", monitor.ID));
 
       return Get<DefaultResponse>("editMonitor", paramList).Status;
     }

@@ -99,53 +99,40 @@ namespace UptimeSharp.Models
     {
       List<Parameter> parameters = new List<Parameter>();
 
-      if(!string.IsNullOrEmpty(Name))
-      {
-        parameters.Add(Utilities.CreateParam("monitorFriendlyName", Name)); 
-      }
-
-      if(!string.IsNullOrEmpty(Uri))
-      {
-        parameters.Add(Utilities.CreateParam("monitorURL", Uri)); 
-      }
+      parameters.Add(UptimeClient.Parameter("monitorFriendlyName", Name)); 
+      parameters.Add(UptimeClient.Parameter("monitorURL", Uri));
 
       if(Type != null && (int)Type != 0)
       {
-        parameters.Add(Utilities.CreateParam("monitorType", (int)Type)); 
+        parameters.Add(UptimeClient.Parameter("monitorType", (int)Type)); 
       }
 
       // special params for port listener
       if (Type == Type.Port && Subtype != Subtype.Unknown && Port.HasValue)
       {
-        parameters.Add(Utilities.CreateParam("monitorSubType", (int)Subtype));
+        parameters.Add(UptimeClient.Parameter("monitorSubType", (int)Subtype));
 
         if (Subtype == Subtype.Custom)
         {
-          parameters.Add(Utilities.CreateParam("monitorPort", Port));
+          parameters.Add(UptimeClient.Parameter("monitorPort", Port));
         }
       }
 
       // keyword listener
       if (Type == Type.Keyword && !string.IsNullOrEmpty(KeywordValue))
       {
-        parameters.Add(Utilities.CreateParam("monitorKeywordType", (int)KeywordType));
-        parameters.Add(Utilities.CreateParam("monitorKeywordValue", KeywordValue));
+        parameters.Add(UptimeClient.Parameter("monitorKeywordType", (int)KeywordType));
+        parameters.Add(UptimeClient.Parameter("monitorKeywordValue", KeywordValue));
       }
 
       // HTTP basic auth credentials
-      if (!string.IsNullOrEmpty(HTTPUsername))
-      {
-        parameters.Add(Utilities.CreateParam("monitorHTTPUsername", HTTPUsername));
-      }
-      if (!string.IsNullOrEmpty(HTTPPassword))
-      {
-        parameters.Add(Utilities.CreateParam("monitorHTTPPassword", HTTPPassword));
-      }
+      parameters.Add(UptimeClient.Parameter("monitorHTTPUsername", HTTPUsername));
+      parameters.Add(UptimeClient.Parameter("monitorHTTPPassword", HTTPPassword));
 
       // alert notifications
       if (Alerts != null && Alerts.Length > 0)
       {
-        parameters.Add(Utilities.CreateParam("monitorAlertContacts", string.Join("-", Alerts)));
+        parameters.Add(UptimeClient.Parameter("monitorAlertContacts", string.Join("-", Alerts)));
       }
 
       return parameters;
