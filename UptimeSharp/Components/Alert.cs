@@ -1,4 +1,5 @@
 ﻿using RestSharp;
+using System;
 using System.Collections.Generic;
 using UptimeSharp.Models;
 
@@ -12,11 +13,11 @@ namespace UptimeSharp
     /// <summary>
     /// Retrieves alerts from UptimeRobot
     /// </summary>
-    /// <param name="IDs">Retrieve specified alert contacts by supplying IDs for them.</param>
+    /// <param name="alertIDs">Retrieve specified alert contacts by supplying IDs for them.</param>
     /// <returns></returns>
-    public List<Alert> RetrieveAlerts(params int[] alertIDs)
+    public List<Alert> RetrieveAlerts(int[] alertIDs = null)
     {
-      Parameter alerts = Parameter("alertcontacts", alertIDs.Length > 0 ? string.Join("-", alertIDs) : null);
+      Parameter alerts = Parameter("alertcontacts", alertIDs != null ? string.Join("-", alertIDs) : null);
 
       return Get<AlertResponse>("getAlertContacts", alerts).Items;
     }

@@ -147,6 +147,12 @@ namespace UptimeSharp
     }
 
 
+    /// <summary>
+    /// Creates a RestSharp.Parameter instance.
+    /// </summary>
+    /// <param name="name">The name.</param>
+    /// <param name="value">The value.</param>
+    /// <returns></returns>
     public static Parameter Parameter(string name, object value)
     {
       return new Parameter()
