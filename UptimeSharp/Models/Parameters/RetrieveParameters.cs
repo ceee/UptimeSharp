@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// <summary>
   /// All parameters which can be passed for monitor retrieval
   /// </summary>
-  public class RetrieveParameters
+  internal class RetrieveParameters
   {
     /// <summary>
     /// List of monitor ids
@@ -50,8 +50,15 @@ namespace UptimeSharp.Models
     {
       List<Parameter> parameters = new List<Parameter>();
 
-      parameters.Add(UptimeClient.Parameter("monitors", String.Join("-", Monitors)));
-      parameters.Add(UptimeClient.Parameter("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
+      if (Monitors != null && Monitors.Length > 0)
+      {
+        parameters.Add(UptimeClient.Parameter("monitors", String.Join("-", Monitors)));
+      }
+      if (CustomUptimeRatio != null && CustomUptimeRatio.Length > 0)
+      {
+        parameters.Add(UptimeClient.Parameter("customUptimeRatio", String.Join("-", CustomUptimeRatio)));
+      }
+
       parameters.Add(UptimeClient.Parameter("showMonitorAlertContacts", (bool)ShowAlerts ? "1" : "0"));
 
       if (ShowLog.HasValue)

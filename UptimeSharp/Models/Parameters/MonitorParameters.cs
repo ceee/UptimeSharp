@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// <summary>
   /// All parameters which can be passed for monitor modifications
   /// </summary>
-  public class MonitorParameters
+  internal class MonitorParameters
   {
     /// <summary>
     /// Gets or sets the name.
@@ -102,7 +102,7 @@ namespace UptimeSharp.Models
       parameters.Add(UptimeClient.Parameter("monitorFriendlyName", Name)); 
       parameters.Add(UptimeClient.Parameter("monitorURL", Uri));
 
-      if(Type != null && (int)Type != 0)
+      if ((int)Type != 0)
       {
         parameters.Add(UptimeClient.Parameter("monitorType", (int)Type)); 
       }
