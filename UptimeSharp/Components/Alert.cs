@@ -59,8 +59,7 @@ namespace UptimeSharp
     /// <summary>
     /// Removes an alert.
     /// </summary>
-    /// <param name="type">The type.</param>
-    /// <param name="value">The value.</param>
+    /// <param name="alertID">The alert ID.</param>
     /// <returns></returns>
     public bool DeleteAlert(int alertID)
     {

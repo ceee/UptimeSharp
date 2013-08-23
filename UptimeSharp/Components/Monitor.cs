@@ -14,6 +14,9 @@ namespace UptimeSharp
     /// Retrieves specified monitors from UptimeRobot
     /// </summary>
     /// <param name="monitors">monitor list</param>
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="showLog">if set to <c>true</c> [show log].</param>
+    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
     /// <returns></returns>
     public List<Monitor> Retrieve(int[] monitors = null, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
     {
@@ -43,7 +46,7 @@ namespace UptimeSharp
     /// <summary>
     /// Deletes a monitor
     /// </summary>
-    /// <param name="monitorId">The unique identifier for the monitor.</param>
+    /// <param name="monitorId">a specific monitor ID</param>
     /// <returns>success state</returns>
     public bool Delete(int monitorId)
     {
@@ -73,6 +76,8 @@ namespace UptimeSharp
     /// <param name="keywordValue">The keyword value.</param>
     /// <param name="keywordType">Type of the keyword.</param>
     /// <param name="alerts">A ID list of existing alerts to notify.</param>
+    /// <param name="HTTPPassword">The HTTP password.</param>
+    /// <param name="HTTPUsername">The HTTP username.</param>
     /// <returns>
     /// success state
     /// </returns>
