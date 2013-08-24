@@ -1,6 +1,7 @@
 ﻿using RestSharp;
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace UptimeSharp
 {
@@ -67,21 +68,6 @@ namespace UptimeSharp
 
 
     /// <summary>
-    /// Makes a HTTP REST request to the API
-    /// </summary>
-    /// <param name="request">The request.</param>
-    /// <returns></returns>
-    protected string Request(RestRequest request)
-    {
-      IRestResponse response = _restClient.Execute(request);
-
-      LastRequestData = response;
-      //ValidateResponse(response);
-
-      return response.Content;
-    }
-
-    /// <summary>
     /// Makes a typed HTTP REST request to the API
     /// </summary>
     /// <typeparam name="T"></typeparam>
@@ -95,7 +81,7 @@ namespace UptimeSharp
       IRestResponse<T> response = _restClient.Execute<T>(request);
 
       LastRequestData = response;
-      //ValidateResponse(response);
+      ValidateResponse(response);
 
       return response.Data;
     }
@@ -164,52 +150,51 @@ namespace UptimeSharp
     }
 
 
-    ///// <summary>
-    ///// Validates the response.
-    ///// </summary>
-    ///// <param name="response">The response.</param>
-    ///// <returns></returns>
-    ///// <exception cref="APIException">
-    ///// Error retrieving response
-    ///// </exception>
-    //protected void ValidateResponse(IRestResponse response)
-    //{
-    //  if (response.StatusCode != HttpStatusCode.OK)
-    //  {
-    //    // get pocket error headers
-    //    Parameter error = response.Headers[1];
-    //    Parameter errorCode = response.Headers[2];
+    /// <summary>
+    /// Validates the response.
+    /// </summary>
+    /// <param name="response">The response.</param>
+    /// <returns></returns>
+    /// <exception cref="APIException">
+    /// Error retrieving response
+    /// </exception>
+    protected void ValidateResponse(IRestResponse response)
+    {
+      if (response.StatusCode != HttpStatusCode.OK)
+      {
+        //Parameter error = response.Headers[1];
+        //Parameter errorCode = response.Headers[2];
 
-    //    string exceptionString = response.Content;
+        //string exceptionString = response.Content;
 
-    //    bool isPocketError = error.Name == "X-Error";
+        //bool isPocketError = error.Name == "X-Error";
 
-    //    // update message to include pocket response data
-    //    if (isPocketError)
-    //    {
-    //      exceptionString = exceptionString + "\nPocketResponse: (" + errorCode.Value + ") " + error.Value;
-    //    }
+        //// update message to include pocket response data
+        //if (isPocketError)
+        //{
+        //  exceptionString = exceptionString + "\nPocketResponse: (" + errorCode.Value + ") " + error.Value;
+        //}
 
-    //    // create exception
-    //    APIException exception = new APIException(exceptionString, response.ErrorException);
+        // create exception
+        APIException exception = new APIException("Request Exception", response.ErrorException);
 
-    //    if (isPocketError)
-    //    {
-    //      // add custom pocket fields
-    //      exception.PocketError = error.Value.ToString();
-    //      exception.PocketErrorCode = Convert.ToInt32(errorCode.Value);
+        //if (isPocketError)
+        //{
+        //  // add custom pocket fields
+        //  exception.PocketError = error.Value.ToString();
+        //  exception.PocketErrorCode = Convert.ToInt32(errorCode.Value);
 
-    //      // add to generic exception data
-    //      exception.Data.Add(error.Name, error.Value);
-    //      exception.Data.Add(errorCode.Name, errorCode.Value);
-    //    }
+        //  // add to generic exception data
+        //  exception.Data.Add(error.Name, error.Value);
+        //  exception.Data.Add(errorCode.Name, errorCode.Value);
+        //}
 
-    //    throw exception;
-    //  }
-    //  else if (response.ErrorException != null)
-    //  {
-    //    throw new APIException("Error retrieving response", response.ErrorException);
-    //  }
-    //}
+        throw exception;
+      }
+      else if (response.ErrorException != null)
+      {
+        throw new APIException("Error retrieving response", response.ErrorException);
+      }
+    }
   }
 }
