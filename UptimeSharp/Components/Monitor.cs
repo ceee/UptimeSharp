@@ -20,11 +20,11 @@ namespace UptimeSharp
     /// <returns>
     /// Monitor List
     /// </returns>
-    public List<Monitor> GetMonitors(int[] monitors = null, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
+    public List<Monitor> GetMonitors(int[] monitorIDs = null, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
     {
       RetrieveParameters parameters = new RetrieveParameters()
       {
-        Monitors = monitors,
+        Monitors = monitorIDs,
         CustomUptimeRatio = customUptimeRatio,
         ShowAlerts = showAlerts,
         ShowLog = showLog
@@ -84,19 +84,19 @@ namespace UptimeSharp
     /// <param name="name">The name of the new monitor.</param>
     /// <param name="uri">The URI or IP to watch.</param>
     /// <param name="type">The type of the monitor.</param>
-    /// <param name="subtype">The subtype of the port.</param>
+    /// <param name="subtype">The subtype of the monitor (if port).</param>
     /// <param name="port">The port (only for Subtype.Custom).</param>
     /// <param name="keywordValue">The keyword value.</param>
     /// <param name="keywordType">Type of the keyword.</param>
-    /// <param name="alerts">A ID list of existing alerts to notify.</param>
-    /// <param name="HTTPPassword">The HTTP password.</param>
+    /// <param name="alerts">An ID list of existing alerts to notify.</param>
     /// <param name="HTTPUsername">The HTTP username.</param>
+    /// <param name="HTTPPassword">The HTTP password.</param>
     /// <returns>
     /// Success state
     /// </returns>
     public bool AddMonitor(string name, string uri, Type type = Type.HTTP, Subtype subtype = Subtype.Unknown,
                            int? port = null, string keywordValue = null, KeywordType keywordType = KeywordType.Unknown,
-                           int[] alerts = null, string HTTPPassword = null, string HTTPUsername = null)
+                           int[] alerts = null, string HTTPUsername = null, string HTTPPassword = null)
     {
 
       MonitorParameters parameters = new MonitorParameters()
