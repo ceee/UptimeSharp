@@ -50,7 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UptimeSharpTest.cs" />
+    <Compile Include="AlertsTest.cs" />
+    <Compile Include="ClientTest.cs" />
+    <Compile Include="MonitorsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
