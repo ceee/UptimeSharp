@@ -82,7 +82,7 @@ List<Monitor> items = _client.GetMonitors(
 	monitorIDs: new int[]{ 12891, 98711 },
 	customUptimeRatio: new float[] { 7, 30, 45 },
 	showLog: true,
-	showAlerts = true
+	showAlerts: true
 );
 ```
 
@@ -115,7 +115,7 @@ bool AddMonitor(
 )
 ```
 
-Example - Watch the a SMTP Server:
+Example - Watch an SMTP Server:
 
 ```csharp
 bool isSuccess = _client.AddMonitor(

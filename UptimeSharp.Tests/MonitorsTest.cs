@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
+using System;
 using System.Collections.Generic;
 using UptimeSharp.Models;
 
 namespace UptimeSharp.Tests
 {
-  [TestFixture]
-  public class MonitorsTest
+  public class MonitorsTest : IDisposable
   {
     UptimeClient client;
 
@@ -14,17 +14,17 @@ namespace UptimeSharp.Tests
     string APIKey = "u97240-a24c634b3b84f1af602628e8";
 
 
-    [SetUp]
-    public void Setup()
+    // setup
+    public MonitorsTest()
     {
       //client = new UptimeClient(APIKey);
     }
 
 
-    [TearDown]
-    public void Teardown()
+    // teardown
+    public void Dispose()
     {
-      //List<Alert> alerts = client.RetrieveAlerts();
+      //List<Alert> alerts = client.GetAlerts();
       //alerts.ForEach(alert => client.DeleteAlert(alert));
     }
 

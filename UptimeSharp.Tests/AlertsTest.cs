@@ -1,11 +1,11 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 using System.Collections.Generic;
 using UptimeSharp.Models;
+using System;
 
 namespace UptimeSharp.Tests
 {
-  [TestFixture]
-  public class AlertsTest
+  public class AlertsTest : IDisposable
   {
     UptimeClient client;
 
@@ -14,76 +14,74 @@ namespace UptimeSharp.Tests
     string APIKey = "u97240-a24c634b3b84f1af602628e8";
 
 
-    [SetUp]
-    public void Setup()
+    // setup
+    public AlertsTest()
     {
       client = new UptimeClient(APIKey);
     }
 
 
-    [TearDown]
-    public void Teardown()
+    // teardown
+    public void Dispose()
     {
       List<Alert> alerts = client.GetAlerts();
       alerts.ForEach(alert => client.DeleteAlert(alert));
     }
 
 
-    [Test]
-    [ExpectedException(typeof(APIException))]
+    [Fact]
     public void AddInvalidAlertWithTypeSms()
     {
-      client.AddAlert(Models.AlertType.SMS, "+436601289172");
+      Assert.Throws<APIException>(() =>
+      {
+        client.AddAlert(Models.AlertType.SMS, "+436601289172");
+      });
     }
 
 
-    [Test]
-    [ExpectedException(typeof(APIException))]
+    [Fact]
     public void AddInvalidAlertWithTypeTwitter()
     {
-      client.AddAlert(Models.AlertType.Twitter, "artistandsocial");
+      Assert.Throws<APIException>(() =>
+      {
+        client.AddAlert(Models.AlertType.Twitter, "artistandsocial");
+      });
     }
 
 
-    [Test]
+    [Fact]
     public void AddAndRemoveAlerts()
     {
       string email = "example@ceecore.com";
 
-      Assert.IsTrue(client.AddAlert(AlertType.Email, email), "Response should be true for adding a new alert");
+      Assert.True(client.AddAlert(AlertType.Email, email));
 
       Alert origin = GetOriginAlert(email);
 
-      Assert.AreEqual(email, origin.Value, "Retrieved alert should have the value (example@ceecore.com) which was submitted");
-      Assert.AreEqual(AlertType.Email, origin.Type, "Retrieved alert should have the type (email) which was submitted");
+      Assert.Equal(email, origin.Value);
+      Assert.Equal(AlertType.Email, origin.Type);
 
       client.DeleteAlert(origin);
 
       origin = GetOriginAlert(email);
 
-      Assert.IsNull(origin, "Alert should have been deleted");
+      Assert.Null(origin);
     }
 
 
-    [Test]
+    [Fact]
     public void AddAndRetrieveSpecificAlerts()
     {
-      Assert.IsTrue(
-        client.AddAlert(AlertType.Email, "example1@ceecore.com"),
-        "Response should be true for adding a new alert (email 1)"
-      );
-      Assert.IsTrue(
-        client.AddAlert(AlertType.Boxcar, "example@ceecore.com"),
-        "Response should be true for adding a new alert (bocar 4)"
-      );
+      Assert.True(client.AddAlert(AlertType.Email, "example1@ceecore.com"));
+      Assert.True(client.AddAlert(AlertType.Boxcar, "example@ceecore.com"));
 
       List<Alert> alerts = client.GetAlerts();
 
-      Assert.GreaterOrEqual(alerts.ToArray().Length, 2, "Alerts length should be at least 2", alerts);
+      Assert.InRange(alerts.ToArray().Length, 2, 100);
 
       List<Alert> specificAlerts = client.GetAlerts(new int[] { alerts[0].ID, alerts[1].ID });
 
-      Assert.AreEqual(2, specificAlerts.ToArray().Length, "Specific alerts length should be 2", specificAlerts);
+      Assert.Equal(2, specificAlerts.ToArray().Length);
     }
 
 

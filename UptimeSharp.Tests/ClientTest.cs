@@ -1,10 +1,9 @@
-﻿using NUnit.Framework;
+﻿using Xunit;
 using System.Collections.Generic;
 using UptimeSharp.Models;
 
 namespace UptimeSharp.Tests
 {
-  [TestFixture]
   public class ClientTest
   {
     UptimeClient client;
@@ -14,19 +13,19 @@ namespace UptimeSharp.Tests
     string APIKey = "u97240-a24c634b3b84f1af602628e8";
 
 
-    [SetUp]
-    public void Setup()
+    // setup
+    public ClientTest()
     {
       client = new UptimeClient(APIKey);
     }
 
 
-    [Test]
+    [Fact]
     public void Initialize()
     {
-      Assert.IsNull(client.LastRequestData, "LastRequestData should be null on init");
+      Assert.Null(client.LastRequestData);
 
-      Assert.AreEqual(APIKey, client.ApiKey, "API Key should be correctly assigned");
+      Assert.Equal(APIKey, client.ApiKey);
     }
   }
 }
