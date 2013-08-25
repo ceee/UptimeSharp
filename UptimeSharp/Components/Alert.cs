@@ -32,9 +32,9 @@ namespace UptimeSharp
     /// <returns></returns>
     public bool AddAlert(AlertType type, string value)
     {
-      if (type == AlertType.SMS)
+      if (type == AlertType.SMS || type == AlertType.Twitter)
       {
-        throw new APIException("AlertType.SMS is not supported by the UptimeRobot API");
+        throw new APIException("AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API");
       }
 
       return Get<DefaultResponse>("newAlertContact", 

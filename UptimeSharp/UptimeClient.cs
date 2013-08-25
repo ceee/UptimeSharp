@@ -21,11 +21,6 @@ namespace UptimeSharp
     protected static Uri baseUri = new Uri("http://api.uptimerobot.com/");
 
     /// <summary>
-    /// callback URL for API calls
-    /// </summary>
-    protected string CallbackUri { get; set; }
-
-    /// <summary>
     /// Accessor for the UptimeRebot API key
     /// see: http://http://www.uptimerobot.com/api.asp
     /// </summary>
