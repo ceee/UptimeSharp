@@ -15,11 +15,24 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="alertIDs">Retrieve specified alert contacts by supplying IDs for them.</param>
     /// <returns></returns>
-    public List<Alert> RetrieveAlerts(int[] alertIDs = null)
+    public List<Alert> GetAlerts(int[] alertIDs = null)
     {
       Parameter alerts = Parameter("alertcontacts", alertIDs != null ? string.Join("-", alertIDs) : null);
 
       return Get<AlertResponse>("getAlertContacts", alerts).Items;
+    }
+
+
+    /// <summary>
+    /// Retrieves an alert from UptimeRobot
+    /// </summary>
+    /// <param name="alertID">The alertID.</param>
+    /// <returns></returns>
+    public Alert GetAlert(int alertID)
+    {
+      List<Alert> alerts = GetAlerts(new int[] { alertID });
+
+      return alerts.ToArray().Length > 0 ? alerts[0] : null;
     }
 
 

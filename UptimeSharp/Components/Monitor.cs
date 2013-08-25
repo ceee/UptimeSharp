@@ -17,8 +17,10 @@ namespace UptimeSharp
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="showLog">if set to <c>true</c> [show log].</param>
     /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
-    /// <returns></returns>
-    public List<Monitor> Retrieve(int[] monitors = null, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
+    /// <returns>
+    /// Monitor List
+    /// </returns>
+    public List<Monitor> GetMonitors(int[] monitors = null, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
     {
       RetrieveParameters parameters = new RetrieveParameters()
       {
@@ -36,10 +38,17 @@ namespace UptimeSharp
     /// Retrieves a monitor from UptimeRobot
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
-    /// <returns></returns>
-    public Monitor Retrieve(int monitorId)
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="showLog">if set to <c>true</c> [show log].</param>
+    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
+    /// <returns>
+    /// The Monitor
+    /// </returns>
+    public Monitor GetMonitor(int monitorId, float[] customUptimeRatio = null, bool showLog = false, bool showAlerts = true)
     {
-      return Retrieve(new int[] { monitorId })[0];
+      List<Monitor> monitors = GetMonitors(new int[] { monitorId }, customUptimeRatio, showLog, showAlerts);
+
+      return monitors.ToArray().Length > 0 ? monitors[0] : null;
     }
 
 
@@ -47,8 +56,10 @@ namespace UptimeSharp
     /// Deletes a monitor
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
-    /// <returns>success state</returns>
-    public bool Delete(int monitorId)
+    /// <returns>
+    /// Success state
+    /// </returns>
+    public bool DeleteMonitor(int monitorId)
     {
       return Get<DefaultResponse>("deleteMonitor", Parameter("monitorID", monitorId)).Status;
     }
@@ -58,10 +69,12 @@ namespace UptimeSharp
     /// Deletes a monitor
     /// </summary>
     /// <param name="monitor">The monitor.</param>
-    /// <returns>success state</returns>
-    public bool Delete(Monitor monitor)
+    /// <returns>
+    /// Success state
+    /// </returns>
+    public bool DeleteMonitor(Monitor monitor)
     {
-      return Delete(monitor.ID);
+      return DeleteMonitor(monitor.ID);
     }
 
 
@@ -79,11 +92,11 @@ namespace UptimeSharp
     /// <param name="HTTPPassword">The HTTP password.</param>
     /// <param name="HTTPUsername">The HTTP username.</param>
     /// <returns>
-    /// success state
+    /// Success state
     /// </returns>
-    public bool Add(string name, string uri, Type type = Type.HTTP, Subtype subtype = Subtype.Unknown,
-                    int? port = null, string keywordValue = null, KeywordType keywordType = KeywordType.Unknown,
-                    int[] alerts = null, string HTTPPassword = null, string HTTPUsername = null)
+    public bool AddMonitor(string name, string uri, Type type = Type.HTTP, Subtype subtype = Subtype.Unknown,
+                           int? port = null, string keywordValue = null, KeywordType keywordType = KeywordType.Unknown,
+                           int[] alerts = null, string HTTPPassword = null, string HTTPUsername = null)
     {
 
       MonitorParameters parameters = new MonitorParameters()
@@ -109,9 +122,9 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitor">The monitor.</param>
     /// <returns>
-    /// success state
+    /// Success state
     /// </returns>
-    public bool Modify(Monitor monitor)
+    public bool ModifyMonitor(Monitor monitor)
     {
       List<int> alerts = null;
 

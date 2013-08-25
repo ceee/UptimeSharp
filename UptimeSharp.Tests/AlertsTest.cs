@@ -24,7 +24,7 @@ namespace UptimeSharp.Tests
     [TearDown]
     public void Teardown()
     {
-      List<Alert> alerts = client.RetrieveAlerts();
+      List<Alert> alerts = client.GetAlerts();
       alerts.ForEach(alert => client.DeleteAlert(alert));
     }
 
@@ -77,11 +77,11 @@ namespace UptimeSharp.Tests
         "Response should be true for adding a new alert (bocar 4)"
       );
 
-      List<Alert> alerts = client.RetrieveAlerts();
+      List<Alert> alerts = client.GetAlerts();
 
       Assert.GreaterOrEqual(alerts.ToArray().Length, 2, "Alerts length should be at least 2", alerts);
 
-      List<Alert> specificAlerts = client.RetrieveAlerts(new int[] { alerts[0].ID, alerts[1].ID });
+      List<Alert> specificAlerts = client.GetAlerts(new int[] { alerts[0].ID, alerts[1].ID });
 
       Assert.AreEqual(2, specificAlerts.ToArray().Length, "Specific alerts length should be 2", specificAlerts);
     }
@@ -89,7 +89,7 @@ namespace UptimeSharp.Tests
 
     private Alert GetOriginAlert(string value)
     {
-      List<Alert> alerts = client.RetrieveAlerts();
+      List<Alert> alerts = client.GetAlerts();
       Alert origin = null;
 
       alerts.ForEach(alert =>
