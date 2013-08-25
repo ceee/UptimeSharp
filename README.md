@@ -80,11 +80,8 @@ Provide additional params for more data:
 ```csharp
 List<Monitor> items = _client.GetMonitors(
 	monitorIDs: new int[]{ 12891, 98711 },
-	// the number of days to calculate the uptime ratio(s) for
 	customUptimeRatio: new float[] { 7, 30, 45 },
-	// include log, if true (default: false)
 	showLog: true,
-	// include alerts, if true (default: true)
 	showAlerts = true
 );
 ```
