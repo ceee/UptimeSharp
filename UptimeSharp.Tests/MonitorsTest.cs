@@ -17,41 +17,122 @@ namespace UptimeSharp.Tests
     // setup
     public MonitorsTest()
     {
-      //client = new UptimeClient(APIKey);
+      client = new UptimeClient(APIKey);
     }
 
 
     // teardown
     public void Dispose()
     {
-      //List<Alert> alerts = client.GetAlerts();
-      //alerts.ForEach(alert => client.DeleteAlert(alert));
+      List<Monitor> monitors = client.GetMonitors();
+      monitors.ForEach(monitor => client.DeleteMonitor(monitor));
     }
 
 
-    //bool result = client.Delete(775853599);
+    [Fact]
+    public void AddHTTPMonitor()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_1",
+        uri: "http://test1.com"
+      ));
+    }
 
-    //bool result = client.Create("apitest", "http://pocketsharp.com", Models.Type.HTTP);
-    //client.Add("apiKeywordTest", "http://frontendplay.com", "frontendplay", KeywordType.NotExists);
 
-    //client.DeleteAlert(2014599);
-    //bool result = client.AddAlert(AlertType.Email, "klika@live.at");
+    [Fact]
+    public void AddKeywordMonitor()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_2",
+        uri: "http://test2.com",
+        type: Models.Type.Keyword,
+        keywordType: KeywordType.Exists,
+        keywordValue: "test"
+      ));
+    }
 
-    //bool x = client.Add(
-    //  name: "testx",
-    //  uri: "http://google.at",
-    //  type: Models.Type.Keyword,
-    //  keywordType: KeywordType.Exists,
-    //  keywordValue: "goog"
-    //);
-    //List<Monitor> monitors = client.Retrieve(showLog: true);
-    //List<Alert> alerts = client.RetrieveAlerts();
-    //System.Console.WriteLine(monitor.ID + " " + monitor.Name);
-    //alerts.ForEach(item => System.Console.WriteLine(item.ID + " " + item.Type.ToString() + " " + item.Value));
 
-    //monitor.Name = "HALLOOO";
-    //bool result = client.Modify(monitor);
+    [Fact]
+    public void AddPingMonitor()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_3",
+        uri: "http://test3.com",
+        type: Models.Type.Ping
+      ));
+    }
 
-    //monitors.ForEach(item => System.Console.WriteLine(item.ID + " " + item.Name + " " + item.Status));
+
+    [Fact]
+    public void AddPortMonitor()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_4",
+        uri: "127.0.0.1",
+        type: Models.Type.Port,
+        subtype: Subtype.Custom,
+        port: 50004
+      ));
+    }
+
+
+    [Fact]
+    public void GetMonitors()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_5",
+        uri: "255.0.0.1",
+        type: Models.Type.Port,
+        subtype: Subtype.HTTP
+      ));
+
+      List<Monitor> items = client.GetMonitors();
+      Monitor monitor = null;
+
+      items.ForEach(item =>
+      {
+        if(item.Name == "test_5")
+        {
+          monitor = item;
+        }
+      });
+
+      Assert.True(
+        monitor != null 
+        && monitor.UriString == "255.0.0.1"
+        && monitor.Type == Models.Type.Port
+        && monitor.Subtype == Subtype.HTTP);
+    }
+
+
+    [Fact]
+    public void ModifyAMonitor()
+    {
+      Assert.True(client.AddMonitor(
+        name: "test_6",
+        uri: "http://test6.com"
+      ));
+
+      List<Monitor> items = client.GetMonitors();
+      Monitor monitor = null;
+
+      items.ForEach(item =>
+      {
+        if (item.Name == "test_6")
+        {
+          monitor = item;
+        }
+      });
+
+      Assert.NotNull(monitor);
+
+      monitor.Name = "updated_test_6";
+
+      Assert.True(client.ModifyMonitor(monitor));
+
+      monitor = client.GetMonitor(monitor.ID);
+
+      Assert.Equal(monitor.Name, "updated_test_6");
+    }
   }
 }

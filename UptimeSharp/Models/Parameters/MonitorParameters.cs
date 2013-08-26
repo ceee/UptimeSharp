@@ -108,11 +108,11 @@ namespace UptimeSharp.Models
       }
 
       // special params for port listener
-      if (Type == Type.Port && Subtype != Subtype.Unknown && Port.HasValue)
+      if (Type == Type.Port && Subtype != Subtype.Unknown)
       {
         parameters.Add(UptimeClient.Parameter("monitorSubType", (int)Subtype));
 
-        if (Subtype == Subtype.Custom)
+        if (Subtype == Subtype.Custom && Port.HasValue)
         {
           parameters.Add(UptimeClient.Parameter("monitorPort", Port));
         }

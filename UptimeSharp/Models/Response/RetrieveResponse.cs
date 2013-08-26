@@ -30,7 +30,7 @@ namespace UptimeSharp.Models
     {
       get
       {
-        return ItemDictionary["monitor"]; 
+        return ItemDictionary != null ? ItemDictionary["monitor"] : null; 
       }
     }
   }
