@@ -229,6 +229,7 @@ bool isSuccess = _client.DeleteAlert(myAlert);
 
 ## Release History
 
+- 2013-08-26 v0.1.1 Adding a Port monitor works now
 - 2013-08-25 v0.1.0 Monitor and Alert APIs
 
 ## Dependencies
