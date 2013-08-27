@@ -190,13 +190,13 @@ List<Alert> items = _client.GetAlerts();
 Retrieve alerts by IDs:
 
 ```csharp
-List<Alert> items = _client.GetAlerts(new int[]{ 12897, 98711 });
+List<Alert> items = _client.GetAlerts(new string[]{ "12897", "98711" });
 ```
 
 Retrieve a specific alert:
 
 ```csharp
-Alert item = _client.GetAlert(12897);
+Alert item = _client.GetAlert("12897");
 ```
 
 Adds an alert _(Due to UptimeRobot API limitations SMS and Twitter alert contact types are not supported yet)_:
@@ -215,7 +215,7 @@ bool isSuccess = _client.AddAlert(myAlert);
 Deletes an alert:
 
 ```csharp
-bool isSuccess = _client.DeleteAlert(12897);
+bool isSuccess = _client.DeleteAlert("12897");
 ```
 
 Deletes an alert from instance:
@@ -229,6 +229,7 @@ bool isSuccess = _client.DeleteAlert(myAlert);
 
 ## Release History
 
+- 2013-08-28 v0.2.0 Request Validation
 - 2013-08-26 v0.1.1 Adding a Port monitor works now
 - 2013-08-25 v0.1.0 Monitor and Alert APIs
 

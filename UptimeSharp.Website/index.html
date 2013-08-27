@@ -87,6 +87,7 @@ localhost | Ping
 
         <h2>Release History</h2>
 <ul>
+<li>2013-08-28 v0.2.0 Request Validation</li>
 <li>2013-08-26 v0.1.1 Adding a Port monitor works now</li>
 <li>2013-08-25 v0.1.0 Monitor and Alert APIs</li>
 </ul>
@@ -133,20 +134,20 @@ Monitor item = _client.GetMonitor(12891);</code></pre>
 <br></p>
       </div>
 
-      
+
       <div data-part="add">
 
         <h2>Add</h2>
 <p>Adds/creates a new monitor.</p>
 <pre class="language-clike"><code>bool AddMonitor(
-    string name, 
-    string uri, 
-    Type type = Type.HTTP, 
+    string name,
+    string uri,
+    Type type = Type.HTTP,
     Subtype subtype = Subtype.Unknown,
-    int? port = null, 
-    string keywordValue = null, 
+    int? port = null,
+    string keywordValue = null,
     KeywordType keywordType = KeywordType.Unknown,
-    int[] alerts = null, 
+    int[] alerts = null,
     string HTTPUsername = null,
     string HTTPPassword = null
 )</code></pre>
@@ -194,26 +195,26 @@ bool isSuccess = _client.ModifyMonitor(myMonitor);</code></pre>
 <p>Retrieve all alerts:</p>
 <pre class="language-clike"><code>List&lt;Alert&gt; items = _client.GetAlerts();</code></pre>
 <p>Retrieve alerts by IDs:</p>
-<pre class="language-clike"><code>List&lt;Alert&gt; items = _client.GetAlerts(new int[]{ 12897, 98711 });</code></pre>
+<pre class="language-clike"><code>List&lt;Alert&gt; items = _client.GetAlerts(new string[]{ "12897", "98711" });</code></pre>
 <p>Retrieve a specific alert:</p>
-<pre class="language-clike"><code>Alert item = _client.GetAlert(12897);</code></pre>
+<pre class="language-clike"><code>Alert item = _client.GetAlert("12897");</code></pre>
 <p>Adds an alert <em>(Due to UptimeRobot API limitations SMS and Twitter alert contact types are not supported yet)</em>:</p>
 <pre class="language-clike"><code>bool isSuccess = _client.AddAlert(AlertType.Email, &quot;uptimesharp@outlook.com&quot;);</code></pre>
 <p>Adds an alert from instance:</p>
 <pre class="language-clike"><code>// Alert myAlert = ...
 bool isSuccess = _client.AddAlert(myAlert);</code></pre>
 <p>Deletes an alert:</p>
-<pre class="language-clike"><code>bool isSuccess = _client.DeleteAlert(12897);</code></pre>
+<pre class="language-clike"><code>bool isSuccess = _client.DeleteAlert("12897");</code></pre>
 <p>Deletes an alert from instance:</p>
 <pre class="language-clike"><code>// Alert myAlert = ...
 bool isSuccess = _client.DeleteAlert(myAlert);</code></pre>
 
      </div>
-     
+
      <div data-part="delete">
        <h2>Delete</h2>
 <p>Delete a monitor by ID:</p>
-<pre class="language-clike"><code>bool isSuccess = _client.DeleteMonitor(12891);</code></pre>
+<pre class="language-clike"><code>bool isSuccess = _client.DeleteMonitor("12891");</code></pre>
 <p>Delete a monitor by a Monitor instance:</p>
 <pre class="language-clike"><code>// Monitor myMonitor = ...
 bool isSuccess = _client.DeleteMonitor(myMonitor);</code></pre>

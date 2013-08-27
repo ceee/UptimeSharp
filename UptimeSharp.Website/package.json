@@ -1,6 +1,6 @@
 {
-	"name": "wingsforlife",
-	"version": "0.1.0",
+	"name": "uptimesharp",
+	"version": "0.2.0",
 	"devDependencies": {
 		"grunt": "~0.4.1",
 		"grunt-contrib-uglify": "~0.1.2",
