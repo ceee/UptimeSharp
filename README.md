@@ -1,13 +1,13 @@
 # UptimeSharp
 
-**UptimeSharp** is a C#.NET class library that integrates the [UptimeRobot API](http://http://www.uptimerobot.com/api.asp).
+**UptimeSharp** is a C#.NET class library that integrates the [UptimeRobot API](http://www.uptimerobot.com/api.asp).
 
 The wrapper consists of 2 parts:
 
 - Get and modify monitors
 - Get and modify alert contacts
 
-[uptimesharp.frontendplay.com](http://uptimesharp.frontendplay.com/) (coming soon)
+[uptimesharp.frontendplay.com](http://uptimesharp.frontendplay.com/)
 
 ## Install using NuGet
 
@@ -15,7 +15,7 @@ The wrapper consists of 2 parts:
 Install-Package UptimeSharp
 ```
 
-[nuget.org/packages/UptimeSharp](https://www.nuget.org/packages/UptimeSharp/) (coming soon)
+[nuget.org/packages/UptimeSharp](https://www.nuget.org/packages/UptimeSharp/)
 
 ## Usage Example
 
