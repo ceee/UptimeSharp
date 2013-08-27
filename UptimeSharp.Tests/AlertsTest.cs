@@ -32,7 +32,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public void AddInvalidAlertWithTypeSms()
     {
-      Assert.Throws<APIException>(() =>
+      Assert.Throws<UptimeSharpException>(() =>
       {
         client.AddAlert(Models.AlertType.SMS, "+436601289172");
       });
@@ -42,7 +42,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public void AddInvalidAlertWithTypeTwitter()
     {
-      Assert.Throws<APIException>(() =>
+      Assert.Throws<UptimeSharpException>(() =>
       {
         client.AddAlert(Models.AlertType.Twitter, "artistandsocial");
       });

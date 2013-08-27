@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
 
 namespace UptimeSharp
 {
@@ -76,7 +77,7 @@ namespace UptimeSharp
       IRestResponse<T> response = _restClient.Execute<T>(request);
 
       LastRequestData = response;
-      ValidateResponse(response);
+      ValidateResponse<T>(response);
 
       return response.Data;
     }
@@ -134,7 +135,7 @@ namespace UptimeSharp
     /// <param name="name">The name.</param>
     /// <param name="value">The value.</param>
     /// <returns></returns>
-    public static Parameter Parameter(string name, object value)
+    internal static Parameter Parameter(string name, object value)
     {
       return new Parameter()
       {
@@ -150,45 +151,60 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="response">The response.</param>
     /// <returns></returns>
-    /// <exception cref="APIException">
+    /// <exception cref="UptimeSharpException">
     /// Error retrieving response
     /// </exception>
-    protected void ValidateResponse(IRestResponse response)
+    protected void ValidateResponse<T>(IRestResponse<T> response) where T : new()
     {
-      if (response.StatusCode != HttpStatusCode.OK)
+      Type responseType = response.Data.GetType();
+
+      // get status property from ResponseBase POCO
+      PropertyInfo statusProp = responseType.GetProperty("Status");
+      object status = statusProp.GetValue(response.Data, null);
+
+      // Error from UptimeSharp
+      if (status.Equals(false))
       {
-        //Parameter error = response.Headers[1];
-        //Parameter errorCode = response.Headers[2];
+        // get error properties from response
+        PropertyInfo errorProp = responseType.GetProperty("ErrorMessage");
+        object error = errorProp.GetValue(response.Data, null);
 
-        //string exceptionString = response.Content;
-
-        //bool isPocketError = error.Name == "X-Error";
-
-        //// update message to include pocket response data
-        //if (isPocketError)
-        //{
-        //  exceptionString = exceptionString + "\nPocketResponse: (" + errorCode.Value + ") " + error.Value;
-        //}
+        PropertyInfo errorCodeProp = responseType.GetProperty("ErrorCode");
+        object errorCode = errorCodeProp.GetValue(response.Data, null);
 
         // create exception
-        APIException exception = new APIException("Request Exception", response.ErrorException);
+        UptimeSharpException exception = new UptimeSharpException(
+          "UptimeRobot Exception: {0} (Code: {1})\n{2}",
+          response.ErrorException,
+          error,
+          errorCode,
+          "http://uptimerobot.com/api.asp#errorMessages"
+        );
 
-        //if (isPocketError)
-        //{
-        //  // add custom pocket fields
-        //  exception.PocketError = error.Value.ToString();
-        //  exception.PocketErrorCode = Convert.ToInt32(errorCode.Value);
+        // add custom pocket fields
+        exception.Error = error.ToString();
+        exception.ErrorCode = Convert.ToInt32(errorCode);
 
-        //  // add to generic exception data
-        //  exception.Data.Add(error.Name, error.Value);
-        //  exception.Data.Add(errorCode.Name, errorCode.Value);
-        //}
+        // add to generic exception data
+        exception.Data.Add("Error", error);
+        exception.Data.Add("ErrorCode", errorCode);
 
         throw exception;
       }
+      // HTTP Request Error
+      else if (response.StatusCode != HttpStatusCode.OK)
+      {
+        throw new UptimeSharpException(
+          "Request Exception: {0} (Code: {1})", 
+          response.ErrorException, 
+          response.ErrorMessage, 
+          response.StatusCode
+        );
+      }
+      // Exception by RestSharp
       else if (response.ErrorException != null)
       {
-        throw new APIException("Error retrieving response", response.ErrorException);
+        throw new UptimeSharpException("Error retrieving response", response.ErrorException);
       }
     }
   }

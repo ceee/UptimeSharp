@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIException.cs" />
+    <Compile Include="UptimeSharpException.cs" />
     <Compile Include="Components\Alert.cs" />
     <Compile Include="Components\Monitor.cs" />
     <Compile Include="JsonDeserializer.cs" />
