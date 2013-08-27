@@ -24,8 +24,14 @@ namespace UptimeSharp.Tests
     // teardown
     public void Dispose()
     {
-      List<Alert> alerts = client.GetAlerts();
-      alerts.ForEach(alert => client.DeleteAlert(alert));
+      client.GetAlerts().ForEach(alert => 
+      {
+        try
+        {
+          client.DeleteAlert(alert);
+        }
+        catch(UptimeSharpException e){}
+      });
     }
 
 
@@ -73,13 +79,13 @@ namespace UptimeSharp.Tests
     public void AddAndRetrieveSpecificAlerts()
     {
       Assert.True(client.AddAlert(AlertType.Email, "example1@ceecore.com"));
-      Assert.True(client.AddAlert(AlertType.Boxcar, "example@ceecore.com"));
+      Assert.True(client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
 
       List<Alert> alerts = client.GetAlerts();
 
       Assert.InRange(alerts.ToArray().Length, 2, 100);
 
-      List<Alert> specificAlerts = client.GetAlerts(new int[] { alerts[0].ID, alerts[1].ID });
+      List<Alert> specificAlerts = client.GetAlerts(new string[] { alerts[0].ID, alerts[1].ID });
 
       Assert.Equal(2, specificAlerts.ToArray().Length);
     }

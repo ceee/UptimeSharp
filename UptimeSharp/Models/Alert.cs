@@ -15,7 +15,7 @@ namespace UptimeSharp.Models
     /// The ID.
     /// </value>
     [DataMember(Name = "id")]
-    public int ID { get; set; }
+    public string ID { get; set; }
 
     /// <summary>
     /// Gets or sets the alert type.

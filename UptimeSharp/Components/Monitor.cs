@@ -96,7 +96,7 @@ namespace UptimeSharp
     /// </returns>
     public bool AddMonitor(string name, string uri, Type type = Type.HTTP, Subtype subtype = Subtype.Unknown,
                            int? port = null, string keywordValue = null, KeywordType keywordType = KeywordType.Unknown,
-                           int[] alerts = null, string HTTPUsername = null, string HTTPPassword = null)
+                           string[] alerts = null, string HTTPUsername = null, string HTTPPassword = null)
     {
 
       MonitorParameters parameters = new MonitorParameters()
@@ -126,11 +126,11 @@ namespace UptimeSharp
     /// </returns>
     public bool ModifyMonitor(Monitor monitor)
     {
-      List<int> alerts = null;
+      List<string> alerts = null;
 
       if (monitor.Alerts != null)
       {
-        monitor.Alerts.ForEach(item => alerts.Add((int)item.ID));
+        monitor.Alerts.ForEach(item => alerts.Add(item.ID));
       }
 
       MonitorParameters parameters = new MonitorParameters()

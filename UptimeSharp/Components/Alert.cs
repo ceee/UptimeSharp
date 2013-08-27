@@ -15,7 +15,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="alertIDs">Retrieve specified alert contacts by supplying IDs for them.</param>
     /// <returns></returns>
-    public List<Alert> GetAlerts(int[] alertIDs = null)
+    public List<Alert> GetAlerts(string[] alertIDs = null)
     {
       Parameter alerts = Parameter("alertcontacts", alertIDs != null ? string.Join("-", alertIDs) : null);
 
@@ -28,9 +28,9 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="alertID">The alertID.</param>
     /// <returns></returns>
-    public Alert GetAlert(int alertID)
+    public Alert GetAlert(string alertID)
     {
-      List<Alert> alerts = GetAlerts(new int[] { alertID });
+      List<Alert> alerts = GetAlerts(new string[] { alertID });
 
       return alerts.ToArray().Length > 0 ? alerts[0] : null;
     }
@@ -74,7 +74,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="alertID">The alert ID.</param>
     /// <returns></returns>
-    public bool DeleteAlert(int alertID)
+    public bool DeleteAlert(string alertID)
     {
       return Get<DefaultResponse>("deleteAlertContact", Parameter("alertContactID", alertID)).Status;
     }
@@ -87,7 +87,7 @@ namespace UptimeSharp
     /// <returns></returns>
     public bool DeleteAlert(Alert alert)
     {
-      return DeleteAlert((int)alert.ID);
+      return DeleteAlert(alert.ID);
     }
   }
 }

@@ -88,7 +88,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts.
     /// </value>
-    public int[] Alerts { get; set; }
+    public string[] Alerts { get; set; }
 
 
     /// <summary>
