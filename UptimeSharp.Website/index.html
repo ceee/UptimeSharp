@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>UptimeSharp - C# assembly for accessing the UptimeRobot API</title>
+  <meta charset="utf-8" />
+  <meta name="robots" content="index,follow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="UptimeSharp is a C# assembly for accessing the UptimeRobot API" />
+  <meta name="author" content="cee" />
+  <meta name="msvalidate.01" content="8E69C8BDF4C9B86924E9DA609952B416" />
+  <meta property="twitter:site" content="&#64;artistandsocial" />
+  <meta property="twitter:creator" content="&#64;artistandsocial" />
+  <meta property="og:title" content="UptimeSharp - a C#.NET class library for accessing the UptimeRobot API" />
+  <meta property="og:url" content="http://pocketsharp.frontendplay.com/" />
+  <meta property="og:site_name" content="UptimeSharp" />
+  <meta property="og:description" content="UptimeSharp is a C#.NET class library for accessing the UptimeRobot API" />
+
+  <meta property="og:image" content="http://uptimesharp.frontendplay.com/Assets/Images/uptimesharp.png" />
+  <link rel="icon" type="image/png" href="/Assets/Images/uptimesharp.png" />
+  <link rel="image_src" href="/Assets/Images/uptimesharp.png" />
+
+  <link href="/Release/app.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div class="app">
+
+    <aside class="app-side">
+      <h1>
+        <a href="/"><img src="/Assets/Images/robot.png" alt="uptimesharp uptimerobot" class="robot" />UptimeSharp</a>
+      </h1>
+      <p class="app-description">
+        UptimeSharp is a C# assembly for accessing the UptimeRobot API
+      </p>
+      <div class="app-nuget">
+        <code>Install-Package UptimeSharp</code>
+      </div>
+      <div class="app-social">
+        <a href="https://github.com/ceee/uptimesharp"><i class="entypo-github"></i></a>
+        <a href="https://twitter.com/artistandsocial"><i class="entypo-twitter"></i></a>
+      </div>
+    </aside>
+
+    <div class="app-main">
+      <nav class="app-nav">
+        <a href="#" data-id="gettingstarted" class="is-active">Getting Started</a>
+        <a href="#" data-id="retrieve">Retrieve</a>
+        <a href="#" data-id="add">Add</a>
+        <a href="#" data-id="modify">Modify</a>
+        <a href="#" data-id="delete">Delete</a>
+      </nav>
+      <article class="article">
+
+        <div data-part="gettingstarted">
+        <h2>Getting Started</h2>
+<p><strong>UptimeSharp</strong> is a C#.NET class library that integrates the <a href="http://http://www.uptimerobot.com/api.asp">UptimeRobot API</a>.</p>
+<p>The wrapper consists of 2 parts:</p>
+<ul>
+<li>Get and modify monitors</li>
+<li>Get and modify alert contacts</li>
+</ul>
+<h2>Install using NuGet</h2>
+<pre class="language-clike"><code>Install-Package UptimeSharp</code></pre>
+<p><a href="https://www.nuget.org/packages/UptimeSharp/">nuget.org/packages/UptimeSharp</a></p>
+<h2>Usage Example</h2>
+<p>Get your <a href="http://uptimerobot.com/mySettings.asp">API Key UptimeRobot</a> (left section under &quot;API Information&quot;)</p>
+<p>Include the UptimeSharp namespace and it's associated models:</p>
+<pre class="language-clike"><code>using UptimeSharp;
+using UptimeSharp.Models;</code></pre>
+<p>Initialize UptimeClient with:</p>
+<pre class="language-clike"><code>UptimeClient _client = new UptimeClient(&quot;[YOUR_API_KEY]&quot;);</code></pre>
+<p>Do a simple request - e.g. get all your monitors:</p>
+<pre class="language-clike"><code>_client.GetMonitors().ForEach(
+    item =&gt; Console.WriteLine(item.Name + &quot; | &quot; + item.Type)
+);</code></pre>
+<p>Which will output:</p>
+<pre class="language-clike"><code>frontendplay | HTTP
+google | Keyword
+localhost | Ping
+...
+</code></pre>
+
+<h2>Constructor</h2>
+<pre class="language-clike"><code>UptimeClient(string apiKey)</code></pre>
+<p>Get your <a href="http://uptimerobot.com/mySettings.asp">API Key UptimeRobot</a> (left section under &quot;API Information&quot;)</p>
+
+        <h2>Release History</h2>
+<ul>
+<li>2013-08-26 v0.1.1 Adding a Port monitor works now</li>
+<li>2013-08-25 v0.1.0 Monitor and Alert APIs</li>
+</ul>
+<h2>Dependencies</h2>
+<ul>
+<li><a href="http://restsharp.org/">RestSharp</a></li>
+<li><a href="https://github.com/ServiceStack/ServiceStack.Text">ServiceStack.Text</a></li>
+</ul>
+        <h2>Contributors</h2>
+        <p>
+          <a href="https://github.com/ceee" title="Tobias Klika @ceee on github">
+            <img src="http://gravatar.com/avatar/9c61b1f4307425f12f05d3adb930ba66?s=40" alt="twitter/artistandsocial" /></a> &nbsp; <a href="https://github.com/ceee">Tobias Klika @ceee</a>
+        </p>
+        <h2>License</h2>
+<p><a href="https://github.com/ceee/UptimeSharp/blob/master/LICENSE-MIT">MIT License</a></p>
+
+      </div>
+
+
+
+      <div data-part="retrieve">
+
+<h2>Retrieve</h2>
+<p>Get list of all monitors:</p>
+<pre class="language-clike"><code>List&lt;Monitor&gt; items = _client.GetMonitors();</code></pre>
+<p>Get monitors by ID - or a single monitor:</p>
+<pre class="language-clike"><code>List&lt;Monitor&gt; items = _client.GetMonitors(new int[]{ 12891, 98711 });
+// or
+Monitor item = _client.GetMonitor(12891);</code></pre>
+<p>Provide additional params for more data:</p>
+<pre class="language-clike"><code>List&lt;Monitor&gt; items = _client.GetMonitors(
+    monitorIDs: new int[]{ 12891, 98711 },
+    customUptimeRatio: new float[] { 7, 30, 45 },
+    showLog: true,
+    showAlerts: true
+);</code></pre>
+<p><code>monitorIDs</code>: You can remove this parameter if you want to retrieve all monitors <em>(default: null)</em>
+<br>
+<code>customUptimeRatio</code>: the number of days to calculate the uptime ratio(s) for <em>(default: null)</em>
+<br>
+<code>showLog</code>: include log, if true <em>(default: false)</em>
+<br>
+<code>showAlerts</code>: include alerts, if true <em>(default: true)</em>
+<br></p>
+      </div>
+
+      
+      <div data-part="add">
+
+        <h2>Add</h2>
+<p>Adds/creates a new monitor.</p>
+<pre class="language-clike"><code>bool AddMonitor(
+    string name, 
+    string uri, 
+    Type type = Type.HTTP, 
+    Subtype subtype = Subtype.Unknown,
+    int? port = null, 
+    string keywordValue = null, 
+    KeywordType keywordType = KeywordType.Unknown,
+    int[] alerts = null, 
+    string HTTPUsername = null,
+    string HTTPPassword = null
+)</code></pre>
+<p>Example - Watch an SMTP Server:</p>
+<pre class="language-clike"><code>bool isSuccess = _client.AddMonitor(
+    name: &quot;cee&quot;,
+    uri: &quot;127.0.0.1&quot;,
+    type: Type.Port,
+    subtype: Subtype.SMTP
+);</code></pre>
+<p><code>name</code>: A friendly name for the new monitor
+<br>
+<code>uri</code>: The URI or IP to watch
+<br>
+<code>type</code>: The type of the monitor (see <a href="#monitor-types"># Monitor Types</a>)
+<br>
+<code>subtype</code>: The subtype of the monitor (only for Type.Port) (see <a href="#monitor-types"># Monitor Types</a>)
+<br>
+<code>port</code>: The port (only for Subtype.Custom)
+<br>
+<code>keywordValue</code>: The keyword value (for Type.Keyword)
+<br>
+<code>keywordType</code>: Type of the keyword (for Type.Keyword)
+<br>
+<code>alerts</code>: An ID list of existing alerts to notify
+<br>
+<code>HTTPUsername</code>: The HTTP username
+<br>
+<code>HTTPPassword</code>: The HTTP password</p>
+<p>As you can see, a lot of these parameters are only available if you've specified the correct <code>Type</code>.
+<br>
+If you've selected <code>Type.Port</code> for example, UptimeSharp will ignore the <code>keywordValue</code> and <code>keywordType</code> parameters, even if you submitted valid ones.</p>
+
+      </div>
+
+      <div data-part="modify">
+
+        <h2>Modify</h2>
+<p>In order to modify an existing monitor, just alter the properties of the Monitor instance and call the <code>ModifyMonitor</code> method:</p>
+<pre class="language-clike"><code>// Monitor myMonitor = ...
+myMonitor.Name = &quot;my new name :-)&quot;;
+bool isSuccess = _client.ModifyMonitor(myMonitor);</code></pre>
+<p><strong>Important:</strong> It is not possible to alter the <code>Type</code> of a monitor after its creation! In case you want to do this, you have to delete the monitor and create a new one with the changed type.</p>
+<h3>Modify Alerts</h3>
+<p>Retrieve all alerts:</p>
+<pre class="language-clike"><code>List&lt;Alert&gt; items = _client.GetAlerts();</code></pre>
+<p>Retrieve alerts by IDs:</p>
+<pre class="language-clike"><code>List&lt;Alert&gt; items = _client.GetAlerts(new int[]{ 12897, 98711 });</code></pre>
+<p>Retrieve a specific alert:</p>
+<pre class="language-clike"><code>Alert item = _client.GetAlert(12897);</code></pre>
+<p>Adds an alert <em>(Due to UptimeRobot API limitations SMS and Twitter alert contact types are not supported yet)</em>:</p>
+<pre class="language-clike"><code>bool isSuccess = _client.AddAlert(AlertType.Email, &quot;uptimesharp@outlook.com&quot;);</code></pre>
+<p>Adds an alert from instance:</p>
+<pre class="language-clike"><code>// Alert myAlert = ...
+bool isSuccess = _client.AddAlert(myAlert);</code></pre>
+<p>Deletes an alert:</p>
+<pre class="language-clike"><code>bool isSuccess = _client.DeleteAlert(12897);</code></pre>
+<p>Deletes an alert from instance:</p>
+<pre class="language-clike"><code>// Alert myAlert = ...
+bool isSuccess = _client.DeleteAlert(myAlert);</code></pre>
+
+     </div>
+     
+     <div data-part="delete">
+       <h2>Delete</h2>
+<p>Delete a monitor by ID:</p>
+<pre class="language-clike"><code>bool isSuccess = _client.DeleteMonitor(12891);</code></pre>
+<p>Delete a monitor by a Monitor instance:</p>
+<pre class="language-clike"><code>// Monitor myMonitor = ...
+bool isSuccess = _client.DeleteMonitor(myMonitor);</code></pre>
+     </div>
+
+      </article>
+    </div>
+
+  </div>
+
+  <script src="/Release/app.js"></script>
+</body>
+</html>
