@@ -1,3 +1,5 @@
+![UptimeSharp](https://raw.github.com/ceee/UptimeSharp/master/UptimeSharp.Website/Assets/Images/github-header.png)
+
 # UptimeSharp
 
 **UptimeSharp** is a C#.NET class library that integrates the [UptimeRobot API](http://www.uptimerobot.com/api.asp).
