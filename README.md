@@ -1,7 +1,5 @@
 ![UptimeSharp](https://raw.github.com/ceee/UptimeSharp/master/UptimeSharp.Website/Assets/Images/github-header.png)
 
-# UptimeSharp
-
 **UptimeSharp** is a C#.NET class library that integrates the [UptimeRobot API](http://www.uptimerobot.com/api.asp).
 
 The wrapper consists of 2 parts:
@@ -117,7 +115,7 @@ bool AddMonitor(
 )
 ```
 
-Example - Watch an SMTP Server:
+Example - Watch a SMTP Server:
 
 ```csharp
 bool isSuccess = _client.AddMonitor(
@@ -226,6 +224,39 @@ Deletes an alert from instance:
 // Alert myAlert = ...
 bool isSuccess = _client.DeleteAlert(myAlert);
 ```
+
+## Monitor Types
+
+- [HTTP](#http-monitoring)
+- [Keyword](#keyword)
+- [Ping](#ping)
+- [Port](#port)
+
+### HTTP Monitoring
+
+Simple HTTP monitor which requests the webpage every 5 minutes and checks for HTTP Status 200 OK.
+
+### Keyword Monitoring
+
+The keyword monitor is sniffing the page content if a specified keyword exists/not exists.
+
+The keyword is submitted via the **keywordValue** parameter. The **keywordType** parameter specifies if the value should exist or not exist.
+
+### Ping Monitoring
+
+This type lets you monitor a server by pinging it.
+
+### Port Monitoring
+
+If you want to monitor a port, you need to specify a **subType** which is a common port a custom one:
+
+- HTTP :80
+- HTTPS :443
+- FTP :21
+- SMTP :25
+- POP3 :110
+- IMAP :143
+- Custom Port (use the "port" parameter, if this option is selected)
 
 ---
 
