@@ -85,6 +85,32 @@ localhost | Ping
 <pre class="language-clike"><code>UptimeClient(string apiKey)</code></pre>
 <p>Get your <a href="http://uptimerobot.com/mySettings.asp">API Key UptimeRobot</a> (left section under &quot;API Information&quot;)</p>
 
+<h2>Monitor Types</h2>
+<ul>
+<li>>HTTP</li>
+<li>Keyword</li>
+<li>Ping</li>
+<li>Port</li>
+</ul>
+<h3>HTTP Monitoring</h3>
+<p>Simple HTTP monitor which requests the webpage every 5 minutes and checks for HTTP Status 200 OK.</p>
+<h3>Keyword Monitoring</h3>
+<p>The keyword monitor is sniffing the page content if a specified keyword exists/not exists.</p>
+<p>The keyword is submitted via the <strong>keywordValue</strong> parameter. The <strong>keywordType</strong> parameter specifies if the value should exist or not exist.</p>
+<h3>Ping Monitoring</h3>
+<p>This type lets you monitor a server by pinging it.</p>
+<h3>Port Monitoring</h3>
+<p>If you want to monitor a port, you need to specify a <strong>subType</strong> which is a common port a custom one:</p>
+<ul>
+<li>HTTP :80</li>
+<li>HTTPS :443</li>
+<li>FTP :21</li>
+<li>SMTP :25</li>
+<li>POP3 :110</li>
+<li>IMAP :143</li>
+<li>Custom Port (use the <strong>port</strong> parameter, if this option is selected)</li>
+</ul>
+
         <h2>Release History</h2>
 <ul>
 <li>2013-08-28 v0.2.0 Request Validation</li>
@@ -162,9 +188,9 @@ Monitor item = _client.GetMonitor(12891);</code></pre>
 <br>
 <code>uri</code>: The URI or IP to watch
 <br>
-<code>type</code>: The type of the monitor (see <a href="#monitor-types"># Monitor Types</a>)
+<code>type</code>: The type of the monitor
 <br>
-<code>subtype</code>: The subtype of the monitor (only for Type.Port) (see <a href="#monitor-types"># Monitor Types</a>)
+<code>subtype</code>: The subtype of the monitor (only for Type.Port)
 <br>
 <code>port</code>: The port (only for Subtype.Custom)
 <br>
