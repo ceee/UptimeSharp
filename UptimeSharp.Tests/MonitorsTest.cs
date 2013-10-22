@@ -2,37 +2,26 @@
 using System;
 using System.Collections.Generic;
 using UptimeSharp.Models;
+using System.Threading.Tasks;
 
 namespace UptimeSharp.Tests
 {
-  public class MonitorsTest : IDisposable
+  public class MonitorsTest : TestsBase
   {
-    UptimeClient client;
-
-    // this API key is associated with the test account uptimesharp@outlook.com
-    // please don't abuse it and create your own if you want to test the project!
-    string APIKey = "u97240-a24c634b3b84f1af602628e8";
+    public MonitorsTest() : base() { }
 
 
-    // setup
-    public MonitorsTest()
+    public async Task Dispose()
     {
-      client = new UptimeClient(APIKey);
-    }
-
-
-    // teardown
-    public void Dispose()
-    {
-      List<Monitor> monitors = client.GetMonitors();
-      monitors.ForEach(monitor => client.DeleteMonitor(monitor));
+      List<Monitor> monitors = await client.GetMonitors();
+      monitors.ForEach(item => monitorsToDelete.Add(item.ID));
     }
 
 
     [Fact]
-    public void AddHTTPMonitor()
+    public async Task AddHTTPMonitor()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_1",
         uri: "http://test1.com"
       ));
@@ -40,9 +29,9 @@ namespace UptimeSharp.Tests
 
 
     [Fact]
-    public void AddKeywordMonitor()
+    public async Task AddKeywordMonitor()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_2",
         uri: "http://test2.com",
         type: Models.Type.Keyword,
@@ -53,9 +42,9 @@ namespace UptimeSharp.Tests
 
 
     [Fact]
-    public void AddPingMonitor()
+    public async Task AddPingMonitor()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_3",
         uri: "http://test3.com",
         type: Models.Type.Ping
@@ -64,9 +53,9 @@ namespace UptimeSharp.Tests
 
 
     [Fact]
-    public void AddPortMonitor()
+    public async Task AddPortMonitor()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_4",
         uri: "127.0.0.1",
         type: Models.Type.Port,
@@ -77,16 +66,16 @@ namespace UptimeSharp.Tests
 
 
     [Fact]
-    public void GetMonitors()
+    public async Task GetMonitors()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_5",
         uri: "255.0.0.1",
         type: Models.Type.Port,
         subtype: Subtype.HTTP
       ));
 
-      List<Monitor> items = client.GetMonitors();
+      List<Monitor> items = await client.GetMonitors();
       Monitor monitor = null;
 
       items.ForEach(item =>
@@ -106,14 +95,14 @@ namespace UptimeSharp.Tests
 
 
     [Fact]
-    public void ModifyAMonitor()
+    public async Task ModifyAMonitor()
     {
-      Assert.True(client.AddMonitor(
+      Assert.True(await client.AddMonitor(
         name: "test_6",
         uri: "http://test6.com"
       ));
 
-      List<Monitor> items = client.GetMonitors();
+      List<Monitor> items = await client.GetMonitors();
       Monitor monitor = null;
 
       items.ForEach(item =>
@@ -128,9 +117,9 @@ namespace UptimeSharp.Tests
 
       monitor.Name = "updated_test_6";
 
-      Assert.True(client.ModifyMonitor(monitor));
+      Assert.True(await client.ModifyMonitor(monitor));
 
-      monitor = client.GetMonitor(monitor.ID);
+      monitor = await client.GetMonitor(monitor.ID);
 
       Assert.Equal(monitor.Name, "updated_test_6");
     }

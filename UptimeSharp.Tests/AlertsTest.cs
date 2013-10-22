@@ -2,98 +2,74 @@
 using System.Collections.Generic;
 using UptimeSharp.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace UptimeSharp.Tests
 {
-  public class AlertsTest : IDisposable
+  public class AlertsTest : TestsBase
   {
-    UptimeClient client;
-
-    // this API key is associated with the test account uptimesharp@outlook.com
-    // please don't abuse it and create your own if you want to test the project!
-    string APIKey = "u97240-a24c634b3b84f1af602628e8";
+    public AlertsTest() : base() { }
 
 
-    // setup
-    public AlertsTest()
+    [Fact]
+    public async Task AddInvalidAlertWithTypeSms()
     {
-      client = new UptimeClient(APIKey);
-    }
-
-
-    // teardown
-    public void Dispose()
-    {
-      client.GetAlerts().ForEach(alert => 
+      await ThrowsAsync<UptimeSharpException>(async () =>
       {
-        try
-        {
-          client.DeleteAlert(alert);
-        }
-        catch(UptimeSharpException e){}
+        await client.AddAlert(Models.AlertType.SMS, "+436601289172");
       });
     }
 
 
     [Fact]
-    public void AddInvalidAlertWithTypeSms()
+    public async Task AddInvalidAlertWithTypeTwitter()
     {
-      Assert.Throws<UptimeSharpException>(() =>
+      await ThrowsAsync<UptimeSharpException>(async () =>
       {
-        client.AddAlert(Models.AlertType.SMS, "+436601289172");
+        await client.AddAlert(Models.AlertType.Twitter, "artistandsocial");
       });
     }
 
 
     [Fact]
-    public void AddInvalidAlertWithTypeTwitter()
-    {
-      Assert.Throws<UptimeSharpException>(() =>
-      {
-        client.AddAlert(Models.AlertType.Twitter, "artistandsocial");
-      });
-    }
-
-
-    [Fact]
-    public void AddAndRemoveAlerts()
+    public async Task AddAndRemoveAlerts()
     {
       string email = "example@ceecore.com";
 
-      Assert.True(client.AddAlert(AlertType.Email, email));
+      Assert.True(await client.AddAlert(AlertType.Email, email));
 
-      Alert origin = GetOriginAlert(email);
+      Alert origin = await GetOriginAlert(email);
 
       Assert.Equal(email, origin.Value);
       Assert.Equal(AlertType.Email, origin.Type);
 
-      client.DeleteAlert(origin);
+      await client.DeleteAlert(origin);
 
-      origin = GetOriginAlert(email);
+      origin = await GetOriginAlert(email);
 
       Assert.Null(origin);
     }
 
 
     [Fact]
-    public void AddAndRetrieveSpecificAlerts()
+    public async Task AddAndRetrieveSpecificAlerts()
     {
-      Assert.True(client.AddAlert(AlertType.Email, "example1@ceecore.com"));
-      Assert.True(client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
+      Assert.True(await client.AddAlert(AlertType.Email, "example1@ceecore.com"));
+      Assert.True(await client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
 
-      List<Alert> alerts = client.GetAlerts();
+      List<Alert> alerts = await client.GetAlerts();
 
       Assert.InRange(alerts.ToArray().Length, 2, 100);
 
-      List<Alert> specificAlerts = client.GetAlerts(new string[] { alerts[0].ID, alerts[1].ID });
+      List<Alert> specificAlerts = await client.GetAlerts(new string[] { alerts[0].ID, alerts[1].ID });
 
       Assert.Equal(2, specificAlerts.ToArray().Length);
     }
 
 
-    private Alert GetOriginAlert(string value)
+    private async Task<Alert> GetOriginAlert(string value)
     {
-      List<Alert> alerts = client.GetAlerts();
+      List<Alert> alerts = await client.GetAlerts();
       Alert origin = null;
 
       alerts.ForEach(alert =>
