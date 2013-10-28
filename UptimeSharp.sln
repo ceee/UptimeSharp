@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp.OldClassLib", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp.Tests", "UptimeSharp.Tests\UptimeSharp.Tests.csproj", "{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp", "UptimeSharp\UptimeSharp.csproj", "{EC1E656D-4966-499A-9EDD-9DB56137BF62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1E656D-4966-499A-9EDD-9DB56137BF62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1E656D-4966-499A-9EDD-9DB56137BF62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1E656D-4966-499A-9EDD-9DB56137BF62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1E656D-4966-499A-9EDD-9DB56137BF62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

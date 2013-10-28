@@ -39,7 +39,20 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IUptimeClient.cs" />
+    <Compile Include="Models\Alert.cs" />
+    <Compile Include="Models\Log.cs" />
+    <Compile Include="Models\Monitor.cs" />
+    <Compile Include="Models\Parameters\MonitorParameters.cs" />
+    <Compile Include="Models\Parameters\RetrieveParameters.cs" />
+    <Compile Include="Models\Response\AlertResponse.cs" />
+    <Compile Include="Models\Response\DefaultResponse.cs" />
+    <Compile Include="Models\Response\ResponseBase.cs" />
+    <Compile Include="Models\Response\RetrieveResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UptimeClient.cs" />
+    <Compile Include="Utilities\JsonExtensions.cs" />
+    <Compile Include="Utilities\UptimeSharpException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Threading.Tasks">
@@ -47,6 +60,13 @@
     </Reference>
     <Reference Include="Microsoft.Threading.Tasks.Extensions">
       <HintPath>..\packages\Microsoft.Bcl.Async.1.0.16\lib\portable-net40+sl4+win8+wp71\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PropertyChanged">
+      <HintPath>..\packages\PropertyChanged.Fody.1.41.0.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System.IO">
       <HintPath>..\packages\Microsoft.Bcl.1.1.3\lib\portable-net40+sl4+win8+wp71\System.IO.dll</HintPath>
