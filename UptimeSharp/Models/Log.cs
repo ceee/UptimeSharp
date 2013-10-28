@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using System;
+using PropertyChanged;
 
 namespace UptimeSharp.Models
 {
@@ -8,6 +9,7 @@ namespace UptimeSharp.Models
   /// The Log Model
   /// </summary>
   [JsonObject]
+  [ImplementPropertyChanged]
   public class Log
   {
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using PropertyChanged;
 
 namespace UptimeSharp.Models
 {
@@ -6,6 +7,7 @@ namespace UptimeSharp.Models
   /// The Alert Model
   /// </summary>
   [JsonObject]
+  [ImplementPropertyChanged]
   public class Alert
   {
     /// <summary>

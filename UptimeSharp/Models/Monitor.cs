@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Runtime.Serialization;
-using System.Net;
 using Newtonsoft.Json;
+using PropertyChanged;
 
 namespace UptimeSharp.Models
 {
@@ -12,6 +9,7 @@ namespace UptimeSharp.Models
   /// The Monitor Model implementation
   /// </summary>
   [JsonObject]
+  [ImplementPropertyChanged]
   public class Monitor
   {
     /// <summary>
