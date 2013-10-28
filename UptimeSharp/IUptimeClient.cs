@@ -5,7 +5,7 @@ using System.Text;
 
 namespace UptimeSharp
 {
-  public class UptimeClient : IUptimeClient
+  public interface IUptimeClient
   {
   }
 }
