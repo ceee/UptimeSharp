@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp", "UptimeSharp\UptimeSharp.csproj", "{AF900ACF-DC2A-40AC-9614-B7C8C12E114C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp.OldClassLib", "UptimeSharp.OldClassLib\UptimeSharp.OldClassLib.csproj", "{AF900ACF-DC2A-40AC-9614-B7C8C12E114C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp.Tests", "UptimeSharp.Tests\UptimeSharp.Tests.csproj", "{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}"
 EndProject
