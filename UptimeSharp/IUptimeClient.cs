@@ -7,5 +7,6 @@ namespace UptimeSharp
 {
   public interface IUptimeClient
   {
+    string ApiKey { get; set; }
   }
 }
