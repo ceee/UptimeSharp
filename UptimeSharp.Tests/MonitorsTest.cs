@@ -1,8 +1,7 @@
-﻿using Xunit;
-using System;
-using System.Collections.Generic;
-using UptimeSharp.Models;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UptimeSharp.Models;
+using Xunit;
 
 namespace UptimeSharp.Tests
 {
@@ -80,15 +79,15 @@ namespace UptimeSharp.Tests
 
       items.ForEach(item =>
       {
-        if(item.Name == "test_5")
+        if (item.Name == "test_5")
         {
           monitor = item;
         }
       });
 
       Assert.True(
-        monitor != null 
-        && monitor.UriString == "255.0.0.1"
+        monitor != null
+        && monitor.Uri == "255.0.0.1"
         && monitor.Type == Models.Type.Port
         && monitor.Subtype == Subtype.HTTP);
     }

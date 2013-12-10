@@ -1,6 +1,4 @@
 ﻿using Xunit;
-using System.Collections.Generic;
-using UptimeSharp.Models;
 
 namespace UptimeSharp.Tests
 {
@@ -12,7 +10,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public void Initialize()
     {
-      Assert.Null(client.LastRequestData);
+      Assert.Null(client.lastResponseData);
 
       Assert.Equal(APIKey, client.ApiKey);
     }

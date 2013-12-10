@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -31,7 +29,7 @@ namespace UptimeSharp.Tests
     {
       alertsToDelete.ForEach(async id =>
       {
-        await client.DeleteAlert(id);
+        await client.DeleteAlert(id.ToString());
       });
       monitorsToDelete.ForEach(async id =>
       {

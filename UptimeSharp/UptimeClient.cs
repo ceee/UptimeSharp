@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -24,6 +25,11 @@ namespace UptimeSharp
     /// Caches HTTP headers from last response
     /// </summary>
     private HttpResponseHeaders lastHeaders;
+
+    /// <summary>
+    /// Caches JSON data from last response
+    /// </summary>
+    public string lastResponseData;
 
     /// <summary>
     /// The base URL for the Pocket API
@@ -88,7 +94,7 @@ namespace UptimeSharp
     /// <returns></returns>
     protected async Task<T> Request<T>(string method, CancellationToken cancellationToken, Dictionary<string, string> parameters = null) where T : class, new()
     {
-      HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, method);
+      HttpRequestMessage request;
       HttpResponseMessage response = null;
 
       if (parameters == null)
@@ -106,8 +112,10 @@ namespace UptimeSharp
       // with this param it can return raw JSON
       parameters.Add("noJsonCallback", "1");
 
+      IEnumerable<string> paramEnumerable = parameters.Select(item => Uri.EscapeDataString(item.Key) + "=" + Uri.EscapeDataString(item.Value));
+
       // content of the request
-      request.Content = new FormUrlEncodedContent(parameters);
+      request = new HttpRequestMessage(HttpMethod.Get, method + "?" + String.Join("&", paramEnumerable));
 
       // call pre request action
       if (PreRequest != null)
@@ -133,6 +141,9 @@ namespace UptimeSharp
 
       // read response
       var responseString = await response.Content.ReadAsStringAsync();
+
+      // cache response
+      lastResponseData = responseString;
 
       responseString = responseString.Replace("[]", "{}");
 
