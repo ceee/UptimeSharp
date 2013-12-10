@@ -1,10 +1,13 @@
 ﻿
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 namespace UptimeSharp.Models
 {
   /// <summary>
   /// All parameters which can be passed for monitor retrieval
   /// </summary>
-  internal class RetrieveParameters
+  [DataContract]
+  internal class RetrieveParameters : Parameters
   {
     /// <summary>
     /// List of monitor ids
@@ -12,6 +15,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The monitors.
     /// </value>
+    [DataMember(Name = "monitors")]
     public int[] Monitors { get; set; }
 
     /// <summary>
@@ -20,6 +24,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The custom uptime ratio.
     /// </value>
+    [DataMember(Name = "customUptimeRatio")]
     public float[] CustomUptimeRatio { get; set; }
 
     /// <summary>
@@ -28,6 +33,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The log bool.
     /// </value>
+    [DataMember(Name = "logs")]
     public bool? ShowLog { get; set; }
 
     /// <summary>
@@ -36,6 +42,25 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts bool.
     /// </value>
+    [DataMember(Name = "showMonitorAlertContacts")]
     public bool? ShowAlerts { get; set; }
+
+
+    /// <summary>
+    /// Converts an object to a list of HTTP Get parameters.
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> Convert()
+    {
+      Dictionary<string, string> parameters = base.Convert();
+
+      if (ShowLog.HasValue)
+      {
+        parameters.Add("alertContacts", parameters["showLog"]);
+        parameters.Add("showTimezone", parameters["showLog"]);
+      }
+
+      return parameters;
+    }
   }
 }

@@ -13,7 +13,7 @@ namespace UptimeSharp
   /// <summary>
   /// UptimeClient
   /// </summary>
-  public class UptimeClient : IUptimeClient
+  public partial class UptimeClient : IUptimeClient
   {
     /// <summary>
     /// REST client used for the API communication

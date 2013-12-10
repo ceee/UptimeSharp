@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using PropertyChanged;
-using System;
 using System.Collections.Generic;
 
 namespace UptimeSharp.Models
@@ -37,7 +36,7 @@ namespace UptimeSharp.Models
     /// The URI.
     /// </value>
     [JsonIgnore]
-    public Uri Uri { get; set; }
+    public string Uri { get; set; }
 
     /// <summary>
     /// Gets or sets the port.

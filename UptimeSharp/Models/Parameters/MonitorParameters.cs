@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
+using System.Runtime.Serialization;
 namespace UptimeSharp.Models
 {
   /// <summary>
   /// All parameters which can be passed for monitor modifications
   /// </summary>
-  internal class MonitorParameters
+  [DataContract]
+  internal class MonitorParameters : Parameters
   {
     /// <summary>
     /// Gets or sets the name.
@@ -14,6 +14,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The name.
     /// </value>
+    [DataMember(Name = "monitorFriendlyName")]
     public string Name { get; set; }
 
     /// <summary>
@@ -22,6 +23,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The URI.
     /// </value>
+    [DataMember(Name = "monitorURL")]
     public string Uri { get; set; }
 
     /// <summary>
@@ -31,6 +33,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The port.
     /// </value>
+    [DataMember(Name = "monitorPort")]
     public int? Port { get; set; }
 
     /// <summary>
@@ -39,6 +42,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The HTTP password.
     /// </value>
+    [DataMember(Name = "monitorHTTPPassword")]
     public string HTTPPassword { get; set; }
 
     /// <summary>
@@ -47,6 +51,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The HTTP username.
     /// </value>
+    [DataMember(Name = "monitorHTTPUsername")]
     public string HTTPUsername { get; set; }
 
     /// <summary>
@@ -55,6 +60,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The type of the keyword.
     /// </value>
+    [DataMember(Name = "monitorKeywordType")]
     public KeywordType KeywordType { get; set; }
 
     /// <summary>
@@ -63,6 +69,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The keyword value.
     /// </value>
+    [DataMember(Name = "monitorKeywordValue")]
     public string KeywordValue { get; set; }
 
     /// <summary>
@@ -71,6 +78,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The type.
     /// </value>
+    [DataMember(Name = "monitorType")]
     public Type Type { get; set; }
 
     /// <summary>
@@ -79,6 +87,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The subtype.
     /// </value>
+    [DataMember(Name = "monitorSubType")]
     public Subtype Subtype { get; set; }
 
     /// <summary>
@@ -87,6 +96,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts.
     /// </value>
+    [DataMember(Name = "monitorAlertContacts")]
     public string[] Alerts { get; set; }
   }
 }
