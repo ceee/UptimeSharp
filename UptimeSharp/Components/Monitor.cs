@@ -143,7 +143,7 @@ namespace UptimeSharp
         HTTPUsername = HTTPUsername
       };
 
-      DefaultResponse response = await Request<DefaultResponse>("getMonitors", cancellationToken, parameters.Convert());
+      DefaultResponse response = await Request<DefaultResponse>("newMonitor", cancellationToken, parameters.Convert());
       return response.Status;
     }
 

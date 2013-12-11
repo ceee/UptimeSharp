@@ -57,6 +57,11 @@ namespace UptimeSharp.Models
           value = (int)((DateTime)value - new DateTime(1970, 1, 1)).TotalSeconds;
         }
 
+        if (value is Enum)
+        {
+          value = (int)value;
+        }
+
         parameterDict.Add(name, value.ToString());
       }
 

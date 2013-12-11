@@ -1,5 +1,5 @@
-﻿
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+
 namespace UptimeSharp.Models
 {
   /// <summary>
