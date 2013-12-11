@@ -42,7 +42,7 @@ namespace UptimeSharp.Models
         // convert array to comma-seperated list
         if (value is IEnumerable && value.GetType().GetElementType() == typeof(string))
         {
-          value = string.Join(",", ((IEnumerable)value).Cast<object>().Select(x => x.ToString()).ToArray());
+          value = String.Join("-", ((IEnumerable)value).Cast<object>().Select(x => x.ToString()).ToArray());
         }
 
         // convert booleans
