@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PropertyChanged;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace UptimeSharp.Models
 {
@@ -9,6 +10,7 @@ namespace UptimeSharp.Models
   /// </summary>
   [JsonObject]
   [ImplementPropertyChanged]
+  [DebuggerDisplay("Name = {Name}, Uri = {Uri}")]
   public class Monitor
   {
     /// <summary>

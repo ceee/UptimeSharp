@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
-using System;
+﻿using Newtonsoft.Json;
 using PropertyChanged;
+using System;
+using System.Collections.Generic;
 
 namespace UptimeSharp.Models
 {
