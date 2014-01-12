@@ -86,8 +86,14 @@ namespace UptimeSharp
     /// <param name="alertID">The alert ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException">Can't delete main alert</exception>
     public async Task<bool> DeleteAlert(string alertID, CancellationToken cancellationToken = default(CancellationToken))
     {
+      if (alertID.StartsWith("0"))
+      {
+        throw new UptimeSharpException("Can't delete main alert");
+      }
+
       DefaultResponse response = await Request<DefaultResponse>("deleteAlertContact", cancellationToken, new Dictionary<string, string>()
       {
         { "alertContactID", alertID }

@@ -47,6 +47,21 @@ namespace UptimeSharp.Models
     /// </value>
     [JsonProperty("value")]
     public string Value { get; set; }
+
+    /// <summary>
+    /// Gets a value indicating whether [is main alert].
+    /// </summary>
+    /// <value>
+    ///   <c>true</c> if [is main alert]; otherwise, <c>false</c>.
+    /// </value>
+    [JsonIgnore]
+    public bool IsMainAlert
+    {
+      get
+      {
+        return ID.StartsWith("0");
+      }
+    }
   }
 
 

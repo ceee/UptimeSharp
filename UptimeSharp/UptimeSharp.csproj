@@ -68,7 +68,7 @@
       <HintPath>..\packages\Newtonsoft.Json.5.0.8\lib\portable-net40+sl4+wp7+win8\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PropertyChanged">
-      <HintPath>..\packages\PropertyChanged.Fody.1.43.0.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
+      <HintPath>..\packages\PropertyChanged.Fody.1.43.1.0\Lib\portable-net4+sl4+wp7+win8+MonoAndroid16+MonoTouch40\PropertyChanged.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System.IO">
