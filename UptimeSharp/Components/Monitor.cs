@@ -23,6 +23,7 @@ namespace UptimeSharp
     /// <returns>
     /// Monitor List
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<List<Models.Monitor>> GetMonitors(
       int[] monitorIDs = null,
       float[] customUptimeRatio = null,
@@ -55,6 +56,7 @@ namespace UptimeSharp
     /// <returns>
     /// The Monitor
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<Models.Monitor> GetMonitor(
       int monitorId,
       float[] customUptimeRatio = null,
@@ -75,6 +77,7 @@ namespace UptimeSharp
     /// <returns>
     /// Success state
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteMonitor(int monitorId, CancellationToken cancellationToken = default(CancellationToken))
     {
       DefaultResponse response = await Request<DefaultResponse>("getMonitors", cancellationToken, new Dictionary<string, string>()
@@ -93,6 +96,7 @@ namespace UptimeSharp
     /// <returns>
     /// Success state
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken))
     {
       return await DeleteMonitor(monitor.ID, cancellationToken);
@@ -116,6 +120,7 @@ namespace UptimeSharp
     /// <returns>
     /// Success state
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> AddMonitor(
       string name,
       string uri,
@@ -156,6 +161,7 @@ namespace UptimeSharp
     /// <returns>
     /// Success state
     /// </returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> ModifyMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken))
     {
       List<string> alerts = null;

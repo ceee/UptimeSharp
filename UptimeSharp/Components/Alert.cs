@@ -16,6 +16,7 @@ namespace UptimeSharp
     /// <param name="alertIDs">Retrieve specified alert contacts by supplying IDs for them.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<List<Alert>> GetAlerts(string[] alertIDs = null, CancellationToken cancellationToken = default(CancellationToken))
     {
       AlertResponse response = await Request<AlertResponse>("getAlertContacts", cancellationToken, new Dictionary<string, string>()
@@ -33,6 +34,7 @@ namespace UptimeSharp
     /// <param name="alertID">The alertID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<Alert> GetAlert(string alertID, CancellationToken cancellationToken = default(CancellationToken))
     {
       List<Alert> alerts = await GetAlerts(new string[] { alertID }, cancellationToken);
@@ -49,7 +51,7 @@ namespace UptimeSharp
     /// <param name="value">The value.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    /// <exception cref="UptimeSharpException">AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API</exception>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> AddAlert(AlertType type, string value, CancellationToken cancellationToken = default(CancellationToken))
     {
       if (type == AlertType.SMS || type == AlertType.Twitter)
@@ -74,6 +76,7 @@ namespace UptimeSharp
     /// <param name="alert">The alert.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> AddAlert(Alert alert, CancellationToken cancellationToken = default(CancellationToken))
     {
       return await AddAlert(alert.Type, alert.Value, cancellationToken);
@@ -86,7 +89,7 @@ namespace UptimeSharp
     /// <param name="alertID">The alert ID.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    /// <exception cref="UptimeSharpException">Can't delete main alert</exception>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteAlert(string alertID, CancellationToken cancellationToken = default(CancellationToken))
     {
       if (alertID.StartsWith("0"))
@@ -109,6 +112,7 @@ namespace UptimeSharp
     /// <param name="alert">The alert.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteAlert(Alert alert, CancellationToken cancellationToken = default(CancellationToken))
     {
       return await DeleteAlert(alert.ID, cancellationToken);
