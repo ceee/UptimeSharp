@@ -174,7 +174,7 @@ namespace UptimeSharp
       MonitorParameters parameters = new MonitorParameters()
       {
         Name = monitor.Name,
-        Uri = monitor.Uri != null ? monitor.Uri : null,
+        Uri = monitor.Target != null ? monitor.Target : null,
         Port = monitor.Port,
         HTTPPassword = monitor.HTTPPassword,
         HTTPUsername = monitor.HTTPUsername,

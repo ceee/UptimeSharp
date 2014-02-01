@@ -10,7 +10,7 @@ namespace UptimeSharp.Models
   /// </summary>
   [JsonObject]
   [ImplementPropertyChanged]
-  [DebuggerDisplay("Name = {Name}, Uri = {Uri}")]
+  [DebuggerDisplay("Name = {Name}, Target = {Target}")]
   public class Monitor
   {
     /// <summary>
@@ -32,13 +32,13 @@ namespace UptimeSharp.Models
     public string Name { get; set; }
 
     /// <summary>
-    /// Gets the URI.
+    /// Gets the target URI/IP.
     /// </summary>
     /// <value>
-    /// The URI.
+    /// The target URI/IP.
     /// </value>
-    [JsonIgnore]
-    public string Uri { get; set; }
+    [JsonProperty("url")]
+    public string Target { get; set; }
 
     /// <summary>
     /// Gets or sets the port.

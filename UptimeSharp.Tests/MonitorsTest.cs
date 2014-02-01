@@ -80,7 +80,7 @@ namespace UptimeSharp.Tests
 
       Assert.True(
         monitor != null
-        && monitor.Uri == "255.0.0.1"
+        && monitor.Target == "255.0.0.1"
         && monitor.Type == Models.Type.Port
         && monitor.Subtype == Subtype.HTTP);
     }
