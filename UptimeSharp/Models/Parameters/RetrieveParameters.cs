@@ -56,8 +56,8 @@ namespace UptimeSharp.Models
 
       if (ShowLog.HasValue)
       {
-        parameters.Add("alertContacts", parameters["showLog"]);
-        parameters.Add("showTimezone", parameters["showLog"]);
+        parameters.Add("alertContacts", parameters["logs"]);
+        parameters.Add("showTimezone", parameters["logs"]);
       }
 
       return parameters;

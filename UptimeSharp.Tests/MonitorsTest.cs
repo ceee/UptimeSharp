@@ -67,12 +67,12 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task GetMonitors()
     {
-      Assert.True(await client.AddMonitor(
-        name: "test_5",
-        uri: "255.0.0.1",
-        type: Models.Type.Port,
-        subtype: Subtype.HTTP
-      ));
+      //Assert.True(await client.AddMonitor(
+      //  name: "test_5",
+      //  uri: "255.0.0.1",
+      //  type: Models.Type.Port,
+      //  subtype: Subtype.HTTP
+      //));
 
       List<Monitor> items = await client.GetMonitors();
       Monitor monitor = null;
