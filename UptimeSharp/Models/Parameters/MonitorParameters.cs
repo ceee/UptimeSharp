@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace UptimeSharp.Models
 {
@@ -24,7 +26,7 @@ namespace UptimeSharp.Models
     /// The URI.
     /// </value>
     [DataMember(Name = "monitorURL")]
-    public string Uri { get; set; }
+    public string Target { get; set; }
 
     /// <summary>
     /// Gets or sets the port.
@@ -98,5 +100,55 @@ namespace UptimeSharp.Models
     /// </value>
     [DataMember(Name = "monitorAlertContacts")]
     public string[] Alerts { get; set; }
+
+    /// <summary>
+    /// Converts an object to a list of HTTP Get parameters.
+    /// </summary>
+    /// <returns></returns>
+    public Dictionary<string, string> Convert()
+    {
+      Dictionary<string, string> parameters = new Dictionary<string, string>();
+
+      parameters.Add("monitorFriendlyName", Name);
+      parameters.Add("monitorURL", Target);
+
+      if ((int)Type != 0)
+      {
+        parameters.Add("monitorType", Type.ToString());
+      }
+
+      // special params for port listener
+      if (Type == Type.Port && Subtype != Subtype.Unknown)
+      {
+        parameters.Add("monitorSubType", Subtype.ToString());
+
+        if (Subtype == Subtype.Custom && Port.HasValue)
+        {
+          parameters.Add("monitorPort", Port.ToString());
+        }
+      }
+
+      // keyword listener
+      if (Type == Type.Keyword && !String.IsNullOrEmpty(KeywordValue))
+      {
+        parameters.Add("monitorKeywordType", KeywordType.ToString());
+        parameters.Add("monitorKeywordValue", KeywordValue);
+      }
+
+      // HTTP basic auth credentials
+      if (!String.IsNullOrEmpty(HTTPUsername))
+      {
+        parameters.Add("monitorHTTPUsername", HTTPUsername);
+        parameters.Add("monitorHTTPPassword", HTTPPassword);
+      }
+
+      // alert notifications
+      if (Alerts != null && Alerts.Length > 0)
+      {
+        parameters.Add("monitorAlertContacts", String.Join("-", Alerts));
+      }
+
+      return parameters;
+    }
   }
 }

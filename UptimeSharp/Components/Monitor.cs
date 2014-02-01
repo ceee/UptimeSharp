@@ -107,7 +107,7 @@ namespace UptimeSharp
     /// Creates a monitor.
     /// </summary>
     /// <param name="name">The name of the new monitor.</param>
-    /// <param name="uri">The URI or IP to watch.</param>
+    /// <param name="target">The URI or IP to watch.</param>
     /// <param name="type">The type of the monitor.</param>
     /// <param name="subtype">The subtype of the monitor (if port).</param>
     /// <param name="port">The port (only for Subtype.Custom).</param>
@@ -123,7 +123,7 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> AddMonitor(
       string name,
-      string uri,
+      string target,
       Type type = Type.HTTP,
       Subtype subtype = Subtype.Unknown,
       int? port = null, string keywordValue = null,
@@ -137,7 +137,7 @@ namespace UptimeSharp
       MonitorParameters parameters = new MonitorParameters()
       {
         Name = name,
-        Uri = uri,
+        Target = target,
         Type = type,
         Subtype = subtype,
         Port = port,
@@ -174,7 +174,7 @@ namespace UptimeSharp
       MonitorParameters parameters = new MonitorParameters()
       {
         Name = monitor.Name,
-        Uri = monitor.Target != null ? monitor.Target : null,
+        Target = monitor.Target != null ? monitor.Target : null,
         Port = monitor.Port,
         HTTPPassword = monitor.HTTPPassword,
         HTTPUsername = monitor.HTTPUsername,

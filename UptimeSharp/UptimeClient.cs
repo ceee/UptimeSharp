@@ -83,7 +83,7 @@ namespace UptimeSharp
         _restClient.Timeout = TimeSpan.FromSeconds(timeout.Value);
       }
 
-      // set base uri
+      // set base target
       _restClient.BaseAddress = baseUri;
 
       // defines the response format

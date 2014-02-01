@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UptimeSharp.Models;
 using Xunit;
 
 namespace UptimeSharp.Tests
@@ -25,13 +26,14 @@ namespace UptimeSharp.Tests
 
 
     // teardown
-    public void Dispose()
+    public async void Dispose()
     {
+      List<Monitor> monitors = await client.GetMonitors();
       alertsToDelete.ForEach(async id =>
       {
         await client.DeleteAlert(id.ToString());
       });
-      monitorsToDelete.ForEach(async id =>
+      monitors.ForEach(async id =>
       {
         await client.DeleteMonitor(id);
       });
@@ -42,7 +44,7 @@ namespace UptimeSharp.Tests
     public static async Task ThrowsAsync<TException>(Func<Task> func)
     {
       var expected = typeof(TException);
-      Type actual = null;
+      System.Type actual = null;
       try
       {
         await func();

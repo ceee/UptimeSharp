@@ -11,19 +11,15 @@ namespace UptimeSharp.Tests
     public MonitorsTest() : base() { }
 
 
-    public async Task Dispose()
-    {
-      List<Monitor> monitors = await client.GetMonitors();
-      monitors.ForEach(item => monitorsToDelete.Add(item.ID));
-    }
+    public async Task Dispose() { }
 
 
     [Fact]
-    public async Task AddHTTPMonitor()
+    public async void AddHTTPMonitor()
     {
       Assert.True(await client.AddMonitor(
         name: "test_1",
-        uri: "http://test1.com"
+        target: "http://test1.com"
       ));
     }
 
@@ -33,7 +29,7 @@ namespace UptimeSharp.Tests
     {
       Assert.True(await client.AddMonitor(
         name: "test_2",
-        uri: "http://test2.com",
+        target: "http://test2.com",
         type: Models.Type.Keyword,
         keywordType: KeywordType.Exists,
         keywordValue: "test"
@@ -46,7 +42,7 @@ namespace UptimeSharp.Tests
     {
       Assert.True(await client.AddMonitor(
         name: "test_3",
-        uri: "http://test3.com",
+        target: "http://test3.com",
         type: Models.Type.Ping
       ));
     }
@@ -57,7 +53,7 @@ namespace UptimeSharp.Tests
     {
       Assert.True(await client.AddMonitor(
         name: "test_4",
-        uri: "127.0.0.1",
+        target: "127.0.0.1",
         type: Models.Type.Port,
         subtype: Subtype.Custom,
         port: 50004
@@ -70,7 +66,7 @@ namespace UptimeSharp.Tests
     {
       //Assert.True(await client.AddMonitor(
       //  name: "test_5",
-      //  uri: "255.0.0.1",
+      //  target: "255.0.0.1",
       //  type: Models.Type.Port,
       //  subtype: Subtype.HTTP
       //));
@@ -91,7 +87,7 @@ namespace UptimeSharp.Tests
     {
       Assert.True(await client.AddMonitor(
         name: "test_6",
-        uri: "http://test6.com"
+        target: "http://test6.com"
       ));
 
       List<Monitor> items = await client.GetMonitors();
