@@ -65,7 +65,7 @@ namespace UptimeSharp
         { "alertContactValue", value }
       });
 
-      return response.Status;
+      return response.Success;
     }
 
 
@@ -102,7 +102,7 @@ namespace UptimeSharp
         { "alertContactID", alertID }
       });
 
-      return response.Status;
+      return response.Success;
     }
 
 

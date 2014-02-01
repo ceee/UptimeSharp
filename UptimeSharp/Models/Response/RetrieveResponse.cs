@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace UptimeSharp.Models
 {
@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// Monitor Response
   /// </summary>
   [JsonObject]
-  internal class RetrieveResponse : ResponseBase
+  internal class RetrieveResponse : Response
   {
     /// <summary>
     /// Gets or sets the item dictionary.
@@ -30,7 +30,7 @@ namespace UptimeSharp.Models
     {
       get
       {
-        return ItemDictionary != null ? ItemDictionary["monitor"] : null; 
+        return ItemDictionary != null ? ItemDictionary["monitor"] : null;
       }
     }
   }

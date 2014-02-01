@@ -50,7 +50,8 @@
     <Compile Include="Models\Parameters\RetrieveParameters.cs" />
     <Compile Include="Models\Response\AlertResponse.cs" />
     <Compile Include="Models\Response\DefaultResponse.cs" />
-    <Compile Include="Models\Response\ResponseBase.cs" />
+    <Compile Include="Models\Response\IResponse.cs" />
+    <Compile Include="Models\Response\Response.cs" />
     <Compile Include="Models\Response\RetrieveResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UptimeClient.cs" />

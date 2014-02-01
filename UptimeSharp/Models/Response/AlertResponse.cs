@@ -7,7 +7,7 @@ namespace UptimeSharp.Models
   /// Alert Response
   /// </summary>
   [JsonObject]
-  internal class AlertResponse : ResponseBase
+  internal class AlertResponse : Response
   {
     /// <summary>
     /// Gets or sets the item dictionary.

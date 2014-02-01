@@ -41,7 +41,7 @@ namespace UptimeSharp
 
       RetrieveResponse response = await Request<RetrieveResponse>("getMonitors", cancellationToken, parameters.Convert());
 
-      return response.Items;
+      return response.Items ?? new List<Models.Monitor>();
     }
 
 
@@ -85,7 +85,7 @@ namespace UptimeSharp
         { "monitorID", monitorId.ToString() }
       });
 
-      return response.Status;
+      return response.Success;
     }
 
 
@@ -149,7 +149,7 @@ namespace UptimeSharp
       };
 
       DefaultResponse response = await Request<DefaultResponse>("newMonitor", cancellationToken, parameters.Convert());
-      return response.Status;
+      return response.Success;
     }
 
 
@@ -195,7 +195,7 @@ namespace UptimeSharp
       paramList.Add("monitorID", monitor.ID.ToString());
 
       DefaultResponse response = await Request<DefaultResponse>("editMonitor", cancellationToken, paramList);
-      return response.Status;
+      return response.Success;
     }
   }
 }

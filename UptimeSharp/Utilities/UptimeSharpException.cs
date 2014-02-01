@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 
 namespace UptimeSharp
 {
@@ -17,7 +13,7 @@ namespace UptimeSharp
     /// <value>
     /// The pocket error code.
     /// </value>
-    public int? ErrorCode { get; set; }
+    public string ErrorCode { get; set; }
 
     /// <summary>
     /// Gets or sets the UptimeRobot error.

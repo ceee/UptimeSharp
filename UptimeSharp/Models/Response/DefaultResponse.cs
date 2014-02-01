@@ -6,5 +6,5 @@ namespace UptimeSharp.Models
   /// Default Response
   /// </summary>
   [JsonObject]
-  internal class DefaultResponse : ResponseBase {}
+  internal class DefaultResponse : Response { }
 }

@@ -6,7 +6,7 @@ namespace UptimeSharp.Models
   /// Base for Responses
   /// </summary>
   [JsonObject]
-  internal class ResponseBase
+  internal class Response : IResponse
   {
 
     /// <summary>
@@ -28,7 +28,7 @@ namespace UptimeSharp.Models
     public string ErrorMessage { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether this <see cref="ResponseBase"/> is status.
+    /// Gets or sets a value indicating whether this <see cref="Response"/> is status.
     /// </summary>
     /// <value>
     ///   "ok" or "fail"
@@ -37,13 +37,13 @@ namespace UptimeSharp.Models
     public string RawStatus { get; set; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether this <see cref="ResponseBase"/> is status.
+    /// Gets or sets a value indicating whether this <see cref="Response"/> is success.
     /// </summary>
     /// <value>
     ///   <c>true</c> if status is OK; otherwise, <c>false</c>.
     /// </value>
     [JsonIgnore]
-    public bool Status
+    public bool Success
     {
       get { return RawStatus == "ok"; }
     }

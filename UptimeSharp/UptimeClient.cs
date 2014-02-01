@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
+using UptimeSharp.Models;
 
 namespace UptimeSharp
 {
@@ -52,6 +53,12 @@ namespace UptimeSharp
     /// The pre request callback.
     /// </value>
     public Action<string> PreRequest { get; set; }
+
+
+    /// <summary>
+    /// The fail codes that don't raise exceptions
+    /// </summary>
+    private static readonly string[] successFailCodes = new string[] { "212", "221" };
 
 
     /// <summary>
@@ -133,8 +140,11 @@ namespace UptimeSharp
         throw new UptimeSharpException(exc.Message, exc);
       }
 
-      // validate HTTP response
-      ValidateResponse(response);
+      // HTTP error
+      if (!response.IsSuccessStatusCode)
+      {
+        throw new UptimeSharpException("Request Exception: {0} (Code: {1})", response.ReasonPhrase, response.StatusCode.ToString());
+      }
 
       // cache headers
       lastHeaders = response.Headers;
@@ -145,8 +155,6 @@ namespace UptimeSharp
       // cache response
       lastResponseData = responseString;
 
-      responseString = responseString.Replace("[]", "{}");
-
       // deserialize object
       T parsedResponse = JsonConvert.DeserializeObject<T>(
         responseString,
@@ -154,7 +162,7 @@ namespace UptimeSharp
         {
           Error = (object sender, ErrorEventArgs args) =>
           {
-            throw new UptimeSharpException(String.Format("Parse error: {0}", args.ErrorContext.Error.Message));
+            throw new UptimeSharpException(String.Format("Parse Exception: {0}", args.ErrorContext.Error.Message));
           },
           Converters =
           {
@@ -164,6 +172,9 @@ namespace UptimeSharp
           }
         }
       );
+
+      // validate response
+      ValidateResponse(parsedResponse as IResponse);
 
       return parsedResponse;
     }
@@ -177,46 +188,38 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException">
     /// Error retrieving response
     /// </exception>
-    protected void ValidateResponse(HttpResponseMessage response)
+    internal void ValidateResponse(IResponse response)
     {
-      // no error found
-      if (response.StatusCode == HttpStatusCode.OK)
+      // it's a success ;-)
+      if (response.Success)
       {
         return;
       }
 
-      //string exceptionString = response.ReasonPhrase;
-      //bool isPocketError = response.Headers.Contains("X-Error");
+      // don't raise exceptions for minor error codes
+      if (successFailCodes.Contains(response.ErrorCode))
+      {
+        return;
+      }
 
-      //// fetch custom pocket headers
-      //string error = TryGetHeaderValue(response.Headers, "X-Error");
-      //int errorCode = Convert.ToInt32(TryGetHeaderValue(response.Headers, "X-Error-Code"));
+      // create exception
+      UptimeSharpException exception = new UptimeSharpException(
+        "UptimeRobot Exception: {0} (Code: {1})\n{2}",
+        null,
+        response.ErrorMessage,
+        response.ErrorCode,
+        "http://uptimerobot.com/api.asp#errorMessages"
+      );
 
-      //// create exception strings
-      //if (isPocketError)
-      //{
-      //  exceptionString = String.Format("Pocket error: {0} ({1}) ", error, errorCode);
-      //}
-      //else
-      //{
-      //  exceptionString = String.Format("Request error: {0} ({1})", response.ReasonPhrase, (int)response.StatusCode);
-      //}
+      // add custom fields
+      exception.Error = response.ErrorMessage;
+      exception.ErrorCode = response.ErrorCode;
 
-      //// create exception
-      //PocketException exception = new PocketException(exceptionString);
+      // add to generic exception data
+      exception.Data.Add("Error", response.ErrorMessage);
+      exception.Data.Add("ErrorCode", response.ErrorCode);
 
-      //if (isPocketError)
-      //{
-      //  // add custom pocket fields
-      //  exception.PocketError = error;
-      //  exception.PocketErrorCode = errorCode;
-
-      //  // add to generic exception data
-      //  exception.Data.Add("X-Error", error);
-      //  exception.Data.Add("X-Error-Code", errorCode);
-      //}
-
-      //throw exception;
+      throw exception;
     }
   }
 }

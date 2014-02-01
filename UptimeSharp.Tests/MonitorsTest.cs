@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UptimeSharp.Models;
 using Xunit;
@@ -75,15 +76,7 @@ namespace UptimeSharp.Tests
       //));
 
       List<Monitor> items = await client.GetMonitors();
-      Monitor monitor = null;
-
-      items.ForEach(item =>
-      {
-        if (item.Name == "test_5")
-        {
-          monitor = item;
-        }
-      });
+      Monitor monitor = items.SingleOrDefault(item => item.Name == "test_5");
 
       Assert.True(
         monitor != null
