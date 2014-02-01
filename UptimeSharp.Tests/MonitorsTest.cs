@@ -11,9 +11,6 @@ namespace UptimeSharp.Tests
     public MonitorsTest() : base() { }
 
 
-    public async Task Dispose() { }
-
-
     [Fact]
     public async void AddHTTPMonitor()
     {
@@ -91,15 +88,7 @@ namespace UptimeSharp.Tests
       ));
 
       List<Monitor> items = await client.GetMonitors();
-      Monitor monitor = null;
-
-      items.ForEach(item =>
-      {
-        if (item.Name == "test_6")
-        {
-          monitor = item;
-        }
-      });
+      Monitor monitor = items.SingleOrDefault(item => item.Name == "test_6");
 
       Assert.NotNull(monitor);
 

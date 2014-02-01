@@ -40,7 +40,11 @@ namespace UptimeSharp.Models
         }
 
         // convert array to comma-seperated list
-        if (value is IEnumerable && value.GetType().GetElementType() == typeof(string))
+        if (value is Array && (value as Array).Length > 0)
+        {
+          value = String.Join("-", value);
+        }
+        else if (value is IEnumerable && value.GetType().GetElementType() == typeof(string))
         {
           value = String.Join("-", ((IEnumerable)value).Cast<object>().Select(x => x.ToString()).ToArray());
         }

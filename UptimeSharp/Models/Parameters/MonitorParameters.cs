@@ -114,24 +114,24 @@ namespace UptimeSharp.Models
 
       if ((int)Type != 0)
       {
-        parameters.Add("monitorType", Type.ToString());
+        parameters.Add("monitorType", ((int)Type).ToString());
       }
 
       // special params for port listener
       if (Type == Type.Port && Subtype != Subtype.Unknown)
       {
-        parameters.Add("monitorSubType", Subtype.ToString());
+        parameters.Add("monitorSubType", ((int)Subtype).ToString());
 
         if (Subtype == Subtype.Custom && Port.HasValue)
         {
-          parameters.Add("monitorPort", Port.ToString());
+          parameters.Add("monitorPort", ((int)Port).ToString());
         }
       }
 
       // keyword listener
       if (Type == Type.Keyword && !String.IsNullOrEmpty(KeywordValue))
       {
-        parameters.Add("monitorKeywordType", KeywordType.ToString());
+        parameters.Add("monitorKeywordType", ((int)KeywordType).ToString());
         parameters.Add("monitorKeywordValue", KeywordValue);
       }
 
