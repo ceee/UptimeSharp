@@ -77,7 +77,7 @@ Provide additional params for more data:
 
 ```csharp
 List<Monitor> items = await _client.GetMonitors(
-	monitorIDs: new string[]{ 12891, 98711 },
+	monitorIDs: new string[]{ "12891", "98711" },
 	customUptimeRatio: new float[] { 7, 30, 45 },
 	showLog: true,
 	showAlerts: true
