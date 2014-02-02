@@ -68,7 +68,7 @@ List<Monitor> items = await _client.GetMonitors();
 Get monitors by ID - or a single monitor:
 
 ```csharp
-List<Monitor> items = await _client.GetMonitors(new string[]{ 12891, 98711 });
+List<Monitor> items = await _client.GetMonitors(new string[]{ "12891", "98711" });
 // or
 Monitor item = await _client.GetMonitor("12891");
 ```
