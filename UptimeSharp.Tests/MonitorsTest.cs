@@ -14,78 +14,98 @@ namespace UptimeSharp.Tests
     [Fact]
     public async void AddHTTPMonitor()
     {
-      Assert.NotNull(await client.AddMonitor(
+      Monitor monitor;
+      Assert.NotNull(monitor = await client.AddMonitor(
         name: "test_1",
         target: "http://test1.com"
       ));
+
+      await client.DeleteMonitor(monitor);
     }
 
 
     [Fact]
     public async Task AddKeywordMonitor()
     {
-      Assert.NotNull(await client.AddMonitor(
+      Monitor monitor;
+      Assert.NotNull(monitor = await client.AddMonitor(
         name: "test_2",
         target: "http://test2.com",
         type: Models.Type.Keyword,
         keywordType: KeywordType.Exists,
         keywordValue: "test"
       ));
+
+      await client.DeleteMonitor(monitor);
     }
 
 
     [Fact]
     public async Task AddPingMonitor()
     {
-      Assert.NotNull(await client.AddMonitor(
+      Monitor monitor;
+      Assert.NotNull(monitor = await client.AddMonitor(
         name: "test_3",
         target: "http://test3.com",
         type: Models.Type.Ping
       ));
+
+      await client.DeleteMonitor(monitor);
     }
 
 
     [Fact]
     public async Task AddPortMonitor()
     {
-      Assert.NotNull(await client.AddMonitor(
+      Monitor monitor;
+      Assert.NotNull(monitor = await client.AddMonitor(
         name: "test_4",
         target: "127.0.0.1",
         type: Models.Type.Port,
         subtype: Subtype.Custom,
         port: 50004
       ));
+
+      await client.DeleteMonitor(monitor);
     }
 
 
     [Fact]
     public async Task GetMonitors()
     {
-      //Assert.True(await client.AddMonitor(
-      //  name: "test_5",
-      //  target: "255.0.0.1",
-      //  type: Models.Type.Port,
-      //  subtype: Subtype.HTTP
-      //));
-
-      List<Monitor> items = await client.GetMonitors();
-      Monitor monitor = items.SingleOrDefault(item => item.Name == "test_5");
+      Monitor monitor;
+      Assert.NotNull(monitor = await client.AddMonitor(
+        name: "test_5",
+        target: "255.0.0.1",
+        type: Models.Type.Port,
+        subtype: Subtype.HTTP
+      ));
 
       Assert.True(
         monitor != null
         && monitor.Target == "255.0.0.1"
         && monitor.Type == Models.Type.Port
         && monitor.Subtype == Subtype.HTTP);
+
+      monitor = await client.GetMonitor(monitor.ID);
+
+      Assert.True(
+        monitor != null
+        && monitor.Target == "255.0.0.1"
+        && monitor.Type == Models.Type.Port
+        && monitor.Subtype == Subtype.HTTP);
+
+      await client.DeleteMonitor(monitor);
     }
 
 
     [Fact]
     public async Task ModifyAMonitor()
     {
-      //Assert.NotNull(await client.AddMonitor(
-      //  name: "test_6",
-      //  target: "http://test6.com"
-      //));
+      Assert.NotNull(await client.AddMonitor(
+        name: "test_6",
+        target: "http://test6.com"
+      ));
 
       List<Monitor> items = await client.GetMonitors();
       Monitor monitor = items.SingleOrDefault(item => item.Name == "test_6");
@@ -99,6 +119,8 @@ namespace UptimeSharp.Tests
       monitor = await client.GetMonitor(monitor.ID);
 
       Assert.Equal(monitor.Name, "updated_test_6");
+
+      await client.DeleteMonitor(monitor);
     }
   }
 }

@@ -81,7 +81,7 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken))
     {
-      return (await Request<DefaultResponse>("getMonitors", cancellationToken, new Dictionary<string, string>()
+      return (await Request<DefaultResponse>("deleteMonitor", cancellationToken, new Dictionary<string, string>()
       {
         { "monitorID", monitorId }
       })).Success;
@@ -125,7 +125,8 @@ namespace UptimeSharp
       string target,
       Type type = Type.HTTP,
       Subtype subtype = Subtype.Unknown,
-      int? port = null, string keywordValue = null,
+      int? port = null,
+      string keywordValue = null,
       KeywordType keywordType = KeywordType.Unknown,
       string[] alerts = null,
       string HTTPUsername = null,
@@ -152,6 +153,7 @@ namespace UptimeSharp
       if (monitor != null)
       {
         monitor.Name = name;
+        monitor.Target = target;
         monitor.Type = type;
         monitor.Subtype = subtype;
         monitor.Port = port;
