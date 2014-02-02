@@ -35,7 +35,7 @@ namespace UptimeSharp.Tests
     {
       string email = "example@ceecore.com";
 
-      Assert.True(await client.AddAlert(AlertType.Email, email));
+      Assert.NotNull(await client.AddAlert(AlertType.Email, email));
 
       Alert origin = await GetOriginAlert(email);
 
@@ -53,8 +53,8 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task AddAndRetrieveSpecificAlerts()
     {
-      Assert.True(await client.AddAlert(AlertType.Email, "example1@ceecore.com"));
-      Assert.True(await client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
+      Assert.NotNull(await client.AddAlert(AlertType.Email, "example1@ceecore.com"));
+      Assert.NotNull(await client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
 
       List<Alert> alerts = await client.GetAlerts();
 

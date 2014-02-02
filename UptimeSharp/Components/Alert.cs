@@ -51,19 +51,29 @@ namespace UptimeSharp
     /// <param name="value">The value.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
-    /// <exception cref="UptimeSharpException"></exception>
-    public async Task<bool> AddAlert(AlertType type, string value, CancellationToken cancellationToken = default(CancellationToken))
+    /// <exception cref="UptimeSharpException">AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API</exception>
+    public async Task<Alert> AddAlert(AlertType type, string value, CancellationToken cancellationToken = default(CancellationToken))
     {
       if (type == AlertType.SMS || type == AlertType.Twitter)
       {
         throw new UptimeSharpException("AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API");
       }
 
-      return (await Request<DefaultResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
+      AddAlertResponse response = await Request<AddAlertResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
       {
         { "alertContactType", ((int)type).ToString() },
         { "alertContactValue", value }
-      })).Success;
+      });
+
+      Alert alert = response.Alert;
+
+      if (alert != null)
+      {
+        alert.Type = type;
+        alert.Value = value;
+      }
+
+      return alert;
     }
 
 
@@ -75,7 +85,7 @@ namespace UptimeSharp
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns></returns>
     /// <exception cref="UptimeSharpException"></exception>
-    public async Task<bool> AddAlert(Alert alert, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task<Alert> AddAlert(Alert alert, CancellationToken cancellationToken = default(CancellationToken))
     {
       return await AddAlert(alert.Type, alert.Value, cancellationToken);
     }
