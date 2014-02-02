@@ -16,7 +16,7 @@ namespace UptimeSharp.Models
     /// The monitors.
     /// </value>
     [DataMember(Name = "monitors")]
-    public int[] Monitors { get; set; }
+    public string[] Monitors { get; set; }
 
     /// <summary>
     /// Defines the number of days to calculate the uptime ratio

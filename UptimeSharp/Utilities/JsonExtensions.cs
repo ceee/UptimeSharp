@@ -77,4 +77,21 @@ namespace UptimeSharp
       return objectType.Equals(typeof(Uri));
     }
   }
+
+
+
+  public class EnumConverter : StringEnumConverter
+  {
+    public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+    {
+      string value = reader.Value.ToString();
+
+      if (String.IsNullOrEmpty(value))
+      {
+        return Enum.ToObject(objectType, 0);
+      }
+
+      return base.ReadJson(reader, objectType, existingValue, serializer);
+    }
+  }
 }

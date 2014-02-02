@@ -20,7 +20,7 @@ namespace UptimeSharp.Models
     /// The ID.
     /// </value>
     [JsonProperty("id")]
-    public int ID { get; set; }
+    public string ID { get; set; }
 
     /// <summary>
     /// Gets or sets the name.

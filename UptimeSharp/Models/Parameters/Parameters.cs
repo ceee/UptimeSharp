@@ -39,12 +39,13 @@ namespace UptimeSharp.Models
           continue;
         }
 
-        // convert array to comma-seperated list
-        if (value is Array && (value as Array).Length > 0)
+        // empty array
+        if (value is Array && (value as Array).Length == 0)
         {
-          value = String.Join("-", value);
+          continue;
         }
-        else if (value is IEnumerable && value.GetType().GetElementType() == typeof(string))
+        // convert array to comma-seperated list
+        else if (value is IEnumerable)
         {
           value = String.Join("-", ((IEnumerable)value).Cast<object>().Select(x => x.ToString()).ToArray());
         }

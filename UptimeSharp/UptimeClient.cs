@@ -168,7 +168,8 @@ namespace UptimeSharp
           {
             new BoolConverter(),
             new UnixDateTimeConverter(),
-            new UriConverter()
+            new UriConverter(),
+            new EnumConverter()
           }
         }
       );

@@ -15,7 +15,7 @@ namespace UptimeSharp
     /// <summary>
     /// Retrieves specified monitors from UptimeRobot
     /// </summary>
-    /// <param name="monitorIDs">The monitor i ds.</param>
+    /// <param name="monitorIDs">The monitor IDs.</param>
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="showLog">if set to <c>true</c> [show log].</param>
     /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
@@ -25,7 +25,7 @@ namespace UptimeSharp
     /// </returns>
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<List<Models.Monitor>> GetMonitors(
-      int[] monitorIDs = null,
+      string[] monitorIDs = null,
       float[] customUptimeRatio = null,
       bool showLog = false,
       bool showAlerts = true,
@@ -58,13 +58,14 @@ namespace UptimeSharp
     /// </returns>
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<Models.Monitor> GetMonitor(
-      int monitorId,
+      string monitorId,
       float[] customUptimeRatio = null,
       bool showLog = false,
       bool showAlerts = true,
       CancellationToken cancellationToken = default(CancellationToken))
     {
-      List<Models.Monitor> monitors = await GetMonitors(new int[] { monitorId }, customUptimeRatio, showLog, showAlerts, cancellationToken);
+
+      List<Models.Monitor> monitors = await GetMonitors(new string[] { monitorId }, customUptimeRatio, showLog, showAlerts, cancellationToken);
 
       return monitors != null && monitors.Count > 0 ? monitors[0] : null;
     }
@@ -78,11 +79,11 @@ namespace UptimeSharp
     /// Success state
     /// </returns>
     /// <exception cref="UptimeSharpException"></exception>
-    public async Task<bool> DeleteMonitor(int monitorId, CancellationToken cancellationToken = default(CancellationToken))
+    public async Task<bool> DeleteMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken))
     {
       return (await Request<DefaultResponse>("getMonitors", cancellationToken, new Dictionary<string, string>()
       {
-        { "monitorID", monitorId.ToString() }
+        { "monitorID", monitorId }
       })).Success;
     }
 
@@ -116,10 +117,10 @@ namespace UptimeSharp
     /// <param name="HTTPPassword">The HTTP password.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
-    /// Success state
+    /// New Monitor (without details)
     /// </returns>
     /// <exception cref="UptimeSharpException"></exception>
-    public async Task<bool> AddMonitor(
+    public async Task<Models.Monitor> AddMonitor(
       string name,
       string target,
       Type type = Type.HTTP,
@@ -146,7 +147,21 @@ namespace UptimeSharp
         HTTPUsername = HTTPUsername
       };
 
-      return (await Request<DefaultResponse>("newMonitor", cancellationToken, parameters.Convert())).Success;
+      Models.Monitor monitor = (await Request<AddMonitorResponse>("newMonitor", cancellationToken, parameters.Convert())).Monitor;
+
+      if (monitor != null)
+      {
+        monitor.Name = name;
+        monitor.Type = type;
+        monitor.Subtype = subtype;
+        monitor.Port = port;
+        monitor.KeywordType = keywordType;
+        monitor.KeywordValue = keywordValue;
+        monitor.HTTPPassword = HTTPPassword;
+        monitor.HTTPUsername = HTTPUsername;
+      }
+
+      return monitor;
     }
 
 

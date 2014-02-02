@@ -3,17 +3,16 @@
 namespace UptimeSharp.Models
 {
   /// <summary>
-  /// Alert Response
+  /// Add Alert Response
   /// </summary>
   [JsonObject]
   internal class AddAlertResponse : Response
   {
     /// <summary>
-    /// Gets or sets the item dictionary.
-    /// The list is 2 layers deep, so this one is necessary :-/
+    /// Gets or sets the alert.
     /// </summary>
     /// <value>
-    /// The item dictionary.
+    /// The alert.
     /// </value>
     [JsonProperty("alertcontact")]
     public Alert Alert { get; set; }

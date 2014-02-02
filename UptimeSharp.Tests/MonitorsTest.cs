@@ -14,7 +14,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public async void AddHTTPMonitor()
     {
-      Assert.True(await client.AddMonitor(
+      Assert.NotNull(await client.AddMonitor(
         name: "test_1",
         target: "http://test1.com"
       ));
@@ -24,7 +24,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task AddKeywordMonitor()
     {
-      Assert.True(await client.AddMonitor(
+      Assert.NotNull(await client.AddMonitor(
         name: "test_2",
         target: "http://test2.com",
         type: Models.Type.Keyword,
@@ -37,7 +37,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task AddPingMonitor()
     {
-      Assert.True(await client.AddMonitor(
+      Assert.NotNull(await client.AddMonitor(
         name: "test_3",
         target: "http://test3.com",
         type: Models.Type.Ping
@@ -48,7 +48,7 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task AddPortMonitor()
     {
-      Assert.True(await client.AddMonitor(
+      Assert.NotNull(await client.AddMonitor(
         name: "test_4",
         target: "127.0.0.1",
         type: Models.Type.Port,
@@ -82,10 +82,10 @@ namespace UptimeSharp.Tests
     [Fact]
     public async Task ModifyAMonitor()
     {
-      Assert.True(await client.AddMonitor(
-        name: "test_6",
-        target: "http://test6.com"
-      ));
+      //Assert.NotNull(await client.AddMonitor(
+      //  name: "test_6",
+      //  target: "http://test6.com"
+      //));
 
       List<Monitor> items = await client.GetMonitors();
       Monitor monitor = items.SingleOrDefault(item => item.Name == "test_6");
