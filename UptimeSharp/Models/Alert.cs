@@ -72,6 +72,10 @@ namespace UptimeSharp.Models
   public enum AlertType
   {
     /// <summary>
+    /// Unknown
+    /// </summary>
+    Unknown,
+    /// <summary>
     /// SMS
     /// </summary>
     SMS = 1,

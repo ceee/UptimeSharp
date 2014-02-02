@@ -1,8 +1,7 @@
-﻿using Xunit;
-using System.Collections.Generic;
-using UptimeSharp.Models;
-using System;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using UptimeSharp.Models;
+using Xunit;
 
 namespace UptimeSharp.Tests
 {
@@ -59,11 +58,14 @@ namespace UptimeSharp.Tests
 
       List<Alert> alerts = await client.GetAlerts();
 
-      Assert.InRange(alerts.ToArray().Length, 2, 100);
+      Assert.InRange(alerts.Count, 2, 100);
 
       List<Alert> specificAlerts = await client.GetAlerts(new string[] { alerts[0].ID, alerts[1].ID });
 
-      Assert.Equal(2, specificAlerts.ToArray().Length);
+      Assert.Equal(2, specificAlerts.Count);
+
+      await client.DeleteAlert(alerts[0]);
+      await client.DeleteAlert(alerts[1]);
     }
 
 

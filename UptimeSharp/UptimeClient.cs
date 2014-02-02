@@ -119,7 +119,7 @@ namespace UptimeSharp
       // with this param it can return raw JSON
       parameters.Add("noJsonCallback", "1");
 
-      IEnumerable<string> paramEnumerable = parameters.Select(item => Uri.EscapeDataString(item.Key) + "=" + Uri.EscapeDataString(item.Value));
+      IEnumerable<string> paramEnumerable = parameters.Where(item => !String.IsNullOrEmpty(item.Value)).Select(item => Uri.EscapeDataString(item.Key) + "=" + Uri.EscapeDataString(item.Value));
 
       // content of the request
       request = new HttpRequestMessage(HttpMethod.Get, method + "?" + String.Join("&", paramEnumerable));
