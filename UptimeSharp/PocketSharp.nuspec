@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.github.com/ceee/UptimeSharp/master/LICENSE-MIT</licenseUrl>
+    <projectUrl>https://github.com/ceee/UptimeSharp</projectUrl>
+    <iconUrl>https://raw.github.com/ceee/UptimeSharp/master/Assets/uptimesharp.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>UptimeSharp is a .NET portable class library that integrates the UptimeRobot API.</description>
+    <language>en-US</language>
+    <releaseNotes>
+      <![CDATA[
+        For full release notes see https://github.com/ceee/UptimeSharp/blob/master/CHANGELOG.md
+      ]]>
+    </releaseNotes>
+    <copyright>Copyright by cee, 2014</copyright>
+    <tags>UptimeSharp UptimeRobot Uptime Robot Tobias Klika cee SDK Server</tags>
+  </metadata>
+</package>
