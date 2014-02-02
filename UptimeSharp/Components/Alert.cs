@@ -24,7 +24,7 @@ namespace UptimeSharp
         { "alertcontacts", alertIDs != null ? string.Join("-", alertIDs) : null }
       });
 
-      return response.Items;
+      return response.Items ?? new List<Alert>();
     }
 
 
@@ -59,13 +59,11 @@ namespace UptimeSharp
         throw new UptimeSharpException("AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API");
       }
 
-      DefaultResponse response = await Request<DefaultResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
+      return (await Request<DefaultResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
       {
         { "alertContactType", ((int)type).ToString() },
         { "alertContactValue", value }
-      });
-
-      return response.Success;
+      })).Success;
     }
 
 
@@ -92,17 +90,16 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteAlert(string alertID, CancellationToken cancellationToken = default(CancellationToken))
     {
+      // try to delete main alert
       if (alertID.StartsWith("0"))
       {
         throw new UptimeSharpException("Can't delete main alert");
       }
 
-      DefaultResponse response = await Request<DefaultResponse>("deleteAlertContact", cancellationToken, new Dictionary<string, string>()
+      return (await Request<DefaultResponse>("deleteAlertContact", cancellationToken, new Dictionary<string, string>()
       {
         { "alertContactID", alertID }
-      });
-
-      return response.Success;
+      })).Success;
     }
 
 

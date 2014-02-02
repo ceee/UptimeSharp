@@ -80,12 +80,10 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<bool> DeleteMonitor(int monitorId, CancellationToken cancellationToken = default(CancellationToken))
     {
-      DefaultResponse response = await Request<DefaultResponse>("getMonitors", cancellationToken, new Dictionary<string, string>()
+      return (await Request<DefaultResponse>("getMonitors", cancellationToken, new Dictionary<string, string>()
       {
         { "monitorID", monitorId.ToString() }
-      });
-
-      return response.Success;
+      })).Success;
     }
 
 
@@ -148,8 +146,7 @@ namespace UptimeSharp
         HTTPUsername = HTTPUsername
       };
 
-      DefaultResponse response = await Request<DefaultResponse>("newMonitor", cancellationToken, parameters.Convert());
-      return response.Success;
+      return (await Request<DefaultResponse>("newMonitor", cancellationToken, parameters.Convert())).Success;
     }
 
 
@@ -194,8 +191,7 @@ namespace UptimeSharp
 
       paramList.Add("monitorID", monitor.ID.ToString());
 
-      DefaultResponse response = await Request<DefaultResponse>("editMonitor", cancellationToken, paramList);
-      return response.Success;
+      return (await Request<DefaultResponse>("editMonitor", cancellationToken, paramList)).Success;
     }
   }
 }
