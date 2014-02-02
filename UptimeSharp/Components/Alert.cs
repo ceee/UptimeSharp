@@ -59,13 +59,11 @@ namespace UptimeSharp
         throw new UptimeSharpException("AlertType.SMS and AlertType.Twitter are not supported by the UptimeRobot API");
       }
 
-      AddAlertResponse response = await Request<AddAlertResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
+      Alert alert = (await Request<AddAlertResponse>("newAlertContact", cancellationToken, new Dictionary<string, string>()
       {
         { "alertContactType", ((int)type).ToString() },
         { "alertContactValue", value }
-      });
-
-      Alert alert = response.Alert;
+      })).Alert;
 
       if (alert != null)
       {

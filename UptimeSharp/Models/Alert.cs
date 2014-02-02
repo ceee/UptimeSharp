@@ -100,10 +100,6 @@ namespace UptimeSharp.Models
   public enum AlertStatus
   {
     /// <summary>
-    /// Unknown
-    /// </summary>
-    Unknown,
-    /// <summary>
     /// Not activated
     /// </summary>
     NotActicated = 0,

@@ -48,6 +48,7 @@
     <Compile Include="Models\Parameters\MonitorParameters.cs" />
     <Compile Include="Models\Parameters\Parameters.cs" />
     <Compile Include="Models\Parameters\RetrieveParameters.cs" />
+    <Compile Include="Models\Response\AddAlertResonse.cs" />
     <Compile Include="Models\Response\AlertResponse.cs" />
     <Compile Include="Models\Response\DefaultResponse.cs" />
     <Compile Include="Models\Response\IResponse.cs" />

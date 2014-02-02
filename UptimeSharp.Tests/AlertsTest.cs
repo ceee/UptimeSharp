@@ -64,8 +64,7 @@ namespace UptimeSharp.Tests
 
       Assert.Equal(2, specificAlerts.Count);
 
-      await client.DeleteAlert(alerts[0]);
-      await client.DeleteAlert(alerts[1]);
+      await ResetAlerts();
     }
 
 
@@ -83,6 +82,19 @@ namespace UptimeSharp.Tests
       });
 
       return origin;
+    }
+
+
+    private async Task ResetAlerts()
+    {
+      try
+      {
+        List<Alert> alerts = await client.GetAlerts();
+        await client.DeleteAlert(alerts[0]);
+        await client.DeleteAlert(alerts[1]);
+        await client.DeleteAlert(alerts[2]);
+      }
+      catch { }
     }
   }
 }
