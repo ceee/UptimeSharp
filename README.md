@@ -15,7 +15,7 @@ Install-Package UptimeSharp
 
 ## Usage Example
 
-Get your [API Key UptimeRobot](http://uptimerobot.com/mySettings.asp) (left section under "API Information")
+Get your [API Key UptimeRobot](http://uptimerobot.com/dashboard#mySettings) (right section - "API Settings")
 
 Include the UptimeSharp namespace and it's associated models:
 
@@ -54,7 +54,7 @@ Which will output:
 UptimeClient(string apiKey)
 ```
 
-Get your [API Key UptimeRobot](http://uptimerobot.com/mySettings.asp) (left section under "API Information")
+Get your [API Key UptimeRobot](http://uptimerobot.com/dashboard#mySettings) (left section under "API Information")
 
 
 ## Retrieve
