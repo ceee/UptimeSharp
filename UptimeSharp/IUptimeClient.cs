@@ -199,6 +199,24 @@ namespace UptimeSharp
     /// <exception cref="System.ArgumentNullException">Please provide an e-mail address</exception>
     /// <exception cref="System.ArgumentException">Please provide a valid e-mail address</exception>
     Task<bool> IsEmailAvailable(string email, CancellationToken cancellationToken = default(CancellationToken));
+
+    /// <summary>
+    /// Registers the account.
+    /// </summary>
+    /// <param name="fullName">The full name (min. 3 chars).</param>
+    /// <param name="email">The email address.</param>
+    /// <param name="password">The password (min. 6 chars).</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException">Please provide all parameters (username, email and password)</exception>
+    /// <exception cref="System.ArgumentException">
+    /// Please provide a valid e-mail address
+    /// or
+    /// Name must be at least 3 characters
+    /// or
+    /// Username must be at least 6 characters
+    /// </exception>
+    Task<bool> RegisterAccount(string fullName, string email, string password, CancellationToken cancellationToken = default(CancellationToken));
     #endregion
   }
 }
