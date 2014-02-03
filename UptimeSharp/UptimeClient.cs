@@ -23,6 +23,11 @@ namespace UptimeSharp
     protected readonly HttpClient _restClient;
 
     /// <summary>
+    /// REST client used for the account communication
+    /// </summary>
+    protected readonly HttpClient _accountClient;
+
+    /// <summary>
     /// Caches HTTP headers from last response
     /// </summary>
     private HttpResponseHeaders lastHeaders;
@@ -33,9 +38,15 @@ namespace UptimeSharp
     public string lastResponseData;
 
     /// <summary>
-    /// The base URL for the Pocket API
+    /// The base URL for the UptimeRobot API
     /// </summary>
     protected static Uri baseUri = new Uri("http://api.uptimerobot.com/");
+
+    /// <summary>
+    /// The account base URL for the UptimeRobot API
+    /// Does not use the official API endpoint
+    /// </summary>
+    protected static Uri accountBaseUri = new Uri("http://uptimerobot.com/inc/dml/userDML.php");
 
     /// <summary>
     /// Accessor for the UptimeRebot API key
@@ -77,17 +88,23 @@ namespace UptimeSharp
       {
         AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
       });
+      _accountClient = new HttpClient(handler ?? new HttpClientHandler()
+      {
+        AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
+      });
 
       if (timeout.HasValue)
       {
         _restClient.Timeout = TimeSpan.FromSeconds(timeout.Value);
+        _accountClient.Timeout = TimeSpan.FromSeconds(timeout.Value);
       }
 
-      // set base target
       _restClient.BaseAddress = baseUri;
+      _accountClient.BaseAddress = accountBaseUri;
 
       // defines the response format
       _restClient.DefaultRequestHeaders.Add("Accept", "application/json");
+      _accountClient.DefaultRequestHeaders.Add("Accept", "application/json");
     }
 
 
@@ -98,7 +115,10 @@ namespace UptimeSharp
     /// <param name="method">Requested method (appended to base path)</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <param name="parameters">Additional POST parameters</param>
+    /// <param name="isAccountRequest">if set to <c>true</c> [is account request].</param>
     /// <returns></returns>
+    /// <exception cref="UptimeSharpException">
+    /// </exception>
     protected async Task<T> Request<T>(string method, CancellationToken cancellationToken, Dictionary<string, string> parameters = null) where T : class, new()
     {
       HttpRequestMessage request;
@@ -150,13 +170,14 @@ namespace UptimeSharp
       lastHeaders = response.Headers;
 
       // read response
-      var responseString = await response.Content.ReadAsStringAsync();
+      string responseString = await response.Content.ReadAsStringAsync();
+      T parsedResponse;
 
       // cache response
       lastResponseData = responseString;
 
       // deserialize object
-      T parsedResponse = JsonConvert.DeserializeObject<T>(
+      parsedResponse = JsonConvert.DeserializeObject<T>(
         responseString,
         new JsonSerializerSettings
         {
@@ -182,6 +203,78 @@ namespace UptimeSharp
 
 
     /// <summary>
+    /// Fetches a typed resource
+    /// </summary>
+    /// <param name="action">The action.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <param name="parameters">Additional POST parameters</param>
+    /// <param name="isPost">if set to <c>true</c> [is post].</param>
+    /// <returns></returns>
+    /// <exception cref="UptimeSharpException">
+    /// </exception>
+    internal async Task<AccountResponse> AccountRequest(string action, CancellationToken cancellationToken, Dictionary<string, string> parameters = null, bool isPost = false)
+    {
+      HttpRequestMessage request;
+      HttpResponseMessage response = null;
+
+      if (parameters == null)
+      {
+        parameters = new Dictionary<string, string>();
+      }
+
+      if (!isPost)
+      {
+        IEnumerable<string> paramEnumerable = parameters.Where(item => !String.IsNullOrEmpty(item.Value)).Select(item => Uri.EscapeDataString(item.Key) + "=" + Uri.EscapeDataString(item.Value));
+        request = new HttpRequestMessage(HttpMethod.Get, "?action=" + Uri.EscapeDataString(action) + "&" + String.Join("&", paramEnumerable));
+      }
+      else
+      {
+        request = new HttpRequestMessage(HttpMethod.Post, "?action=" + Uri.EscapeDataString(action))
+        {
+          Content = new FormUrlEncodedContent(parameters.Where(item => !String.IsNullOrEmpty(item.Value)))
+        };
+      }
+
+      // call pre request action
+      if (PreRequest != null)
+      {
+        PreRequest(action);
+      }
+
+      // make async request
+      try
+      {
+        response = await _accountClient.SendAsync(request, cancellationToken);
+      }
+      catch (HttpRequestException exc)
+      {
+        throw new UptimeSharpException(exc.Message, exc);
+      }
+
+      // HTTP error
+      if (!response.IsSuccessStatusCode)
+      {
+        throw new UptimeSharpException("Request Exception: {0} (Code: {1})", response.ReasonPhrase, response.StatusCode.ToString());
+      }
+
+      // cache headers
+      lastHeaders = response.Headers;
+
+      // read response
+      string responseString = await response.Content.ReadAsStringAsync();
+
+      // cache response
+      lastResponseData = responseString;
+
+      // deserialize object
+      return new AccountResponse()
+      {
+        RawStatus = responseString == "true" ? "ok" : "fail"
+      };
+    }
+
+
+    /// <summary>
     /// Validates the response.
     /// </summary>
     /// <param name="response">The response.</param>
@@ -198,7 +291,7 @@ namespace UptimeSharp
       }
 
       // don't raise exceptions for minor error codes
-      if (successFailCodes.Contains(response.ErrorCode))
+      if (!String.IsNullOrEmpty(response.ErrorCode) && successFailCodes.Contains(response.ErrorCode))
       {
         return;
       }

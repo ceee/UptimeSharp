@@ -39,6 +39,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\Account.cs" />
     <Compile Include="Components\Alert.cs" />
     <Compile Include="Components\Monitor.cs" />
     <Compile Include="IUptimeClient.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Models\Parameters\MonitorParameters.cs" />
     <Compile Include="Models\Parameters\Parameters.cs" />
     <Compile Include="Models\Parameters\RetrieveParameters.cs" />
+    <Compile Include="Models\Response\AccountRepsonse.cs" />
     <Compile Include="Models\Response\AddAlertResonse.cs" />
     <Compile Include="Models\Response\AddMonitorResponse.cs" />
     <Compile Include="Models\Response\AlertResponse.cs" />

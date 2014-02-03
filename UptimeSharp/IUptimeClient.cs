@@ -187,5 +187,18 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     Task<bool> DeleteAlert(Alert alert, CancellationToken cancellationToken = default(CancellationToken));
     #endregion
+
+
+    #region Account
+    /// <summary>
+    /// Determines whether a e-mail is available.
+    /// </summary>
+    /// <param name="email">The email.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns></returns>
+    /// <exception cref="System.ArgumentNullException">Please provide an e-mail address</exception>
+    /// <exception cref="System.ArgumentException">Please provide a valid e-mail address</exception>
+    Task<bool> IsEmailAvailable(string email, CancellationToken cancellationToken = default(CancellationToken));
+    #endregion
   }
 }
