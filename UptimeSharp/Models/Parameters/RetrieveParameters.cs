@@ -45,6 +45,24 @@ namespace UptimeSharp.Models
     [DataMember(Name = "showMonitorAlertContacts")]
     public bool? ShowAlerts { get; set; }
 
+    /// <summary>
+    /// Defines if the show response times will be returned.
+    /// </summary>
+    /// <value>
+    /// The response times bool.
+    /// </value>
+    [DataMember(Name = "responseTimes")]
+    public bool? ShowResponseTimes { get; set; }
+
+
+    /// <summary>
+    /// Gets or sets the response time interval in minutes.
+    /// </summary>
+    /// <value>
+    /// The response time interval.
+    /// </value>
+    [DataMember(Name = "responseTimesAverage")]
+    public int? ResponseTimeInterval { get; set; }
 
     /// <summary>
     /// Converts an object to a list of HTTP Get parameters.
