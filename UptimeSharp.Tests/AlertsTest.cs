@@ -55,14 +55,17 @@ namespace UptimeSharp.Tests
     {
       Alert alert1;
       Alert alert2;
+      Alert alert3;
 
       Assert.NotNull(alert1 = await client.AddAlert(AlertType.Email, "example1@ceecore.com"));
       Assert.NotNull(alert2 = await client.AddAlert(AlertType.Boxcar, "example2@ceecore.com"));
+      Assert.NotNull(alert3 = await client.AddAlert(AlertType.WebHook, "http://ceecore.com?"));
 
       try
       {
         await client.DeleteAlert(alert1);
         await client.DeleteAlert(alert2);
+        await client.DeleteAlert(alert3);
       }
       catch { }
     }

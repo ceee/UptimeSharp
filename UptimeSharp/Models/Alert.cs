@@ -90,7 +90,11 @@ namespace UptimeSharp.Models
     /// <summary>
     /// Boxcar
     /// </summary>
-    Boxcar = 4
+    Boxcar = 4,
+    /// <summary>
+    /// Web Hook
+    /// </summary>
+    WebHook = 5
   }
 
 

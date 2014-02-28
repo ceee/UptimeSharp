@@ -45,7 +45,7 @@ namespace UptimeSharp
 
     /// <summary>
     /// Adds an alert.
-    /// mobile/SMS alert contacts are not supported yet, see: http://www.uptimerobot.com/api.asp#methods
+    /// SMS & Twitter alert contacts are not supported yet, see: http://www.uptimerobot.com/api.asp#methods
     /// </summary>
     /// <param name="type">The type.</param>
     /// <param name="value">The value.</param>
