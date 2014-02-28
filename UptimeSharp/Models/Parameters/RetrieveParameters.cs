@@ -46,14 +46,13 @@ namespace UptimeSharp.Models
     public bool? ShowAlerts { get; set; }
 
     /// <summary>
-    /// Defines if the show response times will be returned.
+    /// Defines if the resonse times for each monitor will be returned
     /// </summary>
     /// <value>
-    /// The response times bool.
+    /// The alert contacts bool.
     /// </value>
     [DataMember(Name = "responseTimes")]
     public bool? ShowResponseTimes { get; set; }
-
 
     /// <summary>
     /// Gets or sets the response time interval in minutes.

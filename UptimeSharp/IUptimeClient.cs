@@ -32,8 +32,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitorIDs">The monitor IDs.</param>
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
-    /// <param name="showLog">if set to <c>true</c> [show log].</param>
-    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
+    /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// Monitor List
@@ -42,8 +41,7 @@ namespace UptimeSharp
     Task<List<Models.Monitor>> GetMonitors(
       string[] monitorIDs = null,
       float[] customUptimeRatio = null,
-      bool showLog = false,
-      bool showAlerts = true,
+      bool includeDetails = true,
       CancellationToken cancellationToken = default(CancellationToken));
 
     /// <summary>
@@ -51,8 +49,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
-    /// <param name="showLog">if set to <c>true</c> [show log].</param>
-    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
+    /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// The Monitor
@@ -61,8 +58,7 @@ namespace UptimeSharp
     Task<Models.Monitor> GetMonitor(
       string monitorId,
       float[] customUptimeRatio = null,
-      bool showLog = false,
-      bool showAlerts = true,
+      bool includeDetails = true,
       CancellationToken cancellationToken = default(CancellationToken));
 
     /// <summary>

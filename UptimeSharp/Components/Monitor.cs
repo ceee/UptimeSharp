@@ -17,8 +17,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitorIDs">The monitor IDs.</param>
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
-    /// <param name="showLog">if set to <c>true</c> [show log].</param>
-    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
+    /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// Monitor List
@@ -27,16 +26,16 @@ namespace UptimeSharp
     public async Task<List<Models.Monitor>> GetMonitors(
       string[] monitorIDs = null,
       float[] customUptimeRatio = null,
-      bool showLog = false,
-      bool showAlerts = true,
+      bool includeDetails = true,
       CancellationToken cancellationToken = default(CancellationToken))
     {
       RetrieveParameters parameters = new RetrieveParameters()
       {
         Monitors = monitorIDs,
         CustomUptimeRatio = customUptimeRatio,
-        ShowAlerts = showAlerts,
-        ShowLog = showLog
+        ShowAlerts = includeDetails,
+        ShowLog = includeDetails,
+        ShowResponseTimes = includeDetails
       };
 
       RetrieveResponse response = await Request<RetrieveResponse>("getMonitors", cancellationToken, parameters.Convert());
@@ -50,8 +49,7 @@ namespace UptimeSharp
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
     /// <param name="customUptimeRatio">The custom uptime ratio.</param>
-    /// <param name="showLog">if set to <c>true</c> [show log].</param>
-    /// <param name="showAlerts">if set to <c>true</c> [show alerts].</param>
+    /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// The Monitor
@@ -60,12 +58,10 @@ namespace UptimeSharp
     public async Task<Models.Monitor> GetMonitor(
       string monitorId,
       float[] customUptimeRatio = null,
-      bool showLog = false,
-      bool showAlerts = true,
+      bool includeDetails = true,
       CancellationToken cancellationToken = default(CancellationToken))
     {
-
-      List<Models.Monitor> monitors = await GetMonitors(new string[] { monitorId }, customUptimeRatio, showLog, showAlerts, cancellationToken);
+      List<Models.Monitor> monitors = await GetMonitors(new string[] { monitorId }, customUptimeRatio, includeDetails, cancellationToken);
 
       return monitors != null && monitors.Count > 0 ? monitors[0] : null;
     }

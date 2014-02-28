@@ -148,6 +148,15 @@ namespace UptimeSharp.Models
     /// </value>
     [JsonProperty("log")]
     public List<Log> Log { get; set; }
+
+    /// <summary>
+    /// Gets or sets the response times.
+    /// </summary>
+    /// <value>
+    /// The response times.
+    /// </value>
+    [JsonProperty("responsetime")]
+    public List<ResponseTime> ResponseTimes { get; set; }
   }
 
 
