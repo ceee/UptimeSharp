@@ -79,8 +79,7 @@ Provide additional params for more data:
 List<Monitor> items = await _client.GetMonitors(
 	monitorIDs: new string[]{ "12891", "98711" },
 	customUptimeRatio: new float[] { 7, 30, 45 },
-	showLog: true,
-	showAlerts: true
+	includeDetails: true
 );
 ```
 
@@ -88,9 +87,7 @@ List<Monitor> items = await _client.GetMonitors(
 <br>
 `customUptimeRatio`: the number of days to calculate the uptime ratio(s) for _(default: null)_
 <br>
-`showLog`: include log, if true _(default: false)_
-<br>
-`showAlerts`: include alerts, if true _(default: true)_
+`includeDetails`: include log, alerts and response times, if true _(default: false)_
 <br>
 
 
