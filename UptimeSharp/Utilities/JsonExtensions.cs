@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
+using System.Globalization;
 
 namespace UptimeSharp
 {
@@ -42,7 +43,7 @@ namespace UptimeSharp
         return null;
       }
 
-      return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(Convert.ToDouble(reader.Value)).ToLocalTime();
+      return DateTime.Parse(reader.Value.ToString(), CultureInfo.InvariantCulture).ToLocalTime();
     }
   }
 
