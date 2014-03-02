@@ -173,6 +173,12 @@ namespace UptimeSharp
       string responseString = await response.Content.ReadAsStringAsync();
       T parsedResponse;
 
+      // fix buggy response by uptimerobot óÒ
+      if (!String.IsNullOrEmpty(responseString))
+      {
+        responseString = responseString.Replace("}{", "},{");
+      }
+
       // cache response
       lastResponseData = responseString;
 
