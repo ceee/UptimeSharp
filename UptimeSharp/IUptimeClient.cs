@@ -31,8 +31,9 @@ namespace UptimeSharp
     /// Retrieves specified monitors from UptimeRobot
     /// </summary>
     /// <param name="monitorIDs">The monitor IDs.</param>
-    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="responseTimesAverage">The response times average in minutes, which is used as the calculation base for the response times.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// Monitor List
@@ -40,16 +41,18 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     Task<List<Models.Monitor>> GetMonitors(
       string[] monitorIDs = null,
-      float[] customUptimeRatio = null,
       bool includeDetails = true,
+      float[] customUptimeRatio = null,
+      int responseTimesAverage = 0,
       CancellationToken cancellationToken = default(CancellationToken));
 
     /// <summary>
     /// Retrieves a monitor from UptimeRobot
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
-    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="responseTimesAverage">The response times average in minutes, which is used as the calculation base for the response times.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// The Monitor
@@ -57,8 +60,9 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     Task<Models.Monitor> GetMonitor(
       string monitorId,
-      float[] customUptimeRatio = null,
       bool includeDetails = true,
+      float[] customUptimeRatio = null,
+      int responseTimesAverage = 0,
       CancellationToken cancellationToken = default(CancellationToken));
 
     /// <summary>

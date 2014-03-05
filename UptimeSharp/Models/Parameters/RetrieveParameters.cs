@@ -61,7 +61,7 @@ namespace UptimeSharp.Models
     /// The response time interval.
     /// </value>
     [DataMember(Name = "responseTimesAverage")]
-    public int? ResponseTimeInterval { get; set; }
+    public int? ResponseTimeAverage { get; set; }
 
     /// <summary>
     /// Converts an object to a list of HTTP Get parameters.

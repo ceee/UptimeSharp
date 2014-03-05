@@ -16,8 +16,9 @@ namespace UptimeSharp
     /// Retrieves specified monitors from UptimeRobot
     /// </summary>
     /// <param name="monitorIDs">The monitor IDs.</param>
-    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="responseTimesAverage">The response times average in minutes, which is used as the calculation base for the response times.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// Monitor List
@@ -25,8 +26,9 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<List<Models.Monitor>> GetMonitors(
       string[] monitorIDs = null,
-      float[] customUptimeRatio = null,
       bool includeDetails = true,
+      float[] customUptimeRatio = null,
+      int responseTimesAverage = 0,
       CancellationToken cancellationToken = default(CancellationToken))
     {
       RetrieveParameters parameters = new RetrieveParameters()
@@ -35,7 +37,8 @@ namespace UptimeSharp
         CustomUptimeRatio = customUptimeRatio,
         ShowAlerts = includeDetails,
         ShowLog = includeDetails,
-        ShowResponseTimes = includeDetails
+        ShowResponseTimes = includeDetails,
+        ResponseTimeAverage = responseTimesAverage
       };
 
       RetrieveResponse response = await Request<RetrieveResponse>("getMonitors", cancellationToken, parameters.Convert());
@@ -48,8 +51,9 @@ namespace UptimeSharp
     /// Retrieves a monitor from UptimeRobot
     /// </summary>
     /// <param name="monitorId">a specific monitor ID</param>
-    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
     /// <param name="includeDetails">if set to <c>true</c> [include details (log, alerts and response times)].</param>
+    /// <param name="customUptimeRatio">The custom uptime ratio.</param>
+    /// <param name="responseTimesAverage">The response times average in minutes, which is used as the calculation base for the response times.</param>
     /// <param name="cancellationToken">The cancellation token.</param>
     /// <returns>
     /// The Monitor
@@ -57,11 +61,12 @@ namespace UptimeSharp
     /// <exception cref="UptimeSharpException"></exception>
     public async Task<Models.Monitor> GetMonitor(
       string monitorId,
-      float[] customUptimeRatio = null,
       bool includeDetails = true,
+      float[] customUptimeRatio = null,
+      int responseTimesAverage = 0,
       CancellationToken cancellationToken = default(CancellationToken))
     {
-      List<Models.Monitor> monitors = await GetMonitors(new string[] { monitorId }, customUptimeRatio, includeDetails, cancellationToken);
+      List<Models.Monitor> monitors = await GetMonitors(new string[] { monitorId }, includeDetails, customUptimeRatio, responseTimesAverage, cancellationToken);
 
       return monitors != null && monitors.Count > 0 ? monitors[0] : null;
     }
