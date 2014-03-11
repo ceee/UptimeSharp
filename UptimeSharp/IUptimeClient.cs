@@ -126,6 +126,54 @@ namespace UptimeSharp
     /// </returns>
     /// <exception cref="UptimeSharpException"></exception>
     Task<bool> ModifyMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken));
+
+    /// <summary>
+    /// Pause a monitor
+    /// </summary>
+    /// <param name="monitorId">a specific monitor ID</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    Task<bool> PauseMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken));
+
+    /// <summary>
+    /// Pause a monitor
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    Task<bool> PauseMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken));
+
+    /// <summary>
+    /// Resume a monitor
+    /// </summary>
+    /// <param name="monitorId">a specific monitor ID</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    Task<bool> ResumeMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken));
+
+    /// <summary>
+    /// Resume a monitor
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    Task<bool> ResumeMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken));
     #endregion
 
 

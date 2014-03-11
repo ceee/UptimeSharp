@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -124,7 +125,7 @@ namespace UptimeSharp
     public async Task<Models.Monitor> AddMonitor(
       string name,
       string target,
-      Type type = Type.HTTP,
+      Models.Type type = Models.Type.HTTP,
       Subtype subtype = Subtype.Unknown,
       int? port = null,
       string keywordValue = null,
@@ -210,6 +211,70 @@ namespace UptimeSharp
       paramList.Add("monitorID", monitor.ID.ToString());
 
       return (await Request<DefaultResponse>("editMonitor", cancellationToken, paramList)).Success;
+    }
+
+
+    /// <summary>
+    /// Pause a monitor
+    /// </summary>
+    /// <param name="monitorId">a specific monitor ID</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    public async Task<bool> PauseMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken))
+    {
+      throw new NotImplementedException("not available yet");
+    }
+
+
+    /// <summary>
+    /// Pause a monitor
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    public async Task<bool> PauseMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken))
+    {
+      return await PauseMonitor(monitor.ID, cancellationToken);
+    }
+
+
+    /// <summary>
+    /// Resume a monitor
+    /// </summary>
+    /// <param name="monitorId">a specific monitor ID</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    public async Task<bool> ResumeMonitor(string monitorId, CancellationToken cancellationToken = default(CancellationToken))
+    {
+      throw new NotImplementedException("not available yet");
+    }
+
+
+    /// <summary>
+    /// Resume a monitor
+    /// </summary>
+    /// <param name="monitor">The monitor.</param>
+    /// <param name="cancellationToken">The cancellation token.</param>
+    /// <returns>
+    /// Success state
+    /// </returns>
+    /// <exception cref="System.NotImplementedException">not available yet</exception>
+    /// <exception cref="UptimeSharpException"></exception>
+    public async Task<bool> ResumeMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken))
+    {
+      return await ResumeMonitor(monitor.ID, cancellationToken);
     }
   }
 }
