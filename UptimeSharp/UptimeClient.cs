@@ -176,7 +176,9 @@ namespace UptimeSharp
       // fix buggy response by uptimerobot óÒ
       if (!String.IsNullOrEmpty(responseString))
       {
-        responseString = responseString.Replace("}{", "},{");
+        responseString = responseString
+          .Replace("}{", "},{") // nice one
+          .Replace(",]", ""); // ok, this is a bummer!
       }
 
       // cache response
