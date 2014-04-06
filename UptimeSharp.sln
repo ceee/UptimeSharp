@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30324.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp.Tests", "UptimeSharp.Tests\UptimeSharp.Tests.csproj", "{7AB536B7-1A99-44A7-B5AA-E36E9C7F09F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UptimeSharp", "UptimeSharp\UptimeSharp.csproj", "{EC1E656D-4966-499A-9EDD-9DB56137BF62}"
