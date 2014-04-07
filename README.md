@@ -2,10 +2,11 @@
 
 **UptimeSharp** is a .NET portable class library that integrates the [UptimeRobot API](http://www.uptimerobot.com/api.asp).
 
-The wrapper consists of 2 parts:
+The wrapper consists of the following parts:
 
 - Get and modify monitors
 - Get and modify alert contacts
+- Register accounts (unofficial)
 
 ## Install UptimeSharp using [NuGet](https://www.nuget.org/packages/UptimeSharp/)
 
@@ -258,12 +259,13 @@ If you want to monitor a port, you need to specify a **subType** which is a comm
 
 ## Supported platforms
 
-UptimeSharp is a **Portable Class Library**, therefore it's compatible with multiple platforms:
+UptimeSharp is a **Portable Class Library**, therefore it's compatible with multiple platforms and Universal Apps:
 
 - **.NET** >= 4.5 (including WPF)
-- **Silverlight** >= 4
-- **Windows Phone** >= 7.5
-- **Windows Store**
+- **Windows Phone** (Silverlight + WinPRT) >= 8
+- **Windows Store** >= 8
+- **Xamarin** iOS + Android
+- _WP7 and Silverlight are dropped in 4.0, use PocketSharp < 4.0, if you want to support them_
 
 ## Dependencies
 

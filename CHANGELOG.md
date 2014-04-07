@@ -1,3 +1,7 @@
+### 3.0.0 (2014-04-07)
+
+- Support for Universal apps (dropped SL and WP7 support)
+
 ### 2.1.0 (2014-02-28)
 
 - Support for Response Times
