@@ -55,7 +55,8 @@ Which will output:
 UptimeClient(string apiKey)
 ```
 
-Get your [API Key UptimeRobot](http://uptimerobot.com/dashboard#mySettings) (left section under "API Information")
+Get your [API Key UptimeRobot](http://uptimerobot.com/dashboard#mySettings) (left section under "API Information").
+<br>Automatic authentication is not available in the moment, but the integration in the API is planned according to UptimeRobot.
 
 
 ## Retrieve
