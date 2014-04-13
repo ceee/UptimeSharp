@@ -266,7 +266,7 @@ UptimeSharp is a **Portable Class Library**, therefore it's compatible with mult
 - **Windows Phone** (Silverlight + WinPRT) >= 8
 - **Windows Store** >= 8
 - **Xamarin** iOS + Android
-- _WP7 and Silverlight are dropped in 4.0, use PocketSharp < 4.0, if you want to support them_
+- _WP7 and Silverlight are dropped in 4.0, use UptimeSharp < 3.0, if you want to support them_
 
 ## Dependencies
 
