@@ -44,6 +44,23 @@ namespace UptimeSharp
 
       RetrieveResponse response = await Request<RetrieveResponse>("getMonitors", cancellationToken, parameters.Convert());
 
+      int timezoneOffset = 0;
+      if ((response != null) && Int32.TryParse(response.Timezone, out timezoneOffset) && (timezoneOffset != 0) && (response.Items != null))
+      {
+         foreach(Models.Monitor monitor in response.Items)
+         {
+            foreach(Models.ResponseTime responseTime in monitor.ResponseTimes)
+            {
+                responseTime.Date = responseTime.Date.AddMinutes(-1 * timezoneOffset);
+            }
+
+            foreach(Models.Log log in monitor.Log)
+            {
+                log.Date = log.Date.AddMinutes(-1 * timezoneOffset);
+            }
+         }
+      }
+
       return response.Items ?? new List<Models.Monitor>();
     }
 
