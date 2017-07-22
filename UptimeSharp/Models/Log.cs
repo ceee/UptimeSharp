@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PropertyChanged;
 using System;
 using System.Collections.Generic;
 
@@ -9,7 +8,6 @@ namespace UptimeSharp.Models
   /// The Log Model
   /// </summary>
   [JsonObject]
-  [ImplementPropertyChanged]
   public class Log
   {
     /// <summary>
@@ -36,7 +34,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts.
     /// </value>
-    [JsonProperty("alertcontact")]
+    [JsonProperty("alert_contact")]
     public List<Alert> Alerts { get; set; }
   }
 

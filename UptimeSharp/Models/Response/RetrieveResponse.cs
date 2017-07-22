@@ -17,24 +17,9 @@ namespace UptimeSharp.Models
     /// The item dictionary.
     /// </value>
     [JsonProperty("monitors")]
-    public Dictionary<string, List<Monitor>> ItemDictionary { get; set; }
+    public List<Monitor> Monitors { get; set; }
 
     [JsonProperty("timezone")]
     public string Timezone { get; set; }
-
-    /// <summary>
-    /// Gets the items.
-    /// </summary>
-    /// <value>
-    /// The items.
-    /// </value>
-    [JsonIgnore]
-    public List<Monitor> Items
-    {
-      get
-      {
-        return ItemDictionary != null ? ItemDictionary["monitor"] : null;
-      }
-    }
   }
 }

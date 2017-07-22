@@ -36,32 +36,40 @@ namespace UptimeSharp
       {
         Monitors = monitorIDs,
         CustomUptimeRatio = customUptimeRatio,
-        ShowAlerts = includeDetails,
+        ShowAlerts = includeDetails ? 1 : 0,
         ShowLog = includeDetails,
-        ShowResponseTimes = includeDetails,
-        ResponseTimeAverage = responseTimesAverage
+        ShowResponseTimes = includeDetails ? 1 : 0,
+        ResponseTimeAverage = responseTimesAverage,
+        LogsLimit = 25,
+        ResponseTimesLimit = 25
       };
 
       RetrieveResponse response = await Request<RetrieveResponse>("getMonitors", cancellationToken, parameters.Convert());
 
       int timezoneOffset = 0;
-      if ((response != null) && Int32.TryParse(response.Timezone, out timezoneOffset) && (timezoneOffset != 0) && (response.Items != null))
+      if ((response != null) && Int32.TryParse(response.Timezone, out timezoneOffset) && (timezoneOffset != 0) && (response.Monitors != null))
       {
-         foreach(Models.Monitor monitor in response.Items)
+         foreach(Models.Monitor monitor in response.Monitors)
          {
-            foreach(Models.ResponseTime responseTime in monitor.ResponseTimes)
+            if (monitor.ResponseTimes != null)
             {
-                responseTime.Date = responseTime.Date.AddMinutes(-1 * timezoneOffset);
+              foreach (Models.ResponseTime responseTime in monitor.ResponseTimes)
+              {
+                responseTime.Date = responseTime.Date.AddMinutes(timezoneOffset);
+              }
             }
 
-            foreach(Models.Log log in monitor.Log)
+            if (monitor.Log != null)
             {
-                log.Date = log.Date.AddMinutes(-1 * timezoneOffset);
+              foreach (Models.Log log in monitor.Log)
+              {
+                log.Date = log.Date.AddMinutes(timezoneOffset);
+              }
             }
          }
       }
 
-      return response.Items ?? new List<Models.Monitor>();
+      return response.Monitors ?? new List<Models.Monitor>();
     }
 
 
@@ -198,7 +206,6 @@ namespace UptimeSharp
     public async Task<bool> ModifyMonitor(Models.Monitor monitor, CancellationToken cancellationToken = default(CancellationToken))
     {
       List<string> alerts = null;
-
       if (monitor.Alerts != null)
       {
         alerts = monitor.Alerts.Select(item => item.ID).ToList();

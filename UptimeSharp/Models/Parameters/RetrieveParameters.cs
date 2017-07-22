@@ -24,7 +24,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The custom uptime ratio.
     /// </value>
-    [DataMember(Name = "customUptimeRatio")]
+    [DataMember(Name = "custom_uptime_ratios")]
     public float[] CustomUptimeRatio { get; set; }
 
     /// <summary>
@@ -42,8 +42,8 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts bool.
     /// </value>
-    [DataMember(Name = "showMonitorAlertContacts")]
-    public bool? ShowAlerts { get; set; }
+    [DataMember(Name = "alert_contacts")]
+    public int? ShowAlerts { get; set; }
 
     /// <summary>
     /// Defines if the resonse times for each monitor will be returned
@@ -51,8 +51,8 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts bool.
     /// </value>
-    [DataMember(Name = "responseTimes")]
-    public bool? ShowResponseTimes { get; set; }
+    [DataMember(Name = "response_times")]
+    public int? ShowResponseTimes { get; set; }
 
     /// <summary>
     /// Gets or sets the response time interval in minutes.
@@ -60,8 +60,22 @@ namespace UptimeSharp.Models
     /// <value>
     /// The response time interval.
     /// </value>
-    [DataMember(Name = "responseTimesAverage")]
+    [DataMember(Name = "response_times_average")]
     public int? ResponseTimeAverage { get; set; }
+
+    /// <summary>
+    /// optional (the number of logs to be returned (descending order). If empty, all logs are returned.
+    /// </summary>
+    [DataMember(Name = "logs_limit")]
+    public int? LogsLimit { get; set; }
+
+    /// <summary>
+    /// optional (the number of response time logs to be returned (descending order). 
+    /// If empty, last 24 hours of logs are returned (if response_times_start_date 
+    /// and response_times_end_date are not used).
+    /// </summary>
+    [DataMember(Name = "response_times_limit")]
+    public int? ResponseTimesLimit { get; set; }
 
     /// <summary>
     /// Converts an object to a list of HTTP Get parameters.
@@ -73,8 +87,23 @@ namespace UptimeSharp.Models
 
       if (ShowLog.HasValue)
       {
-        parameters.Add("alertContacts", parameters["logs"]);
-        parameters.Add("showTimezone", parameters["logs"]);
+        if (parameters.ContainsKey("alert_contacts"))
+        {
+          parameters["alert_contacts"] = parameters["logs"];
+        }
+        else
+        {
+          parameters.Add("alert_contacts", parameters["logs"]);
+        }
+
+        if (parameters.ContainsKey("timezone"))
+        {
+          parameters["timezone"] = parameters["logs"];
+        }
+        else
+        {
+          parameters.Add("timezone", parameters["logs"]);
+        }
       }
 
       return parameters;

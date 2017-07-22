@@ -28,6 +28,9 @@ namespace UptimeSharp
 
   public class UnixDateTimeConverter : DateTimeConverterBase
   {
+    static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+
+
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
     {
       DateTime epoc = new DateTime(1970, 1, 1);
@@ -43,7 +46,7 @@ namespace UptimeSharp
         return null;
       }
 
-      return DateTime.Parse(reader.Value.ToString(), CultureInfo.InvariantCulture).ToLocalTime();
+      return UnixEpoch.AddSeconds(Int32.Parse(reader.Value.ToString()));
     }
   }
 

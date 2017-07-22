@@ -21,7 +21,7 @@ namespace UptimeSharp
     {
       AlertResponse response = await Request<AlertResponse>("getAlertContacts", cancellationToken, new Dictionary<string, string>()
       {
-        { "alertcontacts", alertIDs != null ? string.Join("-", alertIDs) : null }
+        { "alert_contacts", alertIDs != null ? string.Join("-", alertIDs) : null }
       });
 
       return response.Items ?? new List<Alert>();

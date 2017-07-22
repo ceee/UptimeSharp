@@ -25,6 +25,7 @@ namespace UptimeSharp.Models
     /// The date.
     /// </value>
     [JsonProperty("datetime")]
+    [JsonConverter(typeof(UnixDateTimeConverter))]
     public DateTime Date { get; set; }
   }
 }
