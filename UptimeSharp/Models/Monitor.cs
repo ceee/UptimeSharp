@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PropertyChanged;
 using System.Collections.Generic;
 using System.Diagnostics;
 
@@ -9,7 +8,6 @@ namespace UptimeSharp.Models
   /// The Monitor Model implementation
   /// </summary>
   [JsonObject]
-  [ImplementPropertyChanged]
   [DebuggerDisplay("Name = {Name}, Target = {Target}")]
   public class Monitor
   {
@@ -28,7 +26,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The name.
     /// </value>
-    [JsonProperty("friendlyname")]
+    [JsonProperty("friendly_name")]
     public string Name { get; set; }
 
     /// <summary>
@@ -56,9 +54,10 @@ namespace UptimeSharp.Models
     /// <value>
     /// Uptime ratio of the monitor calculated since the monitor is created.
     /// </value>
-    [JsonProperty("alltimeuptimeratio")]
+    [JsonProperty("all_time_uptime_ratio")]
     public float Uptime { get; set; }
 
+    /*
     /// <summary>
     /// Gets or sets the uptime custom.
     /// </summary>
@@ -67,6 +66,7 @@ namespace UptimeSharp.Models
     /// </value>
     [JsonProperty("customuptimeratio")]
     public float? UptimeCustom { get; set; }
+    */
 
     /// <summary>
     /// Gets or sets the HTTP password.
@@ -74,7 +74,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The HTTP password.
     /// </value>
-    [JsonProperty("httppassword")]
+    [JsonProperty("http_password")]
     public string HTTPPassword { get; set; }
 
     /// <summary>
@@ -83,7 +83,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The HTTP username.
     /// </value>
-    [JsonProperty("httpusername")]
+    [JsonProperty("http_username")]
     public string HTTPUsername { get; set; }
 
     /// <summary>
@@ -92,7 +92,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The type of the keyword.
     /// </value>
-    [JsonProperty("keywordtype")]
+    [JsonProperty("keyword_type")]
     public KeywordType KeywordType { get; set; }
 
     /// <summary>
@@ -101,7 +101,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The keyword value.
     /// </value>
-    [JsonProperty("keywordvalue")]
+    [JsonProperty("keyword_value")]
     public string KeywordValue { get; set; }
 
     /// <summary>
@@ -128,7 +128,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The subtype.
     /// </value>
-    [JsonProperty("subtype")]
+    [JsonProperty("sub_type")]
     public Subtype Subtype { get; set; }
 
     /// <summary>
@@ -137,7 +137,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The alert contacts.
     /// </value>
-    [JsonProperty("alertcontact")]
+    [JsonProperty("alert_contacts")]
     public List<Alert> Alerts { get; set; }
 
     /// <summary>
@@ -146,7 +146,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The log with dates and associated alert contacts.
     /// </value>
-    [JsonProperty("log")]
+    [JsonProperty("logs")]
     public List<Log> Log { get; set; }
 
     /// <summary>
@@ -155,7 +155,7 @@ namespace UptimeSharp.Models
     /// <value>
     /// The response times.
     /// </value>
-    [JsonProperty("responsetime")]
+    [JsonProperty("response_times")]
     public List<ResponseTime> ResponseTimes { get; set; }
   }
 

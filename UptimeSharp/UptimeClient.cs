@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UptimeSharp.Models;
@@ -40,13 +42,13 @@ namespace UptimeSharp
     /// <summary>
     /// The base URL for the UptimeRobot API
     /// </summary>
-    protected static Uri baseUri = new Uri("http://api.uptimerobot.com/");
+    protected static Uri baseUri = new Uri("https://api.uptimerobot.com/v2");
 
     /// <summary>
     /// The account base URL for the UptimeRobot API
     /// Does not use the official API endpoint
     /// </summary>
-    protected static Uri accountBaseUri = new Uri("http://uptimerobot.com/inc/dml/userDML.php");
+    protected static Uri accountBaseUri = new Uri("https://uptimerobot.com/inc/dml/userDML.php");
 
     /// <summary>
     /// Accessor for the UptimeRebot API key
@@ -92,7 +94,7 @@ namespace UptimeSharp
       {
         AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip
       });
-
+            
       if (timeout.HasValue)
       {
         _restClient.Timeout = TimeSpan.FromSeconds(timeout.Value);
@@ -121,56 +123,36 @@ namespace UptimeSharp
     /// </exception>
     protected async Task<T> Request<T>(string method, CancellationToken cancellationToken, Dictionary<string, string> parameters = null) where T : class, new()
     {
-      HttpRequestMessage request;
-      HttpResponseMessage response = null;
-
       if (parameters == null)
       {
         parameters = new Dictionary<string, string>();
       }
 
       // add api key to each request
-      parameters.Add("apiKey", ApiKey);
+      parameters.Add("api_key", ApiKey);
 
       // require UptimeRobot to respond with JSON formatting
       parameters.Add("format", "json");
-
-      // UptimeRobot returns by default JSON-P when json-formatting is set
-      // with this param it can return raw JSON
-      parameters.Add("noJsonCallback", "1");
-
-      IEnumerable<string> paramEnumerable = parameters.Where(item => !String.IsNullOrEmpty(item.Value)).Select(item => Uri.EscapeDataString(item.Key) + "=" + Uri.EscapeDataString(item.Value));
-
-      // content of the request
-      request = new HttpRequestMessage(HttpMethod.Get, method + "?" + String.Join("&", paramEnumerable));
-
-      // call pre request action
-      if (PreRequest != null)
+      
+      HttpResponseMessage response = null;
+      using (var httpClient = new HttpClient())
       {
-        PreRequest(method);
+        var url = String.Format("{0}/{1}", baseUri, method);
+        var req = new HttpRequestMessage(HttpMethod.Post, url) { Content = new FormUrlEncodedContent(parameters) };
+        response = Task.Run(() => httpClient.SendAsync(req)).Result;
       }
-
-      // make async request
-      try
-      {
-        response = await _restClient.SendAsync(request, cancellationToken);
-      }
-      catch (HttpRequestException exc)
-      {
-        throw new UptimeSharpException(exc.Message, exc);
-      }
-
-      // HTTP error
-      if (!response.IsSuccessStatusCode)
+      
+      if (response.StatusCode != HttpStatusCode.OK)
       {
         throw new UptimeSharpException("Request Exception: {0} (Code: {1})", response.ReasonPhrase, response.StatusCode.ToString());
       }
-
+      
       // cache headers
       lastHeaders = response.Headers;
 
       // read response
       string responseString = await response.Content.ReadAsStringAsync();
+
       T parsedResponse;
 
       // fix buggy response by uptimerobot óÒ
